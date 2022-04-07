@@ -3,7 +3,7 @@
  *
  *
  * M8266WIFI_ops.c
- * .@brief  M8266WiFi HAL操作源文件
+ * @brief  M8266WiFi HAL操作源文件
  ********************************************************************/
 #include "stdio.h"
 #include "string.h"
@@ -80,9 +80,9 @@ void M8266WIFI_Module_Hardware_Reset(void) // 本例子中这个函数的总共�
  * @brief                                                                     *
  *    Wait M8266WIFI in STA mode connecting to AP/Router and get ip address        *
  *    via SPI API functions in M8266WIFIDrv.lib                                    *
- * @param                                                                   *
- *    1. sta_ip: if success, sta_ip return the ip address achieved                 *
- *    2. max_wait_time_in_s: max timeout to wait in seconds                        *
+
+ *@param sta_ip: if success, sta_ip return the ip address achieved                 *
+ *@param max_wait_time_in_s: max timeout to wait in seconds                        *
  * @return                                                                         *
  *       1 = M8266WIFI module connects AP/router and gets a valid IP               *
  *           from AP/router before the timeout successfully                          *
@@ -119,7 +119,7 @@ u8 M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip(char* sta_ip, u8 max_wait_
  *        if the module in STA or STA+AP mode                                      *
  *    Call this function after Host SPI Interface Initialised                      *
  *    if use SPI interface to config module                                        *
- * @param                                                                   *
+
  *    none                                                                         *
  * @return                                                                         *
  * @return                                                                         *
@@ -531,9 +531,10 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 
 	//-------------------------------------------------------------------------------------
 	// 5.4 If you expect to change the ap info overriding the default loaded from flash on bootup, enable it by "#if 1". Meanwhile, according to Protocols, the length of password should not be smaller than 8 Bytes per WAP or WAP2
-	// 5.4 如果你希望改变模组作为AP热点时AP热点名称和密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
+	// 5.4 如果你希望改变模组作为AP热点时的AP热点名称和密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
 	#if 0	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
 	{
+		//TODO:修改WiFi模块AP模式下的WiFi名和WiFi密码
 		//u8 M8266WIFI_SPI_Config_AP(u8 ssid[13+1], u8 password[13+1], u8 enc, u8 channel, u8 saved, u16* status);
 		if(M8266WIFI_SPI_Config_AP("Anylinkin", "1234567890", 4, 1, 0, &status)==0)  // set to 4=WPA_WPA2_PSK, not saved // 0=OPEN, 1=WEP, 2=WPA_PSK, 3=WPA2_PSK, 4=WPA_WPA2_PSK
 		return 0;
@@ -616,7 +617,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
  * @param local_port 本地端口。如果设定为 0，则由模组会产生一个随机的本地端口。
  * @param remote_addr 远程IP/DNS地址的字符串。e.g. "192.168.1.2" or "www.baidu.com"                       
  * @param remote_port 远程端口号                            
- * @param link_no  服务链接通道的链接号(max 8 links as per multiple link)
+ * @param link_no  服务链接通道的链接号(每个多链接最多8个链路)
  * @return u8 (成功=1,失败=0)
  *************************************************************************************/
 u8 M8266WIFI_Config_Connection_via_SPI(u8 tcp_udp, u16 local_port, char* remote_addr, u16 remote_port, u8 link_no)

@@ -16,8 +16,8 @@
 void M8266WIFI_Test(void)
 {
 	u16 i;	//在开启led显示的for()闪烁时的索引值
-	u16 status = 0;	//链接到配置的数量
-	u8  link_no = 0;	//指向失败状态的指针
+	u16 status = 0;		//链接到配置的数量
+	u8  link_no = 0;	//链路号
 
 	// 单片机主板上的两颗LED灯闪烁4次，用于提示代码执行到这里的方便调试。和模组通信无关，非必须，可略。
 	// 若没有定义宏USE_LED_AND_KEY_FOR_TEST，此处不会被编译进来。
@@ -107,7 +107,7 @@ void M8266WIFI_Test(void)
 
 	// Note:步骤2：创建套接字连接
 	if(M8266WIFI_SPI_Setup_Connection(TEST_CONNECTION_TYPE, TEST_LOCAL_PORT, TEST_REMOTE_ADDR, TEST_REMOTE_PORT, link_no, 20, &status)==0)
-	{		
+	{
 		while(1)
 		{
 			#ifdef USE_LED_AND_KEY_FOR_TEST	 // 如果创建套接字失败，则进入死循环和1Hz闪烁主板上的灯
@@ -442,13 +442,12 @@ void M8266WIFI_Test(void)
 
 	/*	4. 多客户端收发测试：模组作为TCP服务器或UDP，接收来自多个远端节点的数据，并将接收到的数据立刻发送回给对应的发送方	*/
 	#elif (TEST_M8266WIFI_TYPE == 4) // multi-clients transimission test: TCP Server or UDP receive data from multilple sender and echo back the data to the coresponding source
+	{
+		#if ( (TEST_CONNECTION_TYPE!=0) && (TEST_CONNECTION_TYPE!=2) )
+		#error multiple clients test could be supported only when socket connection is UDP or TCP Server
+		#endif
 
-	// 前面3种测试后，若测试模式不是0或2，则报错#error
-	#if ( (TEST_CONNECTION_TYPE!=0) && (TEST_CONNECTION_TYPE!=2) )
-	#error multiple clients test could be supported only when socket connection is UDP or TCP Server
-	#endif
-
-	{	// 还处于(TEST_M8266WIFI_TYPE == 4)的测试块中
+		//BUG: 还处于(TEST_M8266WIFI_TYPE == 4)的测试块中
 		#define  RECV_DATA_MAX_SIZE  2048
 		/*	如果使用较大的数组，记得确保有足够大的系统堆栈来容纳这个大数组变量. 否则，单片机程序可能会因为堆栈溢出越界而跳入“hardware fault"系统异常	*/
 		/*	If using large size of array, ensure system stack is large enough for the array variable。 Or stack over-bound leakage might bring about the mcu into "hardware fault exception" 	*/
@@ -458,7 +457,7 @@ void M8266WIFI_Test(void)
 		u8  remote_ip[4];
 		u16 remote_port;
 		
-		for(i=0; i<RECV_DATA_MAX_SIZE; i++)	{ RecvData[i]=i; }
+		for(i = 0; i < RECV_DATA_MAX_SIZE; i++)	{ RecvData[i]=i; }
 
 		link_no = 0;
 
