@@ -1,25 +1,27 @@
 #include "misc.h"
 #include "delay.h"
-////////////////////////////////////////////////////////////////////////////////// 	 
+
 //如果需要使用OS,则包括下面的头文件即可.
 #if SYSTEM_SUPPORT_OS
 #include "includes.h"					//ucos 使用	  
 #endif
 
-static u8  fac_us=0;							//us延时倍乘数			   
-static u16 fac_ms=0;							//ms延时倍乘数,在ucos下,代表每个节拍的ms数
+static u8  fac_us=0;	//us延时倍乘数			   
+static u16 fac_ms=0;	//ms延时倍乘数,在ucos下,代表每个节拍的ms数
 	
 	
-#if SYSTEM_SUPPORT_OS							//如果SYSTEM_SUPPORT_OS定义了,说明要支持OS了(不限于UCOS).
-//当delay_us/delay_ms需要支持OS的时候需要三个与OS相关的宏定义和函数来支持
-//首先是3个宏定义:
-//    delay_osrunning:用于表示OS当前是否正在运行,以决定是否可以使用相关函数
-//delay_ostickspersec:用于表示OS设定的时钟节拍,delay_init将根据这个参数来初始哈systick
-// delay_osintnesting:用于表示OS中断嵌套级别,因为中断里面不可以调度,delay_ms使用该参数来决定如何运行
-//然后是3个函数:
-//  delay_osschedlock:用于锁定OS任务调度,禁止调度
-//delay_osschedunlock:用于解锁OS任务调度,重新开启调度
-//    delay_ostimedly:用于OS延时,可以引起任务调度.
+#if SYSTEM_SUPPORT_OS	//如果SYSTEM_SUPPORT_OS定义了,说明要支持OS了(不限于UCOS).
+/*
+ * 当delay_us/delay_ms需要支持OS的时候需要三个与OS相关的宏定义和函数来支持
+ * 首先是3个宏定义:
+ *    	delay_osrunning:用于表示OS当前是否正在运行,以决定是否可以使用相关函数
+ *		delay_ostickspersec:用于表示OS设定的时钟节拍,delay_init将根据这个参数来初始哈systick
+ * 		delay_osintnesting:用于表示OS中断嵌套级别,因为中断里面不可以调度,delay_ms使用该参数来决定如何运行
+ * 然后是3个函数:
+ *		delay_osschedlock:用于锁定OS任务调度,禁止调度
+ *		delay_osschedunlock:用于解锁OS任务调度,重新开启调度
+ *	    delay_ostimedly:用于OS延时,可以引起任务调度.
+ **/
 
 //本例程仅作UCOSII和UCOSIII的支持,其他OS,请自行参考着移植
 //支持UCOSII
@@ -97,8 +99,7 @@ void delay_init()
 	fac_us=SystemCoreClock/8000000;				//为系统时钟的1/8  
 #if SYSTEM_SUPPORT_OS  							//如果需要支持OS.
 	reload=SystemCoreClock/8000000;				//每秒钟的计数次数 单位为K	   
-	reload*=1000000/delay_ostickspersec;		//根据delay_ostickspersec设定溢出时间
-												//reload为24位寄存器,最大值:16777216,在72M下,约合1.86s左右	
+	reload*=1000000/delay_ostickspersec;		//根据delay_ostickspersec设定溢出时间。//reload为24位寄存器,最大值:16777216,在72M下,约合1.86s左右	
 	fac_ms=1000/delay_ostickspersec;			//代表OS可以延时的最少单位	   
 
 	SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;   	//开启SYSTICK中断

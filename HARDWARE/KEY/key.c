@@ -59,17 +59,17 @@ void KEY_Init(void)
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 
-  RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_GPIOB, ENABLE);//使能GPIOB时钟
- 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9; //KEY4 KEY3 KEY2对应引脚
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //设置成上拉输入
-  GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIOE2,3,4
-	
-	 
-  //初始化 WK_UP-->GPIOA.0	  下拉输入
-  GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_0;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //PA0设置成输入，默认下拉	  
-  GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA.0
+	RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_GPIOB, ENABLE);//使能GPIOB时钟
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9; //KEY4 KEY3 KEY2对应引脚
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //设置成上拉输入
+	GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIOE2,3,4
+
+		
+	//初始化 WK_UP-->GPIOA.0	  下拉输入
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_0;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //PA0设置成输入，默认下拉	  
+	GPIO_Init(GPIOA, &GPIO_InitStructure);//初始化GPIOA.0
 	
 } 
 //按键处理函数

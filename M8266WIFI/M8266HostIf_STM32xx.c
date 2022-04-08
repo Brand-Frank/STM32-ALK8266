@@ -996,11 +996,11 @@ void M8266HostIf_Set_nRESET_Pin(u8 level)
 	if(level!=0)
 	//GPIO_SetBits(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
 #if   defined(MCU_IS_STM32F1XX)
-		  M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
+	M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX)
-		  M8266WIFI_nRESET_GPIO->BSRRL = M8266WIFI_nRESET_PIN;
+	M8266WIFI_nRESET_GPIO->BSRRL = M8266WIFI_nRESET_PIN;
 #elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
-		  M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
+	M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
 #else
 #error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
 #endif
@@ -1008,11 +1008,11 @@ void M8266HostIf_Set_nRESET_Pin(u8 level)
 	else
 	//GPIO_ResetBits(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
 #if   defined(MCU_IS_STM32F1XX)
-		  M8266WIFI_nRESET_GPIO->BRR   = M8266WIFI_nRESET_PIN;
+	M8266WIFI_nRESET_GPIO->BRR   = M8266WIFI_nRESET_PIN;
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX)
-		  M8266WIFI_nRESET_GPIO->BSRRH = M8266WIFI_nRESET_PIN;
+	M8266WIFI_nRESET_GPIO->BSRRH = M8266WIFI_nRESET_PIN;
 #elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
-		  M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN<<16;
+	M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN<<16;
 #else
 #error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
 #endif
@@ -1076,7 +1076,7 @@ void M8266HostIf_delay_us(u8 nus)
 //
 /***********************************************************************************
  * M8266HostIf_SPI_ReadWriteByte                                                   *
- * @brief                                                                     *
+ * @brief
  *    To write a byte onto the SPI bus from MCU MOSI to the M8266WIFI module       *
  *    and read back a byte from the SPI bus MISO meanwhile                         *
  *    You may update the macros of SPI usage from brd_cfg.h                        *
@@ -1085,7 +1085,7 @@ void M8266HostIf_delay_us(u8 nus)
  ***********************************************************************************/
 u8 M8266HostIf_SPI_ReadWriteByte(u8 TxdByte)
 {
-#if  defined(MCU_IS_STM32F1XX) || defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX)	
+#if defined(MCU_IS_STM32F1XX) || defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX)	
 	while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_TXE) == RESET){} 	//wait SPI TXD Buffer Empty
 	SPI_I2S_SendData(M8266WIFI_INTERFACE_SPI, TxdByte);		//Write the byte to the TXD buffer and then shift out via MOSI
 	while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_RXNE) == RESET){} 	//wait the SPI RXD buffer has received the data from MISO

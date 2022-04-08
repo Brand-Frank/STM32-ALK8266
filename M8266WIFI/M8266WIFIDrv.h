@@ -1,14 +1,18 @@
 /********************************************************************
- *	《主机驱动库文件》
- *	(1) 实现了和模块的基础通信API函数
- *	(2) SPI操作的全部原子功能，例如配网、建立套接字等等
- *	- 手册：《ALK8266WIFI模组SPI接口高速通信使用与集成 主机驱动API函数说明》第4章
- *
- * M8266WIFIDrv.h                                                   *
- * @brief                                                     *
- *     Header file of M8266WIFI Dirver Layer                        *
- ********************************************************************/
-
+ * @file M8266WIFIDrv.h*
+ * @brief Header file of M8266WIFI Dirver Layer
+ *（1）接口初始化的逻辑验证和性能测试
+ *（2）基础 WIFI 操作
+ *（3）UDP/TCP 服务链接的建立、查询与控制
+ *（4）UDP/TCP 数据包的高速收发
+ *（5）智能配网操作
+ *（6）模组上的 WEB 服务器的配置和控制
+ *（7）低功耗支持
+ *（8）模组上的 GPIO
+ *（9）模组基本信息的查询
+ *（10）其他
+	- 手册：《主机驱动API函数说明》第4章
+********************************************************************/
 
 #ifndef _M8266WIFI_DRV_H_
 #define _M8266WIFI_DRV_H_
@@ -66,9 +70,9 @@ u8 M8266HostIf_SPI_Select(uint32_t spi_base_addr, uint32_t spi_clock, u16* statu
  * @brief   <4.1.2> - 写入一个字节然后从M8266WIFI模块的SPI寄存器中读出，检查在时钟和互连下逻辑基础SPI通信（读/写）是否稳定正常
  *  1. To write a byte and then read out from M8266WIFI module SPI registers       *
  *     to check whether the logical fundamentai SPI communication (read/write)     *
- *     is stabilly OK under the clock and interconnection                           *
+ *     is stabilly OK under the clock and interconnection                          *
  *  2. M8266WIFI模块初始化时调用，模块正常运行后不要调用
- * @param byte:  a pointer to the byte read out during test                           *
+ * @param byte:  a pointer to the byte read out during test                        *
  *     - normally the data should be 0x41 during test.                             *
  *       if it is 0x41, this function will return 1 for success as well            *
  *     - If readout other value, it may indicating the fundamental SPI             *
@@ -160,10 +164,11 @@ u8 M8266WIFI_SPI_Set_Opmode(u8 op_mode, u8 saved, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_STA_Connect_Ap                                                    *
- * @brief <4.2.3> - 通过 SPI 接口让模组接入热点（包括路由器）。
+ * @brief <4.2.3> - 通过SPI接口让模组接入热点（包括路由器）。
  * 将SSID和密码通过SPI接口（不依赖于串口）传递给模组，模组在收到这个SSID和密码后，开始连接对应的热点AP或路由器。
  *			ssid - AP接入点的名称(wifi名) | passwd(wifi密码) | 是否保存WiFi名/密码 | 等待连接的最长时间（以秒为单位）
- *			To connect the M8266WIFI STA to an AP or router via SPI                     *
+ *			To connect the M8266WIFI STA to an AP or router via SPI                *
+ * 
  * @param ssid    : the ssid of AP connected to. Max len = 32 Bytes                *
  *                  use NULL if use last connected ssid(without reboot)            *
  * @param password: the password of AP connecting to. Max len = 64 Bytes           *
@@ -238,7 +243,7 @@ u8 M8266WIFI_SPI_Query_STA_Dhcpc(u8* enabled, u16* status);
  * @param enable
  *             = 0,      disable the dhcpc, and module uses static ip address      *
  *             = others, enable  the dhcpc, and module uses ip address via dhcp     *
- *     2  saved                                                                    *
+ * @param saved                                                                    *
  *             = 0,      config not saved, only this time valid                    *
  *             = others, config be saved, and valid upon next boot                 *
  *               kindly reminded that:                                             *
@@ -283,31 +288,24 @@ typedef enum{
 
 /***********************************************************************************
  * M8266WIFI_SPI_Get_STA_IP_Addr                                                   *
- * @brief  <4.2.9> - 通过 SPI 接口获取模组的 STA 模式 IP 地址
- *     To get ip address of M8266WIFI STA via SPI                                  *
+ * @brief  <4.2.9> - 通过SPI接口获取模组的STA模式IP地址。
 
- * @param sta_ip :  the sta ip address returned if successful                      * // 成功返回的 sta ip 地址
+ * @param sta_ip :  连接成功时，返回的STA模式IP地址。
  *                  "0.0.0.0" returned if in AP-only mode or ip not achieved       * // “0.0.0.0”如果在 AP-only 模式下返回或ip未达到
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return (u8)	success=1, has errors=0
  ***********************************************************************************/
 u8 M8266WIFI_SPI_Get_STA_IP_Addr(char* sta_ip , u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI                                   *
- * @brief                                                                   *
- *     To get current AP info (SSID and RSSI) M8266WIFI STA connected to           *
+ * @brief <4.2.10> - 获取M8266WIFI STA模式时连接到的当前AP信息（SSID 和 RSSI）
 
  * @param ssid    : the current SSID returned which m8266wifi sta connected to     *
  * @param rssi    : the rssi of current connected ssid. 31 if error                *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。 如果不需要返回状态码，可以使用 NULL。
+ * @return (u8)	success=1, has errors=0
  ***********************************************************************************/
-// <4.2.10> - 获取M8266WIFI STA 连接到的当前 AP 信息（SSID 和 RSSI）
 u8 M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI(char* ssid, s8* rssi, u16* status);
 
 
@@ -315,79 +313,58 @@ u8 M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI(char* ssid, s8* rssi, u16* stat
 //		STA模式  |  扫描信号<4.2.11>-<4.2.14>  |  配置STA主机<4.2.15>-<4.2.17>
 //====================================================================================
 
-/***********************************************************************************
- * M8266WIFI_SPI_STA_ScanSignals                                                   *
- * @brief                                                                   *
- *     To perform a scanning procedure, the scanned signals sorted by rssi         *
-
- * @param scanned_signals : the return signals after scanning                      * // 扫描后的返回信号
- * @param max_signals     : max counts of signals to scan                          * // 要扫描的最大信号数
- * @param channel         : channel to scan.                                       * // 扫描的频段
- *                          - 0xFF, to scan all channles with default parameters   *
- *                            i.e. with below parameters overrided                 *
- *                             . show_hidden = 1, show hidden signals              *
- *                             . passive_not_active_scan = 0, active scan          *
- *                             . channel_scan_time_ms_max= 120                     *
- *                             . channel_scan_time_ms_min=  60                     *
- *                          - 0x00, to scan all channles with paramters specified  *
- *                               by this function                                  *
- *                          - others, to scan a channel with paramters specified   *
- *                               by this function                                  *
- *     4. show_hidden     : scan hidden signals or not                             * // 是否扫描隐藏信号
- *                          = 1,      scan hidden signals                          *
- *                          = others, not scan hidden signals                      *
- *     5. passive_not_active_scan                                                  *
- *                        : passive or active scan                                 *
- *                          = 1,      passive scan                                 * // 被动扫描
- *                          = others, active  scan                                 * // 主动扫描
- *     6. channel_scan_time_ms_max: max time in miliseconds for each channel scan  *
- *                          - if =0, 120ms will be used                            *
- *     7. channel_scan_time_ms_min: min time in miliseconds for each channel scan  *
- *                                                                                 *
- *     8. timeout_in_s    : time out in seconds                                    *
- *     9. status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- *                  Upon failure with status!=NULL:                                *
- *                  errcode(LSB)=0x3E, if start scan failed                        *
- *                              =0x27, if last scan result has failure             *
- *                              =0x28, if scan timeout                             *
- *                              =0x29, other failure                               *
- * @return value:                                                                  *
- *    !=0, signal numbers scanned succesfully                                      *
- *     =0, has error(s)                                                            *
- ***********************************************************************************/
-// <4.2.11> - 通过 SPI 接口扫描周边的热点信号	
-//		(1) 为了执行扫描程序，扫描的信号按 rssi 排序
-//		(2) 适用于主机接口模式2（只使用 SPI 接口不使用串口）下
-//		(3) 当模组处于 AP-Only 模式时，该函数会返回错误
 struct ScannedSigs{
 	char ssid[32];	// 无线网络的名称
 	u8   channel;	// 信道 = 频段 | (信道容量bps 信道带宽kHz) | (同一信道上的设备越多，WiFi信号的强度越弱)
 	u8   authmode;	// 授权模式
 	s8   rssi;
 };
+/***********************************************************************************
+ * M8266WIFI_SPI_STA_ScanSignals                                                   *
+ * @brief  <4.2.11> - 通过 SPI 接口扫描周边的热点信号(为了执行扫描程序，扫描的信号按 rssi 排序)
+ *					Note:当模组处于 AP-Only 模式时，该函数会返回错误
+ * @param scanned_signals 返回扫描得到的热点信息，按照信号强度排序
+ * @param max_signals     指定所需要返回的信号最大个数。如果周边的可扫描的热点信号个数超过这里所指定的最大个数，那么将只返回信号最强的前max_signals个热点信号
+ * @param channel         指定所扫描的信道(频段)
+ *                - 如果使用 0xFF，则表示将不使用函数里传递的下面的参数，而会使用如下缺省的参数数值进行扫描
+ *                   . show_hidden = 1, 将扫描全部信号包括隐藏的信号
+ *                   . passive_not_active_scan = 0, 将执行 active 扫描
+ *                   . channel_scan_time_ms_max= 120，扫描每个信道的最大时间不超过 120ms
+ *                   . channel_scan_time_ms_min=  60，扫描每个信道的最短时间不少于 60ms
+ *                - 0x00, 将使用函数里传递的下面的参数进行扫描
+ *                - others, 将使用函数里传递的下面的参数进行扫描
+ * @param show_hidden  指定是否包含对隐藏信号的扫描。（= 1，扫描隐藏信号；= others，不扫描隐藏信号）
+ * @param passive_not_active_scan  指定执行 active 扫描还是 passive 扫描
+ *                          = 1,      passive scan(被动扫描)
+ *                          = others, active  scan(主动扫描)
+ * @param channel_scan_time_ms_max 设定扫描是在单个频道上执行扫描的最大时间，单位ms(如果设置为0，则会设置为缺省的120ms。)
+ * @param channel_scan_time_ms_min 设定扫描是在单个频道上执行扫描的最小时间，单位ms(如果设置为 0，则会设置为缺省的60ms)                                                                             
+ * @param timeout_in_s    执行整个扫描操作的最大超时时间，单位是秒。
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。                       *
+ *                  Upon failure with status!=NULL:                                *
+ *                  errcode(LSB)=0x3E, if start scan failed                        *
+ *                              =0x27, if last scan result has failure             *
+ *                              =0x28, if scan timeout                             *
+ *                              =0x29, other failure                               *
+ * @return (u8) !=0, 执行成功，返回扫描得到的信号个数；=0, 出错了。
+ ***********************************************************************************/
 u8 M8266WIFI_SPI_STA_ScanSignals(struct ScannedSigs scanned_signals[], u8 max_signals, u8 channel, u8 show_hidden, u8 passive_not_active_scan, u32 channel_scan_time_ms_max, u32 channel_scan_time_ms_min, u8 timeout_in_s, u16* status);
 // 下面的宏用于与1.1.8-Q之前的旧API的代码兼容。 建议使用M8266WIFI_SPI_STA_ScanSignals而非M8266WIFI_SPI_STA_Scan_Signals。
 #define M8266WIFI_SPI_STA_Scan_Signals(scanned_signals, max_signals, channel, timeout_in_s, status) 	\
-        M8266WIFI_SPI_STA_ScanSignals(scanned_signals,  max_signals , channel, 0, 0, 0, 0, timeout_in_s, status)
+        M8266WIFI_SPI_STA_ScanSignals(scanned_signals, max_signals , channel, 0, 0, 0, 0, timeout_in_s, status)
 
 /***********************************************************************************
  * M8266WIFI_SPI_STA_Fetch_Last_Scanned_Signals                                    *
- * @brief <4.2.12> - 读取上次所扫描但是没有被单片机主机所读取走的信号列表，
- * 					适用于主机接口模式 2（只使用 SPI 接口不使用串口）下。                                                                  *
- *					(To Fetch the signals last scanned if not fetched before)
- * @param scanned_signals : the return signals after scanning                      *
- * @param max_signals     : max counts of signals to scan                          *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @brief <4.2.12> - 读取上次所扫描但是没有被单片机主机所读取走的信号列表。(To Fetch the signals last scanned if not fetched before)
+ * @param scanned_signals : 返回扫描得到的热点信息
+ * @param max_signals :指定所需要返回的信号最大个数。如果周边的可扫描的热点信号个数超过这里所指定的最大个数，那么将只返回信号最强的前max_signals个热点信号。
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  *                  Upon failure with status!=NULL:                                *
  *                  errcode(LSB)=0x25, if not start scan before                    *
  *                              =0x26, if currently module is scanning             *
  *                              =0x27, if last scan result has failure             *
  *                              =0x29, other failure                               *
- * @return value:                                                                  *
- *    !=0, signal numbers fetched successfully                                      *
- *     =0, has error(s)                                                            *
+ * @return !=0，执行成功，返回扫描得到的信号个数。|	=0，出错了
  ***********************************************************************************/
 u8 M8266WIFI_SPI_STA_Fetch_Last_Scanned_Signals(struct ScannedSigs scanned_signals[], u8 max_signals, u16* status);
 
@@ -447,44 +424,17 @@ u8 M8266WIFI_SPI_STA_ScanSignalsByBssid(char target_bssid[17+1], u8 channel, s8*
 u8 M8266WIFI_SPI_Get_STA_Hostname(char hostname[28+1], u16* status);
 
 /**********************************************************************************
- * M8266WIFI_SPI_Set_STA_Hostname								                                  *
- * @brief																																	*
+ * M8266WIFI_SPI_Set_STA_Hostname
+ * @brief	<4.2.16> - 设置 STA 的主机名，如果模块处于 AP-Only 模式，将返回失败
  *     To set up the hostname of the STA via SPI                                  *
  *     Note: Will return failure if module in AP-Only Mode                        *
  * @param																																	*
- * @param hostname 		: the hostame to setup		       														*
- * @param status  		: pointer to the status upon failure												*
- *                      如果不需要返回状态码，可以使用 NULL。                  * 
- * @return value:																																	*
- *     =1, success																																*
- *     =0, has error(s)																														*
+ * @param hostname 		: the hostame to setup*
+ * @param status  		: pointer to the status upon failure.如果不需要返回状态码，可以使用 NULL。 
+ * @return u8 (1=success, 0=has errors)
  **********************************************************************************/
-// <4.2.16> - 设置 STA 的主机名，如果模块处于 AP-Only 模式，将返回失败
 u8 M8266WIFI_SPI_Set_STA_Hostname(char hostname[28+1], u16* status);
 
-/***********************************************************************************
- * M8266WIFI_SPI_Query_STA_Param                                                   *
- * @brief                                                                   *
- *     To query a parameter of the module STA via SPI                              *
-
- * @param param_type : the param type to set, enum of STA_PARAM_TYPE      		   *
- *                      STA_PARAM_TYPE_SSID					= 0,                   *
- *                      STA_PARAM_TYPE_PASSWORD			= 1,                       *
- *                      STA_PARAM_TYPE_CHANNEL			= 2,                       *
- *                      STA_PARAM_TYPE_HOSTNAME			= 3,                       *
- *						STA_PARAM_TYPE_USE_BSSID		= 4,					   *
- *                      STA_PARAM_TYPE_BSSID			= 5,					   *
- *						STA_PARAM_TYPE_RSSI				= 6,					   *
- *						STA_PARAM_TYPE_IP_ADDR			= 7,					   *
- *                      STA_PARAM_TYPE_GATEWAY_ADDR		= 8,                       *
- *                      STA_PARAM_TYPE_NETMASK_ADDR		= 9,                       * 
- *                     	STA_PARAM_TYPE_MAC				= 11,                      *
- * @param param      : pointer to the param value returned                         *
- * @param param_len  : pointer to length the param, unit in bytes                  * // 指向参数长度的指针，以字节为单位
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。 (如果不需要返回状态码，可以使用 NULL。)
- * @return u8 (1=success, 0=has errors)
- ***********************************************************************************/
-// <4.2.17> - 查询模块 STA 的参数
 typedef enum{
 	STA_PARAM_TYPE_SSID				= 0,
 	STA_PARAM_TYPE_PASSWORD			= 1,
@@ -499,6 +449,16 @@ typedef enum{
 	STA_PARAM_TYPE_DHCPC			= 10,
 	STA_PARAM_TYPE_MAC				= 11,
 }STA_PARAM_TYPE;
+/***********************************************************************************
+ * M8266WIFI_SPI_Query_STA_Param                                                   *
+ * @brief <4.2.17> - 查询模块 STA 的参数(To query a parameter of the module STA via SPI)
+
+ * @param param_type : the param type to set, enum of STA_PARAM_TYPE      		   *
+ * @param param      : pointer to the param value returned                         *
+ * @param param_len  指向参数长度的指针，以字节为单位
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。 (如果不需要返回状态码，可以使用 NULL。)
+ * @return u8 (1=success, 0=has errors)
+ ***********************************************************************************/
 u8 M8266WIFI_SPI_Query_STA_Param(STA_PARAM_TYPE param_type, u8* param, u8* param_len, u16* status);
 
 
@@ -509,12 +469,10 @@ u8 M8266WIFI_SPI_Query_STA_Param(STA_PARAM_TYPE param_type, u8* param, u8* param
 
 /***********************************************************************************
  * M8266WIFI_SPI_Config_AP                                                         *
- * @brief                                                                   *
- *     To config the module AP via SPI                                             *
-
- * @param ssid    : the ssid string of AP, Max Size=27 Bytes                       * // AP的ssid字符串，Max Size=27 Bytes
- * @param password: the password string of AP, Max Size=27 Bytes                   * // AP的密码字符串，Max Size=27 Bytes
- * @param enc     : authorisation mode, valid value is 0~4                         * // 授权方式，有效值为0~4
+ * @brief <4.2.18>-通过 SPI 接口配置模组热点 AP 模式下的 AP 参数。
+ * @param ssid    : AP的ssid字符串，Max Size=27 Bytes
+ * @param password: AP的密码字符串，Max Size=27 Bytes
+ * @param enc     : 需要设置的 AP 认证方式，有效值为0~4
  *                  = 0, OPEN                                                      *
  *                  = 1, WEP                                                       *
  *                  = 2, WPA_PSK                                                   *
@@ -533,104 +491,65 @@ u8 M8266WIFI_SPI_Query_STA_Param(STA_PARAM_TYPE param_type, u8* param, u8* param
  *                  如果不需要返回状态码，可以使用 NULL。                       *
  * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
-// <4.2.18> - 配置模块的AP模式
 u8 M8266WIFI_SPI_Config_AP(u8 ssid[27+1], u8 password[27+1], u8 enc, u8 channel, u8 saved, u16* status);
 
+//指定查询的参数类型
+typedef enum{
+	AP_PARAM_TYPE_SSID 				= 0,	/*	返回当前热点的 SSID 字符串- 参数最长 27 字节	*/
+	AP_PARAM_TYPE_PASSWORD 			= 1,	/*	返回当前热点的 密码 字符串- 参数最长 27 字节	*/
+	AP_PARAM_TYPE_CHANNEL 			= 2,	/*	返回当前热点的 频道 - 参数长度 1 个字节	*/
+	AP_PARAM_TYPE_AUTHMODE 			= 3,	/*	返回当前热点 加密方式- 参数长度1个字节(=0，OPEN开放式；=1，WEB；=2，WPA_PSK；=3，WPA2_PSK；=4，WPA_WPA2_PSK)	*/
+	AP_PARAM_TYPE_SSID_HIDDEN 		= 4,	/*	返回当前热点 是否掩藏- 参数长度 1 个字节（=0，不隐藏；=1，隐藏）	*/
+	AP_PARAM_TYPE_MAX_CONNECT 		= 5,	/*	返回当前热点支持的接入数- 参数长度 1 个字节- 取值范围 1~8*/
+	AP_PARAM_TYPE_BEACON_INTERVAL 	= 6,	/*	返回当前热点的beacon值 - 参数长度 2个字节，小结尾模式，即Param[0]=高字节。参数取值范围100-60000，单位ms。- 缺省值为100ms*/
+	AP_PARAM_TYPE_IP_ADDR			= 7,	/*	返回当前热点的 IP 地址- 参数是IP地址的字符串形式，比如"192.168.5.1"- 缺省值为"192.168.4.1"*/
+	AP_PARAM_TYPE_GATEWAY_ADDR	  	= 8,	/*	返回当前热点的网关地址- 参数是IP地址的字符串形式，比如 ”192.168.5.1”- 缺省值为 “192.168.4.1”	*/
+	AP_PARAM_TYPE_NETMASK_ADDR	  	= 9,	/*	返回当前热点的子网掩码- 参数是IP地址的字符串形式，比如 ”255.255.255.0”- 缺省值为 “255.255.255.0”	*/
+	AP_PARAM_TYPE_PHY_MODE			= 10,	/*	返回当前热点的 PHY 模式- 参数长度为 1 个字节 (= 1，802.11b; = 2，802.11g; = 3，802.11n)	*/
+	AP_PARAM_TYPE_MAC				= 11	/*	返回当前热点的物理地址	*/
+} AP_PARAM_TYPE;
 /***********************************************************************************
  * M8266WIFI_SPI_Query_AP_Param                                                    *
- * @brief                                                                   *
- *     To query a parameter of the module AP via SPI                               *
-
- * @param param_type : the param type to set, enum of AP_PARAM_TYPE       		   *
- *                      AP_PARAM_TYPE_SSID 				= 0,					   *
- *                      AP_PARAM_TYPE_PASSWORD 			= 1,					   *
- *                      AP_PARAM_TYPE_CHANNEL 			= 2,					   *
- *                      AP_PARAM_TYPE_AUTHMODE 			= 3,					   *
- *                      AP_PARAM_TYPE_SSID_HIDDEN 		= 4,					   *
- *                      AP_PARAM_TYPE_MAX_CONNECT 		= 5,					   *
- *                      AP_PARAM_TYPE_BEACON_INTERVAL 	= 6,					   *
- *                      AP_PARAM_TYPE_IP_ADDR			= 7,					   *
- *                      AP_PARAM_TYPE_GATEWAY_ADDR	  	= 8,                       *
- *                      AP_PARAM_TYPE_NETMASK_ADDR	  	= 9,                       *
- *                      AP_PARAM_TYPE_PHY_MODE			= 10,					   *
- *                      AP_PARAM_TYPE_MAC				= 11					   *
- * @param param      : pointer to the param value returned                         *
- * @param param_len  : pointer to length the param, unit in bytes                  *
- *     4. status     : 失败时返回错误码（LSB）和状态（MSB）的指针。*
- *                     如果不需要返回状态码，可以使用 NULL。                    *
+ * @brief  <4.2.19> - 通过 SPI 接口查询模组热点 AP 模式下的 AP 参数
+ * @param param_type : 指定查询的参数类型(SSID/PASSWORD/CHANNEL/AUTHMODE/SSID_HIDDEN/MAX_CONNECT/BEACON_INTERVAL/IP_ADDR/GATEWAY_ADDR/NETMASK_ADDR/PHY_MODE/MAC)
+ * @param param      : 指针，指向返回的参数
+ * @param param_len  : 指针，指向返回的参数长度，单位字节
+ * @param status     : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
-// <4.2.19> - 查询模块AP的参数
-typedef enum{
-	AP_PARAM_TYPE_SSID 				= 0,
-	AP_PARAM_TYPE_PASSWORD 			= 1,
-	AP_PARAM_TYPE_CHANNEL 			= 2,
-	AP_PARAM_TYPE_AUTHMODE 			= 3,
-	AP_PARAM_TYPE_SSID_HIDDEN 		= 4,
-	AP_PARAM_TYPE_MAX_CONNECT 		= 5,
-	AP_PARAM_TYPE_BEACON_INTERVAL 	= 6,	
-	AP_PARAM_TYPE_IP_ADDR			= 7,
-	AP_PARAM_TYPE_GATEWAY_ADDR	  	= 8,
-	AP_PARAM_TYPE_NETMASK_ADDR	  	= 9,
-	AP_PARAM_TYPE_PHY_MODE			= 10,
-	AP_PARAM_TYPE_MAC				= 11
-} AP_PARAM_TYPE;
 u8 M8266WIFI_SPI_Query_AP_Param(AP_PARAM_TYPE param_type, u8* param, u8* param_len, u16* status);
 
 
 /***********************************************************************************
  * M8266WIFI_SPI_Config_AP_Param                                                   *
- * @brief                                                                   *
- *     To config a parameter of the module AP via SPI                              *
-
- * @param param_type : the param type to set, enum of AP_PARAM_TYPE       		   *
- *                      AP_PARAM_TYPE_SSID 				= 0,				  	   *
- *                      AP_PARAM_TYPE_PASSWORD 			= 1,				  	   *
- *                      AP_PARAM_TYPE_CHANNEL 			= 2,				  	   *
- *                      AP_PARAM_TYPE_AUTHMODE 			= 3,				  	   *
- *                      AP_PARAM_TYPE_SSID_HIDDEN 		= 4,					   *
- *                      AP_PARAM_TYPE_MAX_CONNECT 		= 5,					   *
- *                      AP_PARAM_TYPE_BEACON_INTERVAL 	= 6,					   *
- *                      AP_PARAM_TYPE_IP_ADDR			= 7						   *
- *                      AP_PARAM_TYPE_GATEWAY_ADDR	  	= 8,                       *
- *                      AP_PARAM_TYPE_NETMASK_ADDR	  	= 9,                       * 
+ * @brief  <4.2.20> - 通过SPI接口配置模组热点AP模式下的单个AP参数
+ * @param param_type : 指定配置的参数类型(AP_PARAM_TYPE) 
  * @param param      : pointer to the param value                                  *
  * @param param_len  : length the param, unit in bytes                             *
- *     4. saved   : to save the param into flash or not								*
- *        =0,       not saved, i.e. after reboot setting will restore to previous  *
- *        =others,  saved, i.e. after reboot, the saved setting will be loaded     *
- *                  PLEASE DO NOT CALL IT EACH TIME OF BOOTUP WITH SAVED != 0      *
- *                  OR, THE FLASH ON MODULE MIGHT GO TO FAILURE DUE TO LIFT CYCLE  *
- *                  OF WRITE                                                       *
- *     5. status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param saved   : 是否保存该配置到flash
+ *        =0， 不保存到模组上的 FLASH 里，下次启动时无效；
+ *        =others,  =1， 保存到模组上的 FLASH 里，下次启动时依然有效。
+ * @todo  调用本函数时，如果选定了保存，会对模块上的 FLASH 进行写操作。所以，建议不要在单片机初始化阶段执行保存，否则每次启动都可能导致一次写FLASH 操作，这可能会影响 FLASH 的寿命。保存只需要执行一次就够了。
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
-// <4.2.20> - 通过SPI 配置 模块AP的参数
 u8 M8266WIFI_SPI_Config_AP_Param(AP_PARAM_TYPE param_type, u8* param, u8 param_len, u8 saved, u16* status);
 
-/***********************************************************************************
- * M8266WIFI_SPI_AP_List_STAs_Info                                                 *
- * @brief                                                                   *
- *     To list the STAs connected to the moduel AP                                 *
-
- * @param sta_list   : the array of struct CONNECTED_STATION_INFO                  *
- *                     which will store the returned station infos                 *
- * @param stas       : sum of return stations                                      *
- * @param max_states : max number of stations to returned                          *
- *     4. status     : 失败时返回错误码（LSB）和状态（MSB）的指针。*
- *                     如果不需要返回状态码，可以使用 NULL。                    *
- *                      - LSB = 0x2A: module does not include ap mode              *
-*                             = 0x2C: other failures                               *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
- ***********************************************************************************/
 struct CONNECTED_STATION_INFO{
 	u8 bssid[6];
 	u8 ipaddr[4];
 };
-// <4.2.21> - 列出连接到模块AP的STA站点
+/***********************************************************************************
+ * M8266WIFI_SPI_AP_List_STAs_Info                                                 *
+ * @brief <4.2.21> - 通过 SPI 接口列举当前连接着本模组热点的所有 STA 信息。
+ * @param sta_list   : the array of struct CONNECTED_STATION_INFO which will store the returned station infos                 *
+ * @param stas       : 返回当前实际连接着本模组热点的 STA 的个数。
+ * @param max_states : 指定所需要返回的最大个数。
+ * @param status     : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。         
+ *                      - LSB = 0x2A: module does not include ap mode
+*                             = 0x2C: other failures                 
+ * @return =0，出错了；=1，执行成功
+ ***********************************************************************************/
 u8 M8266WIFI_SPI_AP_List_STAs_Info(struct CONNECTED_STATION_INFO sta_list[], u8* stas, u8 max_stas, u16* status);
 
 
@@ -641,20 +560,15 @@ u8 M8266WIFI_SPI_AP_List_STAs_Info(struct CONNECTED_STATION_INFO sta_list[], u8*
 
 /***********************************************************************************
  * M8266WIFI_SPI_AP_Permit_Block_A_STA                                             *
- * @brief                                                                   *
- *     To permit or block the connection of a STA by STA's BSSID/MAC               *
-
- * @param block_not_permit: permit or block the conecttion of the sta              *
- *                  = 0, if to permit                                              *
- *                  = others, if to block                                          *
- * @param bssid   : the bssid of the sta to be removed                             *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @brief  <4.2.22> -配置本模组热点的允许/禁止某个 STA 的接入(通过 STA 的 BSSID/MAC 允许或阻止 STA 的连接)
+ * @param block_not_permit: permit or block the connection of the sta
+ *                  = 0, if to permit
+ *                  = others, if to block
+ * @param bssid   : the bssid of the sta to be removed
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。
+ *                  如果不需要返回状态码，可以使用 NULL。
+ * @return =0，出错了；=1，执行成功
  ***********************************************************************************/
-// <4.2.22> - 通过 STA 的 BSSID/MAC 允许或阻止 STA 的连接
 u8 M8266WIFI_SPI_AP_Permit_Block_A_STA(u8 block_not_enable, u8 bssid[6], u16* status);
 
 typedef enum{
@@ -662,11 +576,9 @@ typedef enum{
 	AP_MAC_LIST_PERIMIT_BLOCK_TYPE_PERMIT 	= 1,	
 	AP_MAC_LIST_PERIMIT_BLOCK_TYPE_BLOCK 	= 2,	
 } AP_MAC_LIST_PERIMIT_BLOCK_TYPE;
-
-
 /***********************************************************************************
  * M8266WIFI_SPI_AP_Config_PermitBlock_List                                        *
- * @brief                                                                   *
+ * @brief  <4.2.23> - 配置本模组热点的全部允许/禁止接入的 STA 列表
  *     To config the Permitted or Blocked MAC list to the AP                       *
 
  * @param block_permit_type   : the list type                                      *
@@ -675,33 +587,24 @@ typedef enum{
  *               = others,  neither block nor permit                               *
  * @param mac_list            : The permitted/blocked mac list to be configured    *
  * @param mac_list_count      : The size of the permitted/blocked mac list         *
- *     4. status    : 失败时返回错误码（LSB）和状态（MSB）的指针。 *
- *                    如果不需要返回状态码，可以使用 NULL。                     *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param status    : 失败时返回错误码（LSB）和状态（MSB）的指针。 如果不需要返回状态码，可以使用 NULL。
+ * @return =0，出错了；=1，执行成功
  ***********************************************************************************/
-// <4.2.23> - 为 AP 配置 允许的或阻止的 MAC 列表
 u8 M8266WIFI_SPI_AP_Config_PermitBlock_List(AP_MAC_LIST_PERIMIT_BLOCK_TYPE block_permit_type, u8 mac_list[][6], u8 mac_list_count, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_AP_Query_PermitBlock_List                                         *
- * @brief                                                                   *
- *     To query the Permitted or Blocked MAC list to the AP                       *
-
+ * @brief <4.2.24> - 查询 AP允许或禁止接入的 MAC 列表(To query the Permitted or Blocked MAC list to the AP)
  * @param block_permit_type   : pointer to the list type                           *
  *               = 1,  the list is permitted list                                  *
  *               = 2,  the list is blocked list                                    *
  *               = others,  neither block nor permit                               *
  * @param mac_list            : The permitted/blocked mac list                     *
  * @param mac_list_count      : The pointer to return the size of mac list         *
- *     4. status    : 失败时返回错误码（LSB）和状态（MSB）的指针。 *
- *                    如果不需要返回状态码，可以使用 NULL。                     *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param status    : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ * @return =0，出错了；=1，执行成功                                                           *
  ***********************************************************************************/
-// <4.2.24> - 查询 AP允许的或阻止的 MAC 列表
+// 
 u8 M8266WIFI_SPI_AP_Query_PermitBlock_List(AP_MAC_LIST_PERIMIT_BLOCK_TYPE *block_permit_type, u8 mac_list[][6], u8* mac_list_count, u16* status);
 
 
@@ -716,7 +619,7 @@ u8 M8266WIFI_SPI_AP_Query_PermitBlock_List(AP_MAC_LIST_PERIMIT_BLOCK_TYPE *block
 
 
 //====================================================================================
-//				UDP 或 TCP 服务/链接的建立与查询控制
+//				(3) UDP 或 TCP 服务/链接的建立与查询控制
 //====================================================================================		
 //----------------------------------------------------------------------------------
 //   3. APIs related to Module WIFI TCP/UDP Connection Operations via SPI        //
@@ -746,25 +649,16 @@ u8 M8266WIFI_SPI_AP_Query_PermitBlock_List(AP_MAC_LIST_PERIMIT_BLOCK_TYPE *block
 
 /***********************************************************************************
  * M8266WIFI_SPI_Setup_Connection                                                  *
- * @brief                                                                   *
- *     To setup a UDP connection or an TCP client connection via SPI               *
+ * @brief   建立一个TCP客户端连接/UDP连接
 
- * @param tcp_udp      : connection type                                           *
- *                       =0, udp                                                   *
- *                       =1, tcp client                                            *
- *                       =2, tcp server                                            *
- * @param local_port   : local_port specified                                      *
- *                       =0, M8266WIFI module will generate a random local port    *
- *                      !=0, the local_port specified here will be used            *
- * @param remote_addr  : string of ip or dns address of the remote connection      *
- *     4. remote_port  : port of remote connection                                 *
- *     5. link_no      : the number of link used for multiple links. Max 4         *
- *     6. timeout_in_s : the max timeout connecting to a remote, unit in seconds   *
- *     7. status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param tcp_udp      : 建立 tcp 或 udp 服务链接的类型(=0, udp；=1, tcp client；=2, tcp server)
+ * @param local_port   : 本地端口。如果设定为 0，则由模组会产生一个随机的本地端口。如果!=0，则设定为指定的本地端口。
+ * @param remote_addr  : 远端（目标）地址，可以是 IP 形式，也可以是域名形式。
+ * @param remote_port  : 远端（目标）端口
+ * @param link_no      : 建立服务链接所占用的链接通道，数值为 0-3。
+ * @param timeout_in_s : 建立服务链接的超时时间，单位是秒。
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
 #define SOCKET_TYPE_UDP 									0
 #define SOCKET_TYPE_TCP_CLIENT 								1
@@ -777,10 +671,10 @@ u8 M8266WIFI_SPI_Setup_Connection(u8 tcp_udp, u16 local_port, char* remote_addr,
 																	
 /***********************************************************************************
  * M8266WIFI_SPI_Disconnect_Connection                                             *
- * @brief                                                                   *
+ * @brief <4.3.2> - 断开模组上的一个服务链接，断开的链接用链接号标识
  *     To disconnect the connections on M8266WIFI TCP server via SPI               *
 
- * @param link_no : the number of link to be deleted/disconnected                  *
+ * @param link_no : 需要断开的服务链接通道的链接号,数值为 0-3		                  *
  * @param status  : pointer to the status upon failure                             *
  * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
  *                  如果不需要返回状态码，可以使用 NULL。                       *
@@ -792,16 +686,13 @@ u8 M8266WIFI_SPI_Setup_Connection(u8 tcp_udp, u16 local_port, char* remote_addr,
  *                            - UDP, using M8266WIFI_SPI_Delete_Connection, or     *
  *                            - TCP Server without clients connecting to, or       *
  *                            - TCP Client already disconnected                    *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
-// <4.3.2> - 通过 SPI 断开 M8266WIFI (TCP 服务器)上的连接
 u8 M8266WIFI_SPI_Disconnect_Connection(u8 link_no, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Delete_Connection                                                 *
- * @brief                                                                   *
+ * @brief   <4.3.3> - 通过 SPI 断开和删除 M8266WIFI 上的(客户端)连接
  *     To disconnect and delete a client connection on M8266WIFI via SPI           *
 
  * @param link_no : the number of link to be deleted/disconnected                  *
@@ -812,53 +703,46 @@ u8 M8266WIFI_SPI_Disconnect_Connection(u8 link_no, u16* status);
  *                    = 0x54, delete a socket not present                          *
  *                    = 0x55, delete a socket when busy in receiving               *
  *                    = 0x56, delete a socket when busy in reading                 *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
-// <4.3.3> - 通过 SPI 断开和删除 M8266WIFI 上的(客户端)连接
  u8 M8266WIFI_SPI_Delete_Connection(u8 link_no, u16* status);
 
 /***********************************************************************************
- * M8266WIFI_SPI_Query_Connection                                                  *
- * @brief    通过 SPI 查询 M8266WIFI 的连接信息							   *
- *     To Query the information about a connection on M8266WIFI via SPI            *
- *     including connection type, state, local port, remote_ip and port, etc       *
+ * M8266WIFI_SPI_Query_Connection                                              
+ * @brief <4.3.4> - 通过SPI查询某个服务链接的信息，包括是否依然链接等信息。
+ *     To Query the information about a connection on M8266WIFI via SPI        
+ *     including connection type, state, local port, remote_ip and port, etc   
 
- * @param link_no 				: the number of link to query                            *
- * @param connection_type	:	pointer to the connection type returned                *
- *                          If you don't expected this value returned, use NULL    *
- *                          = 0, udp                                               *
- *                          = 1, tcp Client                                        *
- *                          = 2, tcp Server                                        *
- *                          = others, invalid                                      *
- *                          如果不需要返回状态码，可以使用 NULL。               *
- * @param connection_state:	pointer to the connection state returned               *
- *                          = 0, invalid                                           *
- *                          = 1, wait                                              *
- *                          = 2, listen                                            *
- *                          = 3, connect                                           *
- *                          = 4, write                                             *
- *                          = 5, read                                              *
- *                          = 6, close                                             *
- *                          = others, invalid                                      *
- *                          如果不需要返回状态码，可以使用 NULL。               *
- *     4. local_port      : pointer to the local port returned                     *
- *                          如果不需要返回状态码，可以使用 NULL。               *
- *     5. remote_ip       : pointer to the remote ip returned,                     *
- *                          - String like "192.168.4.2"                            *
- *                          - 如果不需要返回状态码，可以使用 NULL。             *
- *     6. remote_port     : pointer to the remote port returned                    *
- *                          如果不需要返回状态码，可以使用 NULL。               *
- *     7. status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param link_no 				: the number of link to query
+ * @param connection_type	:	pointer to the connection type returned        
+ *                          If you don't expected this value returned, use NULL
+ *                          = 0, udp                                
+ *                          = 1, tcp Client                         
+ *                          = 2, tcp Server                         
+ *                          = others, invalid                       
+ *                          如果不需要返回状态码，可以使用 NULL。   
+ * @param connection_state:	pointer to the connection state returned
+ *                          = 0, invalid                            
+ *                          = 1, wait                               
+ *                          = 2, listen                             
+ *                          = 3, connect                            
+ *                          = 4, write                              
+ *                          = 5, read                               
+ *                          = 6, close                              
+ *                          = others, invalid                       
+ *                          如果不需要返回状态码，可以使用 NULL。   
+ * @param local_port      : pointer to the local port returned      
+ *                          如果不需要返回状态码，可以使用 NULL。   
+ * @param remote_ip       : pointer to the remote ip returned,      
+ *                          - String like "192.168.4.2"             
+ *                          - 如果不需要返回状态码，可以使用 NULL。 
+ * @param remote_port     : pointer to the remote port returned     
+ *                          如果不需要返回状态码，可以使用 NULL。   
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   
+ *                  如果不需要返回状态码，可以使用 NULL。           
+ * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
-// <4.3.4> - 通过 SPI 查询 M8266WIFI 的连接信息
-u8 M8266WIFI_SPI_Query_Connection(u8 link_no, u8* connection_type, u8* connection_state,
-												u16* local_port, u8* remote_ip, u16* remote_port, u16* status);
+u8 M8266WIFI_SPI_Query_Connection(u8 link_no, u8* connection_type, u8* connection_state, u16* local_port, u8* remote_ip, u16* remote_port, u16* status);
 typedef enum{
 	ANYLINKIN_WIFI_LINK_CONNECTION_STATE_INVALID  =	0,
 	ANYLINKIN_WIFI_LINK_CONNECTION_STATE_WAIT	  =	1,
@@ -871,68 +755,51 @@ typedef enum{
 
 /***********************************************************************************
  * M8266WIFI_SPI_Op_Multicuast_Group                                               *
- * @brief                                                                   *
- *     To join or leave a multicuast groupo AP via SPI                             *
- *     The module should be in STA or STA+AP mode and have connected               *
- *     to a routers before call this API                                           *
+ * @brief <4.3.5> - 通过 SPI 接口来让模组加入/建立或离开一个组播群。
+ *     To join or leave a multicuast group AP via SPI                             *
+ *     The module should be in STA or STA+AP mode and have connected to a routers before call this API                                           *
 
- * @param join_not_leave : join or leave the multicuast groud       				       *
- *        =1, join                                          											 *
- *        =0, leave                                          											 *
- * @param multicust_group_ip : the ip address of a multicuast groud       				 *
- *        e.g. "224.6.6.6".                                                        *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param join_not_leave : join or leave the multicuast group
+ *        =1, join
+ *        =0, leave
+ * @param multicust_group_ip : the ip address of a multicuast group. e.g. "224.6.6.6".
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
-// <4.3.5> - 
 u8 M8266WIFI_SPI_Op_Multicuast_Group(u8 join_not_leave, char multicust_group_ip[15+1], u16* status);
 
 /************************************************************************************
  * M8266WIFI_SPI_Set_TcpServer_Auto_Discon_Timeout                              	*
- * @brief																	*
+ * @brief	<4.3.6> - 通过 SPI 接口设置 TCP 服务器自动断开某个链接是超时时间。
  *     To set up the tcp server's auto-disconnection timeout time 					*
  *     when no communication from clients via SPI									*
- * @param																	*
  * @param link_no 		: the number of link to setup								*
  * @param timeout_in_s: the timeout in seconds the tcp server will auto 			*
  *                      disconnect the connection when no communication				*
  *										  from clients								*
  * @param status  		: pointer to the status upon failure						*
- * @return value:																	*
- *     =1, success																	*
- *     =0, has error(s)																*
+ * @return =1，执行成功；=0，出错了
  **********************************************************************************/
-// <4.3.6> - 
 u8 M8266WIFI_SPI_Set_TcpServer_Auto_Discon_Timeout(u8 link_no, u16 timeout_in_s, u16* status);
 
 /**********************************************************************************
  * M8266WIFI_SPI_Query_Max_Clients_Allowed_To_A_Tcp_Server                        *
- * @brief																																	*
- *     To query the max tcp clients could be accepted simutenoeously to           *
- *     this tcp server                                           					  			*
- * @param																																	*
+ * @brief <4.3.7> - 通过 SPI 接口查询 TCP 服务器允许链接的最大客户端数量。
+ *     To query the max tcp clients could be accepted simultaneously to this tcp server                                           					  			*
  * @param server_link_no: the number of tcp server link to query		  						*
  * @param max_allowed   : pointer to max allowed                                  *
  * @param status    		: pointer to the status upon failure											*
- * @return value:																																	*
- *     =1, success																																*
- *     =0, has error(s)																														*
+ * @return =1，执行成功；=0，出错了
  **********************************************************************************/
-// <4.3.7> - 
 u8 M8266WIFI_SPI_Query_Max_Clients_Allowed_To_A_Tcp_Server(u8 server_link_no, u8* max_allowed, u16* status);
  
 /**********************************************************************************
  * M8266WIFI_SPI_Config_Max_Clients_Allowed_To_A_Tcp_Server                       *
- * @brief <4.3.8> - To Config the max tcp clients could be accepted simultaneously to this tcp server                                           					  			*
+ * @brief <4.3.8> - 通过 SPI 接口配置 TCP 服务器允许同时链接的最大客户端数量。
  * @param server_link_no: the number of tcp server link to config		  						*
  * @param max_allowed   : max allowed, range 1~15                                 *
  * @param status    		: pointer to the status upon failure											*
- * @return value:																																	*
- *     =1, success																																*
- *     =0, has error(s)																														*
+ * @return =1，执行成功；=0，出错了										*
  **********************************************************************************/
 u8 M8266WIFI_SPI_Config_Max_Clients_Allowed_To_A_Tcp_Server(u8 server_link_no, u8 max_allowed, u16* status);
 
@@ -943,7 +810,7 @@ typedef struct {
  }ClientInfo;
 /***********************************************************************************
  * M8266WIFI_SPI_List_Clients_On_A_TCP_Server                                      *
- * @brief  <4.3.9> - To Query the information of clients on a link of tcp server of M8266WIFI    *
+ * @brief  <4.3.9> - 通过 SPI 接口查询本地 TCP 服务器上所连接的 TCP 客户端列表。(To Query the information of clients on a link of tcp server of M8266WIFI)
  * @param server_link_no  : the link number of a tcp server to query               *
  * @param clients        	:	pointer to sum of clients listed                       *
  *                          value range: 0~15                                      *
@@ -951,9 +818,7 @@ typedef struct {
  * @param status          : pointer to return errcode(LSB) and status(MSB)         *
  *                          upon exception(s) of error(s)                          *
  *                          如果不需要返回状态码，可以使用 NULL。               *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
 u8 M8266WIFI_SPI_List_Clients_On_A_TCP_Server(u8 server_link_no, u8* clients, ClientInfo RemoteClients[], u16* status);
 
@@ -1074,10 +939,10 @@ u8 M8266WIFI_SPI_STA_Get_HostIP_by_HostName(char* hostIp, char* hostName, u8 tim
 
 
 //====================================================================================
-//					TCP/UDP数据包的收发
+//					(4) TCP/UDP数据包的收发
 //====================================================================================
 //----------------------------------------------------------------------------------
-//   4. APIs releated to TCP/UDP Packets TXD and RXD via SPI                      //
+//   4. APIs related to TCP/UDP Packets TXD and RXD via SPI                      //
 //       - M8266WIFI_SPI_Send_Data                                       4.4.1    //
 //       - M8266WIFI_SPI_Send_BlockData                                  4.4.2    //
 //       - M8266WIFI_SPI_Send_Udp_Data                                   4.4.3    //
@@ -1090,51 +955,47 @@ u8 M8266WIFI_SPI_STA_Get_HostIP_by_HostName(char* hostIp, char* hostName, u8 tim
 
 /***********************************************************************************
  * M8266WIFI_SPI_Send_Data                                                         *
- * @brief                                                                   *
- *     To send Data to WIFI via M8266 module SPI                                   *
- * .Parameters                                                                     *
- * @param Data   : the pointer to the Data buffer to be sent                       *
- * @param len    : the length the Data buffer to be sent                           *
- * @param link_no: the wifi service link number sent to                            *
- *     4. pointer to return errcode(LSB) and status(MSB) when error encountered    *
- *        use NULL if you don't expect errcode and status                          *
- *        errcode:                                                                 *
- *            = 0x10: timeout when wait Module spi rxd Buffer ready                *
- *            = 0x11: timeout when wait wifi to send data                          *
- *            = 0x12: Module Sending Buffer full                                   *
- *              Module Buffer full defined as                                      *
- *              - If total size of packets waiting to send via WIFI > 5*1024, or   *
- *              - If counts     of packets waiting to send via WIFI > 8            *
- *            = 0x13: Wrong link_no used                                           *
- *            = 0x14: connection by link_no not present                            *
- *            = 0x15: connection by link_no closed                                 *
- *            = 0x18: No clients connecting to this TCP server                     *
- *            = 0x1D: connection is being established, please wait                 *
- *            = 0x1F: Other errors                                                 *
- * @return value:                                                                  *
- *     Actually length that has been sent successfully                             *
+ * @brief <4.4.1> - 通过 SPI 向远端网络节点发送数据。
+ * 		单片机主机调用这个函数通过SPI接口向模组写入的数据，会被模组转化成为TCP/UDP包，发送到远端（目标）。
+ * @param Data   : the pointer to the Data buffer to be sent
+ * @param len    : the length the Data buffer to be sent
+ * @param link_no: the wifi service link number sent to
+ * @param pointer to return errcode(LSB) and status(MSB) when error encountered 
+ *        use NULL if you don't expect errcode and status
+ *        errcode:                                                              
+ *            = 0x10: timeout when wait Module spi rxd Buffer ready             
+ *            = 0x11: timeout when wait wifi to send data                       
+ *            = 0x12: Module Sending Buffer full                                
+ *              Module Buffer full defined as                                   
+ *              - If total size of packets waiting to send via WIFI > 5*1024, or
+ *              - If counts     of packets waiting to send via WIFI > 8         
+ *            = 0x13: Wrong link_no used                                        
+ *            = 0x14: connection by link_no not present                         
+ *            = 0x15: connection by link_no closed                              
+ *            = 0x18: No clients connecting to this TCP server                  
+ *            = 0x1D: connection is being established, please wait              
+ *            = 0x1F: Other errors                                              
+ * @return value: Actually length that has been sent successfully                          
  ***********************************************************************************/
-// <4.4.1> - 
 u16 M8266WIFI_SPI_Send_Data(u8 Data[], u16 Data_len, u8 link_no, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Send_BlockData                                                    *
- * @brief                                                                   *
+ * @brief <4.4.2> - 
  *     To send Block Data to WIFI via M8266 module SPI                             *
- * .Parameters                                                                     *
  * @param Data			  : the pointer to the Data buffer to be sent              *
  * @param Data_len		  : the length the Data buffer to be sent                  *
  * @param link_no		  : the wifi service link number sent to                   *
- *     4. max_loops       : max loops to repeat send if blocked or failed during  *
+ * @param max_loops       : max loops to repeat send if blocked or failed during  *
  *                          transimission to avoid dead-loops, use 1000 as default *
- *     4. max_loops       : max loops to repeat send if blocked or failed during  *
- *     5. remote_ip       : remote_ip like "192.168.1.101" to differentiate        *
+ * @param max_loops       : max loops to repeat send if blocked or failed during  *
+ * @param remote_ip       : remote_ip like "192.168.1.101" to differentiate        *
  *                          multiple remote e.g. multiple clients.                 *
  *                          USE NULL if only one remote(e.g. wifi module is a tcp  *
  *                          Client) or send to latest access/connected remote      *
- *     6. remote_port     : remote_ip like 4321 if remote_ip!=NULL                 *
+ * @param remote_port     : remote_ip like 4321 if remote_ip!=NULL                 *
  *                          use 0 if remote_ip==NULL                               *
- *     7. pointer to return errcode(LSB) and status(MSB) when error encountered    *
+ * @param pointer to return errcode(LSB) and status(MSB) when error encountered    *
  *        use NULL if you don't expect errcode and status                          *
  *        errcode:                                                                 *
  *            = 0x13: Wrong link_no used                                           *
@@ -1143,28 +1004,25 @@ u16 M8266WIFI_SPI_Send_Data(u8 Data[], u16 Data_len, u8 link_no, u16* status);
  *            = 0x18: No clients connecting to this TCP server                     *
  *            = 0x1E: too many errors encountered during sending can not fixed      *
  *            = 0x1F: Other errors                                                 *
- * @return value:                                                                  *
- *     Actually length that has been sent successfully                             *
+ * @return value: Actually length that has been sent successfully
  ***********************************************************************************/
-// <4.4.2> - 
 u32 M8266WIFI_SPI_Send_BlockData(u8 Data[], u32 Data_len, u16 max_loops, u8 link_no, char* remote_ip, u16 remote_port, u16* status);															
 //Below macro is used to be compatible with code with lagacy APIs. Recommended to Use M8266WIFI_SPI_Send_BlockData other than M8266WIFI_SPI_Send_Data_Block.
 #define M8266WIFI_SPI_Send_Data_Block(Data, Data_len, tcp_packet_size, link_no, status)  M8266WIFI_SPI_Send_BlockData(Data[], Data_len, 10000, link_no, NULL, 0, status)
 
 /***********************************************************************************
  * M8266WIFI_SPI_Send_Udp_Data                                                     *
- * @brief                                                                   *
+ * @brief  <4.4.3> - 
  *     .To send Udp Data to WIFI via M8266 module SPI especially suitable for      *
  *      those UDP transmission requiring frequently changing destination           *
  *     .If the UDP transission does not need update dest, please use               *
  *       M8266WIFI_SPI_Send_Data above for better efficiency                       *
- * .Parameters                                                                     *
  * @param Data   : the pointer to the Data buffer to be sent                       *
  * @param len    : the length the Data buffer to be sent                           *
  * @param link_no: the wifi service link number sent to                            *
- *     4. udp_dest_addr: string of ip or dns address of the remote connection      *
- *     5. udp_dest_port: port of remote connection                                 *
- *     6. pointer to return errcode(LSB) and status(MSB) when error encountered    *
+ * @param udp_dest_addr: string of ip or dns address of the remote connection      *
+ * @param udp_dest_port: port of remote connection                                 *
+ * @param pointer to return errcode(LSB) and status(MSB) when error encountered    *
  *        use NULL if you don't expect errcode and status                          *
  *        errcode:                                                                 *
  *            = 0x10: timeout when wait Module spi rxd Buffer ready                *
@@ -1179,26 +1037,23 @@ u32 M8266WIFI_SPI_Send_BlockData(u8 Data[], u32 Data_len, u16 max_loops, u8 link
  *            = 0x19: this link is not a UDP service                               *
  *            = 0x1A: try to point to a new udp dest but failed                    *
  *            = 0x1F: Other errors                                                 *
- * @return value:                                                                  *
- *     Actually length that has been sent successfully                             *
+ * @return value: Actually length that has been sent successfully*
  ***********************************************************************************/
-// <4.4.3> - 
 u16 M8266WIFI_SPI_Send_Udp_Data(u8 Data[], u16 Data_len, u8 link_no, char* udp_dest_addr, u16 udp_dest_port, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Send_Data_to_TcpClient                                             *
- * @brief                                                                   *
+ * @brief   <4.4.4> - 
  *     .To send tcp Data to a tcp client from this  M8266 tcp server               *
  *       especially suitable for scenarios of multiple clients for                 *
  *     .If the tcp server has only one client, please use                          *
  *       M8266WIFI_SPI_Send_Data above for better efficiency                       *
- * .Parameters                                                                     *
  * @param Data   : the pointer to the Data buffer to be sent                       *
  * @param len    : the length the Data buffer to be sent                           *
  * @param link_no: the tcp server link number sent to                              *
- *     4. tcp_client_dest_addr: string of ip or dns address of the remote client   *
- *     5. tcp_client_dest_port: port of remote client                              *
- *     6. pointer to return errcode(LSB) and status(MSB) when error encountered    *
+ * @param tcp_client_dest_addr: string of ip or dns address of the remote client   *
+ * @param tcp_client_dest_port: port of remote client                              *
+ * @param pointer to return errcode(LSB) and status(MSB) when error encountered    *
  *        use NULL if you don't expect errcode and status                          *
  *        errcode:                                                                 *
  *            = 0x10: timeout when wait Module spi rxd Buffer ready                *
@@ -1214,95 +1069,72 @@ u16 M8266WIFI_SPI_Send_Udp_Data(u8 Data[], u16 Data_len, u8 link_no, char* udp_d
  *            = 0x1A: try to point to a client but failed. no this client          *
  *            = 0x1D: connection is being established, please wait                 *
  *            = 0x1F: Other errors                                                 *
- * @return value:                                                                  *
- *     Actually length that has been sent successfully                             *
+ * @return value: Actually length that has been sent successfully
  ***********************************************************************************/
-// <4.4.4> - 
 u16 M8266WIFI_SPI_Send_Data_to_TcpClient(u8 Data[], u16 Data_len, u8 server_link_no, char* tcp_client_dest_addr, u16 tcp_client_dest_port, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Has_DataReceived                                                  *
- * @brief                                                                   *
+ * @brief <4.4.5> - 
  *     To check whether the M8266WIFI module has received data awaiting master     *
  *     to fetch away                                                               *
- * .Parameters                                                                     *
- *     None                                                                        *
+ * @param None
  * @return value:                                                                  *
  *     1, if the M8266WIFI module has received data from wifi                      *
  *     0, if the M8266WIFI module has not received data from wifi                  *
  ***********************************************************************************/
-// <4.4.5> - 
 u8 M8266WIFI_SPI_Has_DataReceived(void);
 
 /***********************************************************************************
  * M8266WIFI_SPI_RcvData                                                           *
- * @brief                                                                   *
- *     To receive the wifi data from M8266WIFI                                     *
- * .Parameters                                                                     *
+ * @brief  <4.4.6> - To receive the wifi data from M8266WIFI
  * @param Data           - the buffer to contained the received Data               *
  * @param max_len        - the max length of Data to fetch                        *
  * @param max_wait_in_ms - the max timeout to wait for the Data                    *
- *     4. link_no        - pointer to return the link_no that current wifi Data    *
- *                         come from. 如果不需要返回状态码，可以使用 NULL。     *
- *     5. status         - pointer to return errcode(LSB) and status(MSB)          *
- *                         when error encountered. Use NULL if you don't expect    *
- *                         it returned                                             *
- *        errcode:                                                                 *
- *            = 0x20: timeout when wait module has received data via WIFI          *
- *            = 0x22: no date in Module wifi receive buffer                        *
- *            = 0x23: Read data from the left of last packets in Module wifi       *
- *                    receive buffer                                               *
- *            = 0x24: The packet in the Module wifi receive buffer is larger       *
- *                    in size than the max_len specified here. Only part of        *
- *                    the packet received                                          *
- *            = 0x2F: Other errors                                                 *
- * @return value:                                                                  *
- *     - the size of larger packet first in the Module wifi receive buffer         *
- *       if errcode = 0x24                                                         *
- *     - the actual length of wifi packet received successfully                    *
- *       if others                                                                 *
+ * @param link_no        - pointer to return the link_no that current wifi Data come from. 如果不需要返回状态码，可以使用 NULL。     *
+ * @param status         - pointer to return errcode(LSB) and status(MSB)      
+ *                         when error encountered. Use NULL if you don't expect it returned                                         
+ *        errcode:                                                             
+ *            = 0x20: timeout when wait module has received data via WIFI      
+ *            = 0x22: no date in Module wifi receive buffer                    
+ *            = 0x23: Read data from the left of last packets in Module wifi receive buffer
+ *            = 0x24: The packet in the Module wifi receive buffer is larger in size than
+ *                    the max_len specified here. Only part of the packet received
+ *            = 0x2F: Other errors                                             
+ * @return value:                                                              
+ *     - the size of larger packet first in the Module wifi receive buffer if errcode = 0x24
+ *     - the actual length of wifi packet received successfully if others
  ***********************************************************************************/
-// <4.4.6> - 
 u16 M8266WIFI_SPI_RecvData(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u8* link_no, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_RcvData_ex                                                        *
- * @brief                                                                   *
+ * @brief <4.4.7> - 
  *     To receive the wifi data from M8266WIFI, extended                           *
  *     Compared with M8266WIFI_SPI_RcvData(), this function also return the        *
  *     source remote_ip and remote_port meanwhile                                  *
- * .Parameters                                                                     *
  * @param Data           - the buffer to contained the received Data               *
  * @param max_len        - the max length of Data to fetch                        *
  * @param max_wait_in_ms - the max timeout to wait for the Data                    *
- *     4. link_no        - pointer to return the link_no that current wifi Data    *
- *                         come from. 如果不需要返回状态码，可以使用 NULL。     *
- *     5. remote_ip      - array[4] to return the remote_ip that current wifi Data *
- *                         come from. 如果不需要返回状态码，可以使用 NULL。     *
- *                         e.g. if remote ip is "192.168.4.2", then remote_ip will *
- *                         return with remote_ip[0]=192, remote_ip[1]=168,         *
- *                         remote_ip[2]=4, and remote_ip[3]=2                      *
- *     6. remote_ip      - pointer to return the remote_port that current wifi Data*
- *                         come from. 如果不需要返回状态码，可以使用 NULL。     *
- *     7. status         - pointer to return errcode(LSB) and status(MSB)          *
- *                         when error encountered. Use NULL if you don't expect    *
- *                         it returned                                             *
- *        errcode:                                                                 *
- *            = 0x20: timeout when wait module has received data via WIFI          *
- *            = 0x22: no date in Module wifi receive buffer                        *
- *            = 0x23: Read data from the left of last packets in Module wifi       *
- *                    receive buffer                                               *
- *            = 0x24: The packet in the Module wifi receive buffer is larger       *
- *                    in size than the max_len specified here. Only part of        *
- *                    the packet received                                          *
- *            = 0x2F: Other errors                                                 *
- * @return value:                                                                  *
- *     - the size of larger packet first in the Module wifi receive buffer         *
- *       if errcode = 0x24                                                         *
- *     - the actual length of wifi packet received successfully                    *
- *       if others                                                                 *
+ * @param link_no        - pointer to return the link_no that current wifi Data come from. 如果不需要返回状态码，可以使用 NULL。
+ * @param remote_ip      - array[4] to return the remote_ip that current wifi Data come from. 如果不需要返回状态码，可以使用 NULL。
+ *                         e.g. if remote ip is "192.168.4.2", then remote_ip will
+ *                         return with remote_ip[0]=192, remote_ip[1]=168, remote_ip[2]=4, and remote_ip[3]=2
+ * @param remote_ip      - pointer to return the remote_port that current wifi Data come from. 如果不需要返回状态码，可以使用 NULL。     
+ * @param status         - pointer to return errcode(LSB) and status(MSB) when error encountered. Use NULL if you don't expect it returned                                          
+ *        errcode:                                                              
+ *            = 0x20: timeout when wait module has received data via WIFI       
+ *            = 0x22: no date in Module wifi receive buffer                     
+ *            = 0x23: Read data from the left of last packets in Module wifi    
+ *                    receive buffer                                            
+ *            = 0x24: The packet in the Module wifi receive buffer is larger    
+ *                    in size than the max_len specified here. Only part of     
+ *                    the packet received                                       
+ *            = 0x2F: Other errors                                              
+ * @return value:                                                               
+ *     - the size of larger packet first in the Module wifi receive buffer if errcode = 0x24
+ *     - the actual length of wifi packet received successfully if others
  ***********************************************************************************/
-// <4.4.7> - 
 u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u8* link_no, u8 remote_ip[4], u16* remote_port, u16* status);
 
 
@@ -1314,7 +1146,7 @@ u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u
 
 
 //====================================================================================
-//					智能配网
+//				(5)	智能配网
 //====================================================================================
 //----------------------------------------------------------------------------------
 //   5. APIs related to Smart Config via SPI                                     //
@@ -1325,7 +1157,7 @@ u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u
 
 /***********************************************************************************
  * M8266WIFI_SPI_DoModuleSmartConfig                                               *
- * @brief                                                                   *
+ * @brief  <4.5.1> - 通过 SPI 接口使模组进入“智能配网模式”，此时模组将开始等待配网
  *     To perform an SmartConfig procedure to wifi module via SPI                  *
 
  * @param timeout_in_s  : timeout for an smartconfig procedure                     *
@@ -1337,7 +1169,7 @@ u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u
  *                    = 0, if type is ESPTOUCH                                     *
  *                    = 1, if type is AIRKISS                                      *
  *                    =-1, if invalid or unknown                                   *
- *     4. smartconfig_phone_ip :                                                   *
+ * @param smartconfig_phone_ip :                                                   *
  *                   - the ip of the phone or smart device                         *
  *                     that runs smartconfig app to broadcast ssid/password        *
  *                     e.g. "192.168.143.121"                                      *
@@ -1345,7 +1177,7 @@ u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u
  *                   - use NULL if you don't expect this param returned            *
  *                   - Airkiss does not response ip addrsss of smart devices,      *
  *                     so smartconfig_phone_ip[0] will be 0 if airkiss             *
- *     5. status  : pointer to return errcode upon failures                        *
+ * @param status  : pointer to return errcode upon failures                        *
  *                  如果不需要返回状态码，可以使用 NULL。                       *
  *                  == 0x0000  success                                             *
  *                  != 0x0000  failed                                              *
@@ -1354,11 +1186,8 @@ u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u
  *                          - failed to find channel           if MSB(8) = 0x00    *
  *                          - failed to get ssid/password      if MSB(8) = 0x01    *
  *                          - failed to connect the ap/routers if MSB(8) = 0x02/03 *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return =1, success; =0, has error(s)
  ***********************************************************************************/
-// <4.5.1> - 通过 SPI 接口使模组进入“智能配网模式”，此时模组将开始等待配网
 u8 M8266WIFI_SPI_DoModuleSmartConfig(u8 timeout_in_s, u8 saved, u8* smartconfig_type, char smartconfig_phone_ip[15+1], u16* status);
 
 //Macro for Compatibility with those MCU codes using previous version of API which will save SSID and passwords
@@ -1377,9 +1206,7 @@ u8 M8266WIFI_SPI_DoModuleSmartConfig(u8 timeout_in_s, u8 saved, u8* smartconfig_
  *                  = others, save                                                 *
  * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
  *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return =1, success; =0, has error(s)
  ***********************************************************************************/
 u8 M8266WIFI_SPI_StartModuleSmartConfig(u8 en, u8 saved, u16* status);
 
@@ -1415,7 +1242,7 @@ u8 M8266WIFI_SPI_StartWpsConfig(u8 en, u16* status);
 
 
 //====================================================================================
-//					Web配网(STA+AP模式下)
+//				(6)	Web配网(STA+AP模式下)
 //====================================================================================
 //   6. APIs related to on-module web operations via SPI                         //
 //       - M8266WIFI_SPI_Set_WebServer                                   4.6.1    //
@@ -1423,7 +1250,8 @@ u8 M8266WIFI_SPI_StartWpsConfig(u8 en, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Set_WebServer                                                     *
- * @brief 设置web服务器，支持单片机主机对内嵌 WEB 进行开启、关闭或设置端口号。(To set the web server via SPI, with option save or not)
+ * @brief <4.6.1> - 设置web服务器，支持单片机主机对内嵌 WEB 进行开启、关闭或设置端口号。
+ * 		  (To set the web server via SPI, with option save or not)
  * @param open_not_shutdown  : to start or shutdown the local web server           *
  *            =0,      to shutdown the webserver if it is running                  *
  *            =others, to (re-)start the webserver                                 *
@@ -1455,7 +1283,7 @@ u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, 
 
 /***********************************************************************************
  * M8266WIFI_SPI_QueryDns                                             *
- * @brief                                                                   *
+ * @brief <4.6.2> - 查询DNS服务器信息
  *     To query the dns server info via SPI                                        *
  * @param start_on_boot   : pointer to whether start on boot                       *
  *        use NULL if you don't expect it                                          *
@@ -1463,17 +1291,13 @@ u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, 
  *        use NULL if you don't expect it                                          *
  * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
  *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
-// 查询DNS服务器信息
 u8 M8266WIFI_SPI_QueryDns(u8* start_on_bootup, u8* current_running, u16* status);
  
 /***********************************************************************************
  * M8266WIFI_SPI_StartDns                                                          *
- * @brief                                                                   *
- *     To start or shutdown the local DNS on module                                *
+ * @brief <4.6.3> - 启动/关闭模块的本地DNS(To start or shutdown the local DNS on module)
  * @param start_not_shutdown  : to start or shutdown the local dns server          *
  *            =0,      to shutdown the webserver if it is running                  *
  *            =others, to (re-)start the webserver                                 *
@@ -1487,14 +1311,10 @@ u8 M8266WIFI_SPI_QueryDns(u8* start_on_bootup, u8* current_running, u16* status)
  *              And after reboot, the settings will restore to previous default    *
  *            - when called with saved=1, the API will write the FL:ASH on module. *
  *                  PLEASE DO NOT CALL IT EACH TIME OF BOOTUP WITH SAVED != 0      *
- *                  OR, THE FLASH ON MODULE MIGHT GO TO FAILURE DUE TO LIFT CYCLE  *
- *                  OF WRITE                                                       *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ *                  OR, THE FLASH ON MODULE MIGHT GO TO FAILURE DUE TO LIFT CYCLE OF WRITE
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
-
-// 启动/关闭模块的本地DNS
 u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
 
 
@@ -1509,9 +1329,9 @@ u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
 
 
 //====================================================================================
-//					低功耗操作
+//				(7)	低功耗操作
 //====================================================================================
-//----------------------------------------------------------------------------------
+//		通过模组的发射功率进行调节和设置模组进入休眠模式，来支持模组的低功耗应用
 //   7. APIs related to module low power operations via SPI                      //
 //       - M8266WIFI_SPI_Set_Tx_Max_Power                                4.7.1    //
 //       - M8266WIFI_SPI_Sleep_Module                                    4.7.2    //
@@ -1519,8 +1339,7 @@ u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Set_Tx_Max_Power                                                  *
- * @brief                                                                   *
- *     To set the RF Tx Max Power via SPI command                                  *
+ * @brief <4.7.1> - 通过 SPI 接口配置模组 WIFI 发射时的最大功率(To set the RF Tx Max Power via SPI command)
  * @param tx_max_power : the max tx power in 0.25 dBm.                             *
  *                       range = 0~82, i.e. 0~20.5dBm, or 1mW~112mW                *
  *                               tx_max_power  dBm        P/mW                     *
@@ -1542,7 +1361,7 @@ u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
 
 /**********************************************************************************
  * M8266WIFI_SPI_Sleep_Module                                                      *
- * @brief 通过SPI接口配置模组进入深度休眠模式
+ * @brief <4.7.2> - 通过SPI接口配置模组进入深度休眠模式
  * 
  * @param sleep_type  休眠类型(深度休眠=3, 0/1/2/其它 保留)
  * @param time_to_wakeup_in_ms 休眠多久后退出休眠，单位是毫秒。
@@ -1560,35 +1379,27 @@ u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
   
 /***********************************************************************************
  * M8266WIFI_SPI_Reset_Module                                                      *
- * @brief                                                                   *
- *     To reset the M8266WIFI module at once via SPI command                       *
+ * @brief <4.7.3> - To reset the M8266WIFI module at once via SPI command
  * @param reset_type : the type of reset                                           *
  *        = 0 :  to perform a software reset to the module,                        *
  *               boot-mode of last power on will be kept                           *
  *        = 1 :  to perform a hardware reset via chip_EN                           *
  *               boot-mode will be sampled again.                                  *
- * Note:                                                                           *
- * @param after a call of this function, normally the module should be re init     *
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ * @note after a call of this function, normally the module should be re init     *
  *        via functions such as M8266WIFI_Module_Init_Via_SPI(), and the connection*
  *        should be re-established as well.                                        *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @return u8(1=success,0=has error(s))
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Reset_Module(u8 reset_type, u16* status);
 
 /**********************************************************************************
  * M8266WIFI_SPI_Restore_Module_to_Default                                         *
- * @brief                                                                   *
- *     To restore the ALK8266WIFI module to factory default and then reboot module *
- *     via SPI command.                                                            *
+ * @brief <4.7.4> - To restore the ALK8266WIFI module to factory default and then reboot module via SPI command.
  *     After calling this API, all the saved paramters will be restored to         *
  *     manufacture default and module will be in AP+STA mode                       *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
- * @return value:                                                                  *
- *     =1, success                                                                 *
- *     =0, has error(s)                                                            *
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ * @return u8(1=success,0=has error(s))
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Restore_Module_to_Default(u16* status);
 
@@ -1605,7 +1416,7 @@ u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
 
 
 //====================================================================================
-//					模组上的GPIO资源
+//				(8)	模组上的GPIO资源
 //====================================================================================
 //----------------------------------------------------------------------------------
 //   8. APIs related to module resources operations via SPI                      //
@@ -1856,7 +1667,7 @@ typedef enum{
 
 
 //====================================================================================
-//					模块信息查询
+//				(9)	模块信息查询
 //====================================================================================
 //----------------------------------------------------------------------------------
 //   9. APIs related to module information					                      //
@@ -1907,7 +1718,7 @@ char* M8266WIFI_SPI_Get_Driver_Info(char* drv_info);
 
 
 //====================================================================================
-//					其他可通过 SPI 接口的设置、查询、和控制功能
+//			(10)	其他可通过 SPI 接口的设置、查询、和控制功能
 //====================================================================================
 //----------------------------------------------------------------------------------
 //   Below specifications are required by the M8266WIFI Driver library            //
