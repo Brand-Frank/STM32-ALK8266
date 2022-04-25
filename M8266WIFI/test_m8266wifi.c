@@ -51,7 +51,7 @@ void M8266WIFI_Test(void)
 	// 测试时WiFi模块的工作方式
 	#define TEST_M8266WIFI_TYPE 1 //1=向外不停地发送数据 | 2=不停地接收数据 | 3=将接收到的数据发送给发送方 | 4=多客户端测试
 
-	//测试时WiFi模块的角色(TCD/UDP-Server/Client)
+	// 测试时WiFi模块的角色(TCD/UDP-Server/Client)
 	#define TEST_CONNECTION_TYPE 2	// 0 = WIFI模组做UDP | 1 = WIFI模组做TCP客户端 | 2 = WIFI模组做TCP服务器
 
 	/*	local port (套接字的本地端口)	*/

@@ -958,10 +958,9 @@ u8 M8266WIFI_SPI_STA_Get_HostIP_by_HostName(char* hostIp, char* hostName, u8 tim
  * @brief <4.4.1> - 通过 SPI 向远端网络节点发送数据。
  * 		单片机主机调用这个函数通过SPI接口向模组写入的数据，会被模组转化成为TCP/UDP包，发送到远端（目标）。
  * @param Data   : the pointer to the Data buffer to be sent
- * @param len    : the length the Data buffer to be sent
+ * @param Data_len  : the length the Data buffer to be sent
  * @param link_no: the wifi service link number sent to
- * @param pointer to return errcode(LSB) and status(MSB) when error encountered 
- *        use NULL if you don't expect errcode and status
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  *        errcode:                                                              
  *            = 0x10: timeout when wait Module spi rxd Buffer ready             
  *            = 0x11: timeout when wait wifi to send data                       
@@ -995,8 +994,7 @@ u16 M8266WIFI_SPI_Send_Data(u8 Data[], u16 Data_len, u8 link_no, u16* status);
  *                          Client) or send to latest access/connected remote      *
  * @param remote_port     : remote_ip like 4321 if remote_ip!=NULL                 *
  *                          use 0 if remote_ip==NULL                               *
- * @param pointer to return errcode(LSB) and status(MSB) when error encountered    *
- *        use NULL if you don't expect errcode and status                          *
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  *        errcode:                                                                 *
  *            = 0x13: Wrong link_no used                                           *
  *            = 0x14: connection by link_no not present                            *
@@ -1018,13 +1016,12 @@ u32 M8266WIFI_SPI_Send_BlockData(u8 Data[], u32 Data_len, u16 max_loops, u8 link
  *     .If the UDP transission does not need update dest, please use               *
  *       M8266WIFI_SPI_Send_Data above for better efficiency                       *
  * @param Data   : the pointer to the Data buffer to be sent                       *
- * @param len    : the length the Data buffer to be sent                           *
+ * @param Data_len    : the length the Data buffer to be sent                           *
  * @param link_no: the wifi service link number sent to                            *
  * @param udp_dest_addr: string of ip or dns address of the remote connection      *
  * @param udp_dest_port: port of remote connection                                 *
- * @param pointer to return errcode(LSB) and status(MSB) when error encountered    *
- *        use NULL if you don't expect errcode and status                          *
- *        errcode:                                                                 *
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ *        错误码:                                                                 *
  *            = 0x10: timeout when wait Module spi rxd Buffer ready                *
  *            = 0x11: timeout when wait wifi to send data                          *
  *            = 0x12: Module Sending Buffer full                                   *
@@ -1049,13 +1046,12 @@ u16 M8266WIFI_SPI_Send_Udp_Data(u8 Data[], u16 Data_len, u8 link_no, char* udp_d
  *     .If the tcp server has only one client, please use                          *
  *       M8266WIFI_SPI_Send_Data above for better efficiency                       *
  * @param Data   : the pointer to the Data buffer to be sent                       *
- * @param len    : the length the Data buffer to be sent                           *
- * @param link_no: the tcp server link number sent to                              *
+ * @param Data_len    : the length the Data buffer to be sent                           *
+ * @param server_link_no: the tcp server link number sent to                              *
  * @param tcp_client_dest_addr: string of ip or dns address of the remote client   *
  * @param tcp_client_dest_port: port of remote client                              *
- * @param pointer to return errcode(LSB) and status(MSB) when error encountered    *
- *        use NULL if you don't expect errcode and status                          *
- *        errcode:                                                                 *
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
+ *        错误码:                                                                 *
  *            = 0x10: timeout when wait Module spi rxd Buffer ready                *
  *            = 0x11: timeout when wait wifi to send data                          *
  *            = 0x12: Module Sending Buffer full                                   *
@@ -1092,8 +1088,7 @@ u8 M8266WIFI_SPI_Has_DataReceived(void);
  * @param max_len        - the max length of Data to fetch                        *
  * @param max_wait_in_ms - the max timeout to wait for the Data                    *
  * @param link_no        - pointer to return the link_no that current wifi Data come from. 如果不需要返回状态码，可以使用 NULL。     *
- * @param status         - pointer to return errcode(LSB) and status(MSB)      
- *                         when error encountered. Use NULL if you don't expect it returned                                         
+ * @param status         - 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。                                      
  *        errcode:                                                             
  *            = 0x20: timeout when wait module has received data via WIFI      
  *            = 0x22: no date in Module wifi receive buffer                    
@@ -1121,7 +1116,7 @@ u16 M8266WIFI_SPI_RecvData(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u8* 
  *                         e.g. if remote ip is "192.168.4.2", then remote_ip will
  *                         return with remote_ip[0]=192, remote_ip[1]=168, remote_ip[2]=4, and remote_ip[3]=2
  * @param remote_ip      - pointer to return the remote_port that current wifi Data come from. 如果不需要返回状态码，可以使用 NULL。     
- * @param status         - pointer to return errcode(LSB) and status(MSB) when error encountered. Use NULL if you don't expect it returned                                          
+ * @param status         - 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  *        errcode:                                                              
  *            = 0x20: timeout when wait module has received data via WIFI       
  *            = 0x22: no date in Module wifi receive buffer                     
@@ -1177,8 +1172,7 @@ u16 M8266WIFI_SPI_RecvData_ex(u8 Data[], u16 max_len, uint16_t max_wait_in_ms, u
  *                   - use NULL if you don't expect this param returned            *
  *                   - Airkiss does not response ip addrsss of smart devices,      *
  *                     so smartconfig_phone_ip[0] will be 0 if airkiss             *
- * @param status  : pointer to return errcode upon failures                        *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  *                  == 0x0000  success                                             *
  *                  != 0x0000  failed                                              *
  *                     (1) failed to start smartconfig if LSB(8) = 0x68            *
@@ -1204,8 +1198,7 @@ u8 M8266WIFI_SPI_DoModuleSmartConfig(u8 timeout_in_s, u8 saved, u8* smartconfig_
  * @param saved   : to save ssid/password or not after configuration with en=1     *
  *                  =0, not save                                                   *
  *                  = others, save                                                 *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return =1, success; =0, has error(s)
  ***********************************************************************************/
 u8 M8266WIFI_SPI_StartModuleSmartConfig(u8 en, u8 saved, u16* status);
@@ -1224,8 +1217,7 @@ u8 M8266WIFI_SPI_StartModuleSmartConfig(u8 en, u8 saved, u16* status);
  * @param en      : to start or stop                                               *
  *                  =0, to stop                                                    *
  *                  others, to start                                               *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
 u8 M8266WIFI_SPI_StartWpsConfig(u8 en, u16* status);
@@ -1364,7 +1356,7 @@ u8 M8266WIFI_SPI_StartDns(u8 start_not_shutdown, u8 save, u16* status);
  * @param sleep_type  休眠类型(深度休眠=3, 0/1/2/其它 保留)
  * @param time_to_wakeup_in_ms 休眠多久后退出休眠，单位是毫秒。
  * （如果设置为 0，则模组将永久休眠，直到外部唤醒。）最大值 4294967 毫秒 (1.19h)，如果超出最大值，将使用最大值。
- * @param status 执行出错时，返回的状态码的指针，方便故障诊断。 (如果不需要返回状态码，可以使用NULL。)
+ * @param status 执行出错时，返回的状态码的指针，方便故障诊断。 (如果不需要返回状态码，可以使用NULL。
  * 
  * @note  1.The nCS should be pulled low before exit sleep and release after bootup
  *        	from sleep if reset_type=3 in order for a normal bootup from extern flash
@@ -1449,8 +1441,7 @@ typedef enum{
  *                       =1, input  with    pullup                                 *
  *                       =2, output normal                                         *
  *                       =3, output open drain                                     *
- * @param status       : pointer to return errcode(LSB) and status(MSB) upon error *
- *                       如果不需要返回状态码，可以使用 NULL。                  *
+ * @param status       : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Query_Module_Gpio_Mode(u8 io_no, M8266WIFI_MODULE_GPIO_MODES *io_mode, u16* status);
@@ -1465,8 +1456,7 @@ typedef enum{
  *                       =1, input  with    pullup                                 *
  *                       =2, output normal                                         *
  *                       =3, output open drain                                     *
- * @param status       : pointer to return errcode(LSB) and status(MSB) upon error *
- *                       如果不需要返回状态码，可以使用 NULL。                  *
+ * @param status       : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Config_Module_Gpio_Mode(u8 io_no, M8266WIFI_MODULE_GPIO_MODES io_mode, u16* status);
@@ -1477,8 +1467,7 @@ typedef enum{
  *     To read the gpios level                                                     *
  * @param io_no        : the number of on-module GPIO                              *
  * @param level        : pointer of the level read back                            *
- * @param status       : pointer to return errcode(LSB) and status(MSB) upon error *
- *                       如果不需要返回状态码，可以使用 NULL。                  *
+ * @param status       : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return value:                                                                  *
  *     =1, success                                                                 *
  *     =0, has error(s)                                                            *
@@ -1491,8 +1480,7 @@ typedef enum{
  *     To write the on-module gpios as output                                      *
  * @param io_no        : the number of on-module GPIO                              *
  * @param level        : pointer of the level read back                            *
- * @param status       : pointer to return errcode(LSB) and status(MSB) upon error *
- *                       如果不需要返回状态码，可以使用 NULL。                  *
+ * @param status       : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Write_Module_Gpio(u8 io_no, u8 level, u16* status);
@@ -1502,8 +1490,7 @@ typedef enum{
  * @brief                                                                   *
  *     To write on-module gpios as output                                          *
  * @param adc          : pointer to the adc value                                  *
- * @param status       : pointer to return errcode(LSB) and status(MSB) upon error *
- *                       如果不需要返回状态码，可以使用 NULL。                  *
+ * @param status       : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Read_Module_Adc(u16* adc, u16* status);
@@ -1515,8 +1502,7 @@ typedef enum{
  * @param leds_flash_on_boot:  store the values return                             *
  *        = 0 :  LEDs not flash but off during module boot up                      *
  *        = 1 :  LEDs flash LEDs        during module boot up                      *
- * @param status  : pointer to return errcode(LSB) and status(MSB) upon error      *
- *                  Use NULL if you don't expect them returned                     *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Module_Query_LedsFlashOnBoot(u8* leds_flash_on_boot, u16 *status);
@@ -1528,8 +1514,7 @@ typedef enum{
  * @param leds_flash_on_boot :  store the values to config                         *
  *        = 0 :  LEDs not flash but off during module boot up                      *
  *        = 1 :  LEDs flash LEDs        during module boot up                      *
- * @param status  : pointer to return errcode(LSB) and status(MSB) upon error      *
- *                  Use NULL if you don't expect them returned                     *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Module_Config_LedsFlashOnBoot(u8 leds_flash_on_boot, u16 *status);
@@ -1551,8 +1536,7 @@ typedef enum{
  *         = 2    :  io2 used for Wifi Inidcator                                   *
  *         = 4    :  io4 used for Wifi Inidcator                                   *
  *         = 5    :  io5 used for Wifi Inidcator                                   *
- *     4. status  : pointer to return errcode(LSB) and status(MSB) upon error      *
- *                  Use NULL if you don't expect them returned                     *
+ *     4. status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Module_Query_Wifi_Inidcator(u8 default_not_current, u8* Wifi_Inidcator_en, u8* Wifi_Inidcator_io_pin, u16 *status);
@@ -1579,8 +1563,7 @@ typedef enum{
  *                  PLEASE DO NOT CALL IT EACH TIME OF BOOTUP WITH SAVED != 0      *
  *                  OR, THE FLASH ON MODULE MIGHT GO TO FAILURE DUE TO LIFT CYCLE  *
  *                  OF WRITE                                                       *
- * @param status  : pointer to return errcode(LSB) and status(MSB) upon error      *
- *                  Use NULL if you don't expect them returned                     *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Module_Config_Wifi_Inidcator(u8 Wifi_Inidcator_en, u8 Wifi_Inidcator_io_pin, u8 saved, u16 *status);
@@ -1604,8 +1587,7 @@ typedef enum{
  *         = 5    :  io5 used for Wifi Rx Interrupt Trigger                        *
  * @param Wifi_Rx_Continous_trigger_delay_us: interval of continuos trigger         *
  *         default 50us                                                            *
- * @param status  : pointer to return errcode(LSB) and status(MSB) upon error      *
- *                  Use NULL if you don't expect them returned                     *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。                    *
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Module_Query_Wifi_Rxd_Interrupt_Trigger(u8 default_not_current, u8* Wifi_Rx_Interrupt_Trigger_en, u8* Wifi_Rx_Interrupt_Trigger_io_pin, u8* Wifi_Rx_Continous_trigger_delay_us, u16 *status);
@@ -1637,8 +1619,7 @@ typedef enum{
  *                  PLEASE DO NOT CALL IT EACH TIME OF BOOTUP WITH SAVED != 0      
  *                  OR, THE FLASH ON MODULE MIGHT GO TO FAILURE DUE TO LIFT CYCLE  
  *                  OF WRITE                                                       
- * @param status  错误时返回错误码（LSB）和状态（MSB）的指针    
- *                Use NULL if you don't expect them returned                   
+ * @param status 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)                                                         
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Module_Config_Wifi_Rx_Interrupt_Trigger(u8 Wifi_Rx_Interrupt_Trigger_en, u8 Wifi_Rx_Interrupt_Trigger_io_pin, u8 Wifi_Rx_Continous_trigger_delay_us, u8 saved, u16 *status);
@@ -1692,15 +1673,14 @@ typedef enum{
  *                    buffer size should be no less than 16 bytes                  *
  *                    returned value e.g. "1.1.4-4"                                *
  *                    如果不需要返回状态码，可以使用 NULL。                     *
- * @param status    : 失败时返回错误码（LSB）和状态（MSB）的指针。 *
- *                    如果不需要返回状态码，可以使用 NULL。                     *
+ * @param status    : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8(1=success, 0=has errors)
  ***********************************************************************************/
  u8 M8266WIFI_SPI_Get_Module_Info(u32* module_id, u8* flash_size, char* fw_ver, u16* status);
 
 /***********************************************************************************
  * M8266WIFI_SPI_Get_Driver_Info                                                   *
- * @brief  获取M8266WIFI驱动信息				                                       *
+ * @brief  获取M8266WIFI驱动信息
  * @param drv_info: the pointer to the returned driver information buffer.         *
  *                  buffer size should be no less than 64 Bytes                    *
  *                  e.g. "ANYLINKIN M8266WIFI SPI DRIVER V1.4, 20170316"           *
@@ -1721,7 +1701,7 @@ char* M8266WIFI_SPI_Get_Driver_Info(char* drv_info);
 //----------------------------------------------------------------------------------
 //   Below specifications are required by the M8266WIFI Driver library            //
 //   And should be implemented according to the hardware in M8266HostIf.c         //
-//   Put here kust for purpose ofheader specification                             //
+//   Put here kust for purpose of header specification                             //
 //----------------------------------------------------------------------------------
 
 void M8266HostIf_Set_nRESET_Pin(u8 level);	// M8266HostIf_STM32xx.c
