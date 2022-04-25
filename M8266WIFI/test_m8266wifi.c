@@ -1,6 +1,6 @@
 /********************************************************************
  *	TCP/UDP等数据传输测试
- * test_m8266wifi.c		在main.c中调用M8266WIFI_Test()函数
+ * @file test_m8266wifi.c		在main.c中调用M8266WIFI_Test()函数
  * @brief Source file of M8266WIFI testing application (M8266WIFI测试应用源文件)
  ********************************************************************/
 
@@ -42,11 +42,11 @@ void M8266WIFI_Test(void)
 	//----------------------------------------------------------------------------------
 	/*		测试使用程序
 		├─1.STM32F1-M8266WIFI
-		├─5.1.WiFi模块AP模式，PC作为STA模式（单向通讯、单链路、服务器链接1个客户端）
-		├─5.2WiFi模块AP模式，PC作为STA模式（单向通讯、单链路、服务器链接多个客户端）
-		├─5.3.WiFi模块STA模式，PC作为AP模式（PC开热点、单向通讯、单链路、服务器链接1个客户端）
-		├─5.4.WiFi模块STA模式（TCP客户端）---手机（路由器）---PC（TCP服务器）
-		└─5.5.WiFi模块双向通讯（WiFi模块AP模式）
+		├─5.1.WiFi模块AP模式，PC作为STA模式（单向通讯、单链路、服务器链接1个客户端）OK
+		├─5.2WiFi模块AP模式，PC作为STA模式（单向通讯、单链路、服务器链接多个客户端）OK
+		├─5.3.WiFi模块STA模式，PC作为AP模式（PC开热点、单向通讯、单链路、服务器链接1个客户端）OK
+		├─5.4.WiFi模块STA模式（TCP客户端）---手机（路由器）---PC（TCP服务器）OK
+		└─5.5.WiFi模块双向通讯（WiFi模块AP模式）//BUG
 	*/
 	// 测试时WiFi模块的工作方式
 	#define TEST_M8266WIFI_TYPE 1 //1=向外不停地发送数据 | 2=不停地接收数据 | 3=将接收到的数据发送给发送方 | 4=多客户端测试
@@ -77,7 +77,7 @@ void M8266WIFI_Test(void)
 		#define TEST_REMOTE_PORT	1234	// 80
 
 	#elif (TEST_CONNECTION_TYPE == 2) 	//模组作为TCP服务器,不需要指定目标地址和端口，这里的数据只是一个格式填充，随便填写。
-		#define TEST_REMOTE_ADDR	"1.1.1.1"
+		#define TEST_REMOTE_ADDR	"1.1.1.1"	//远程IP192.168.4.1（端口4321）
 		#define TEST_REMOTE_PORT	1234
 
 	#else
@@ -125,10 +125,10 @@ void M8266WIFI_Test(void)
 		{
 			while(1)
 			{
-			#ifdef USE_LED_AND_KEY_FOR_TEST   // 如果失败，则进入死循环和闪烁主板上的灯
+				#ifdef USE_LED_AND_KEY_FOR_TEST   // 如果失败，则进入死循环和闪烁主板上的灯
 				LED_set(0, 0); LED_set(1, 0); M8266WIFI_Module_delay_ms(1000);
 				LED_set(0, 1); LED_set(1, 1); M8266WIFI_Module_delay_ms(1000);
-			#endif				 
+				#endif				 
 			}
 		}
 		else	//!!! {} ???
@@ -194,16 +194,16 @@ void M8266WIFI_Test(void)
 	{
 		//如果使用较大的数组，记得确保有足够大的系统堆栈来容纳这个大数组变量. 否则，单片机程序可能会因为堆栈溢出越界而跳入“hardware fault"系统异常
 		#define TEST_SEND_DATA_SIZE  200 //2920 //5840 //2048 // 1024		
-		u8 snd_data[TEST_SEND_DATA_SIZE];
+		u8 snd_data[TEST_SEND_DATA_SIZE];		//TCP报文段大小
 		volatile u32 sent = 0;
 		volatile u32 total_sent = 0, MBytes = 0; 
-		u16 batch;	 
+		u16 batch;
 		volatile u8 debug_point;
 		u16 TEXT_Buffer[40]={0};
 		int at=0;
 		u16 i,j;
 
-		for(i = 0; i < 40; i++)	{ TEXT_Buffer[i]=i; }
+		for(i = 0; i < 40; i++)	{ TEXT_Buffer[i]=i; }	//测试时的随机数据
 
 		for(j = 0; j < 40; j += 2)
 		{
@@ -341,7 +341,7 @@ void M8266WIFI_Test(void)
 				//u16 M8266WIFI_SPI_RecvData(u8 data[], u16 max_len, uint16_t max_wait_in_ms, u8* link_no, u16* status);
 				received = M8266WIFI_SPI_RecvData(RecvData, RECV_DATA_MAX_SIZE, 5*1000, &link_no, &status);
 
-				if(  (status&0xFF)!= 0 )  
+				if( (status&0xFF)!= 0 )  
 				{
 					if( (status&0xFF)==0x22 )	// 0x22 = Module buffer has no data received
 					{  

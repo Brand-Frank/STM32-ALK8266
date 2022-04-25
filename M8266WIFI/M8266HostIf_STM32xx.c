@@ -19,26 +19,26 @@
 //
 /***********************************************************************************
  * M8266HostIf_GPIO_SPInCS_nRESET_Pin_Init                                         *
- * @brief                                                                    
+ * @brief ³õÊ¼»¯ALK8266WIFIÄ£×éµÄÆ¬Ñ¡ÐÅºÅ(nCS)ºÍ¸´Î»ÐÅºÅ(nRESET)¶ÔÓ¦µÄÖ÷»úGPIO¡£
  *    To initialise the GPIOs for SPI nCS and nRESET output for M8266WIFI module   *
  *    You may update the macros of GPIO PINs usages for nRESET from brd_cfg.h      *
  *    You are not recommended to modify codes below please                         *
- * @param None
+ * @param void
  * @return None
  ***********************************************************************************/
 void M8266HostIf_GPIO_CS_RESET_Init(void)	//±¾ÎÄ¼þµÄM8266HostIf_Init()º¯Êý(ÏÂÏÂ·½)
 {
-  GPIO_InitTypeDef  GPIO_InitStructure;
+  	GPIO_InitTypeDef  GPIO_InitStructure;
 
 	//Initial STM32's GPIO for M8266WIFI_SPI_nCS
-	M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN;  						// enable nCS GPIO clock
-	GPIO_OUTPUT_HIGH(M8266WIFI_SPI_nCS_GPIO,M8266WIFI_SPI_nCS_PIN);		// nCS output high initially	
-	GPIO_InitStructure_AS_GPIO_OUTPUT(M8266WIFI_SPI_nCS_GPIO,M8266WIFI_SPI_nCS_PIN);
+	M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN;  						// Ê¹ÄÜ nCS GPIO clock
+	GPIO_OUTPUT_HIGH(M8266WIFI_SPI_nCS_GPIO, M8266WIFI_SPI_nCS_PIN); // nCS output high initially	
+	GPIO_InitStructure_AS_GPIO_OUTPUT(M8266WIFI_SPI_nCS_GPIO, M8266WIFI_SPI_nCS_PIN);
 	
 	//Initial STM32's GPIO for M8266WIFI_nRESET
-	M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN;  						// enable nRESET GPIO clock
-	GPIO_OUTPUT_HIGH(M8266WIFI_nRESET_GPIO,M8266WIFI_nRESET_PIN);		  // nRESET output high initially	
-	GPIO_InitStructure_AS_GPIO_OUTPUT(M8266WIFI_nRESET_GPIO,M8266WIFI_nRESET_PIN);
+	M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN;  						// Ê¹ÄÜnRESET GPIO CLOCK
+	GPIO_OUTPUT_HIGH(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);	// nRESET output high initially	
+	GPIO_InitStructure_AS_GPIO_OUTPUT(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
 }
 
 //
@@ -49,8 +49,8 @@ void M8266HostIf_GPIO_CS_RESET_Init(void)	//±¾ÎÄ¼þµÄM8266HostIf_Init()º¯Êý(ÏÂÏÂ·
 #endif
 
 /***********************************************************************************
- * @brief To initialise the SPI Interface for M8266WIFI module, You may update the macros of 
- * SPI usages for nRESET from brd_cfg.h, You are not recommended to modify codes below please
+ * @brief ³õÊ¼»¯ ALK8266WIFI? Ä£×éËùÁ¬½ÓµÄÖ÷»úµÄ SPI ½Ó¿Ú¡£ You may update the macros of 
+ * SPI usages for nRESET from brd_cfg.h, ²»½¨ÒéÐÞ¸Ä
  * @param void
  * @return void
  ***********************************************************************************/
@@ -64,12 +64,12 @@ void M8266HostIf_SPI_Init(void)			//±¾ÎÄ¼þµÄM8266HostIf_Init()º¯Êý(ÏÂ·½)
 	
 #if (M8266WIFI_SPI_INTERFACE_NO == 1)  
 	#if 1 // if use GPIOA5/6/7 for SPI1 SCK/MISO/MOSI
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); 		// enable the SPI1 GPIO CLOCK
-	GPIO_InitStructure.GPIO_Pin		= GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
-	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_AF_PP;				// SET GPIOs for SPI1
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	//GPIO_PinRemapConfig(GPIO_Remap_SPI1, ENABLE);				// no need to Enable GPIO Alternate for SPI1, since GPIOA5/6/7 for SPI1 is the default alternative
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); 	// Ê¹ÄÜSPI1 GPIO CLOCK
+	GPIO_InitStructure.GPIO_Pin		= GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;	// GPIOAµÄPA5,PA6,PA7
+	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_AF_PP;		// ÎªSPI1ÉèÖÃGPIOsÄ£Ê½
+	GPIO_InitStructure.GPIO_Speed 	= GPIO_Speed_50MHz;		// ÉèÖÃGPIOÆµÂÊÎª50MHz
+	GPIO_Init(GPIOA, &GPIO_InitStructure);					// GPIO³õÊ¼»¯
+	//GPIO_PinRemapConfig(GPIO_Remap_SPI1, ENABLE);			// no need to Enable GPIO Alternate for SPI1, since GPIOA5/6/7 for SPI1 is the default alternative
 	
 	#elif 0 // if use GPIOB3/4/5 for SPI1 SCK/MISO/MOSI
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); 		// enable the SPI1 GPIO CLOCK
@@ -139,14 +139,15 @@ void M8266HostIf_SPI_Init(void)			//±¾ÎÄ¼þµÄM8266HostIf_Init()º¯Êý(ÏÂ·½)
 #error Invalid M8266WIFI_SPI_INTERFACE_NO defined in brd_cfg.h 
 #endif
 
+	/*	SPI²ÎÊýÉèÖÃ	*/
 	SPI_InitStructure.SPI_Direction 			= SPI_Direction_2Lines_FullDuplex;    
 	SPI_InitStructure.SPI_Mode 					= SPI_Mode_Master;									  
 	SPI_InitStructure.SPI_DataSize 				= SPI_DataSize_8b;									 
-	SPI_InitStructure.SPI_CPOL 					= SPI_CPOL_Low;		//  !!!! M8266WIFI SPI Works at CPOL=LOW, CPHA=1Edge
+	SPI_InitStructure.SPI_CPOL 					= SPI_CPOL_Low;		//Note:M8266WIFI SPI Works at CPOL=LOW, CPHA=1Edge
 	SPI_InitStructure.SPI_CPHA 					= SPI_CPHA_1Edge;	
 	SPI_InitStructure.SPI_NSS 					= SPI_NSS_Soft;									
 	SPI_InitStructure.SPI_BaudRatePrescaler 	= SPI_BaudRatePrescaler_16;
-	SPI_InitStructure.SPI_FirstBit 				= SPI_FirstBit_MSB;		//  !!!! M8266WIFI SPI Works with MSB First							
+	SPI_InitStructure.SPI_FirstBit 				= SPI_FirstBit_MSB;	//Note:M8266WIFI SPI Works with MSB First							
 	SPI_InitStructure.SPI_CRCPolynomial 		= 7;
 	SPI_Init(M8266WIFI_INTERFACE_SPI, &SPI_InitStructure);
 	SPI_Cmd(M8266WIFI_INTERFACE_SPI, ENABLE);		//	Enable SPI Interface
@@ -933,9 +934,8 @@ void M8266HostIf_SPI_Init(void)			//±¾ÎÄ¼þµÄM8266HostIf_Init()º¯Êý(ÏÂ·½)
  ***********************************************************************************/ 
 void M8266HostIf_Init(void)		// (GPIO + CS + SPI³õÊ¼»¯)-> µ÷ÓÃÉÏÃæÁ½¸öº¯Êý
 {
-	M8266HostIf_GPIO_CS_RESET_Init();	//(ÉÏÉÏ·½)
-
-	M8266HostIf_SPI_Init();				//£¨ÉÏ·½£©
+	M8266HostIf_GPIO_CS_RESET_Init();	// SPI_nCS ºÍ nRESET ¹Ü½Å¶ÔÓ¦µÄ GPIO ³õÊ¼»¯
+	M8266HostIf_SPI_Init();				// SPIÖ÷»ú½Ó¿ÚµÄ³õÊ¼»¯
 	//M8266HostIf_SPI_SetSpeed(SPI_BaudRatePrescaler_8);	
 }
 //
@@ -986,49 +986,45 @@ void M8266HostIf_SPI_SetSpeed(u32 SPI_BaudRatePrescaler)
 
 /***********************************************************************************
  * @brief ÒªÔÚ M8266WIFI nRESET µÄ GPIO Òý½ÅÉÏÊä³ö HIGH »ò LOW£¬Äú¿ÉÒÔ´Ó brd_cfg.h ¸üÐÂ nRESET µÄ GPIO PIN Ê¹ÓÃºê¡£²»½¨ÒéÄúÐÞ¸ÄÒÔÏÂ´úÂë
- * @param level LEVEL output to nRESET pin                                         *
- *              0 = output LOW  onto nRESET                                        *
- *              1 = output HIGH onto nRESET                                        *
+ * @param level LEVEL output to nRESET pin	(0 = output LOW  onto nRESET, 1 = output HIGH onto nRESET)
  * @return void
  ***********************************************************************************/
 void M8266HostIf_Set_nRESET_Pin(u8 level)
 {
 	if(level!=0)
-	//GPIO_SetBits(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
-#if   defined(MCU_IS_STM32F1XX)
-	M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
-#elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX)
-	M8266WIFI_nRESET_GPIO->BSRRL = M8266WIFI_nRESET_PIN;
-#elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
-	M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
-#else
-#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
-#endif
+		//GPIO_SetBits(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
+	#if defined(MCU_IS_STM32F1XX)
+		M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
+	#elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX)
+		M8266WIFI_nRESET_GPIO->BSRRL = M8266WIFI_nRESET_PIN;
+	#elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
+		M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN;
+	#else
+		#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
+	#endif
 
 	else
-	//GPIO_ResetBits(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
-#if   defined(MCU_IS_STM32F1XX)
-	M8266WIFI_nRESET_GPIO->BRR   = M8266WIFI_nRESET_PIN;
-#elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX)
-	M8266WIFI_nRESET_GPIO->BSRRH = M8266WIFI_nRESET_PIN;
-#elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
-	M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN<<16;
-#else
-#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
-#endif
+		//GPIO_ResetBits(M8266WIFI_nRESET_GPIO, M8266WIFI_nRESET_PIN);
+	#if defined(MCU_IS_STM32F1XX)
+		M8266WIFI_nRESET_GPIO->BRR   = M8266WIFI_nRESET_PIN;
+	#elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX)
+		M8266WIFI_nRESET_GPIO->BSRRH = M8266WIFI_nRESET_PIN;
+	#elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
+		M8266WIFI_nRESET_GPIO->BSRR  = M8266WIFI_nRESET_PIN<<16;
+	#else
+		#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
+	#endif
 }
 
 //
 
 //
 /***********************************************************************************
- * @brief                                                                     *
+ * @brief
  *    To Outpout HIGH or LOW onto the GPIO pin for M8266WIFI SPI nCS               *
  *    You may update the macros of GPIO PIN usages for SPI nCS from brd_cfg.h      *
  *    You are not recommended to modify codes below please                         *
- * @param level: LEVEL output to SPI nCS pin                                        *
- *              0 = output LOW  onto SPI nCS                                       *
- *              1 = output HIGH onto SPI nCS                                       *
+ * @param level: LEVEL output to SPI nCS pin	(0 = output LOW  onto SPI nCS, 1 = output HIGH onto SPI nCS)
  * @return void
  ***********************************************************************************/
 void M8266HostIf_Set_SPI_nCS_Pin(u8 level)
@@ -1042,7 +1038,7 @@ void M8266HostIf_Set_SPI_nCS_Pin(u8 level)
 	#elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) 
 		M8266WIFI_SPI_nCS_GPIO->BSRR  = M8266WIFI_SPI_nCS_PIN;
 	#else
-	#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
+		#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
 	#endif
 
 	else
@@ -1054,7 +1050,7 @@ void M8266HostIf_Set_SPI_nCS_Pin(u8 level)
 	#elif defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX)
 		M8266WIFI_SPI_nCS_GPIO->BSRR  = M8266WIFI_SPI_nCS_PIN<<16;		
 	#else
-	#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
+		#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
 	#endif
 }
 
@@ -1085,24 +1081,24 @@ void M8266HostIf_delay_us(u8 nus)
  ***********************************************************************************/
 u8 M8266HostIf_SPI_ReadWriteByte(u8 TxdByte)
 {
-#if defined(MCU_IS_STM32F1XX) || defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX)	
-	while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_TXE) == RESET){} 	//wait SPI TXD Buffer Empty
-	SPI_I2S_SendData(M8266WIFI_INTERFACE_SPI, TxdByte);		//Write the byte to the TXD buffer and then shift out via MOSI
-	while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_RXNE) == RESET){} 	//wait the SPI RXD buffer has received the data from MISO
-	return SPI_I2S_ReceiveData(M8266WIFI_INTERFACE_SPI);	//return the data received from MISO
+	#if defined(MCU_IS_STM32F1XX) || defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX)	
+		while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_TXE) == RESET){} 	//wait SPI TXD Buffer Empty
+		SPI_I2S_SendData(M8266WIFI_INTERFACE_SPI, TxdByte);		//Write the byte to the TXD buffer and then shift out via MOSI
+		while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_RXNE) == RESET){} 	//wait the SPI RXD buffer has received the data from MISO
+		return SPI_I2S_ReceiveData(M8266WIFI_INTERFACE_SPI);	//return the data received from MISO
 
-#elif defined(MCU_IS_STM32F3XX)	
-	while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_TXE) == RESET){} 	//wait SPI TXD Buffer Empty
-	SPI_SendData8(M8266WIFI_INTERFACE_SPI, TxdByte); 			//Write the byte to the TXD buffer and then shift out via MOSI
-	while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_RXNE) == RESET){} 	//wait the SPI RXD buffer has received the data from MISO
-	return SPI_ReceiveData8(M8266WIFI_INTERFACE_SPI);  		//return the data received from MISO
+	#elif defined(MCU_IS_STM32F3XX)	
+		while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_TXE) == RESET){} 	//wait SPI TXD Buffer Empty
+		SPI_SendData8(M8266WIFI_INTERFACE_SPI, TxdByte); 			//Write the byte to the TXD buffer and then shift out via MOSI
+		while(SPI_I2S_GetFlagStatus(M8266WIFI_INTERFACE_SPI, SPI_I2S_FLAG_RXNE) == RESET){} 	//wait the SPI RXD buffer has received the data from MISO
+		return SPI_ReceiveData8(M8266WIFI_INTERFACE_SPI);  		//return the data received from MISO
 
-#elif defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
-	u8 Rxdata;
-	HAL_SPI_TransmitReceive(&hspi,&TxdByte,&Rxdata,1, 1000);       
- 	return Rxdata; 
+	#elif defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
+		u8 Rxdata;
+		HAL_SPI_TransmitReceive(&hspi,&TxdByte,&Rxdata,1, 1000);       
+		return Rxdata; 
 
-#else
-#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
-#endif	
+	#else
+		#error YOU SHOULD DEFINED MCU_IS_STM32F?XX in brd_cfg.h
+	#endif	
 }

@@ -20,7 +20,6 @@
 
 //#define MCU_IS_HT32F16XX
 
-
 #if defined(MCU_IS_HT32F16XX)
 #include "ht32f1655_56.h"
 #endif
@@ -33,20 +32,20 @@
 //----------------------------------------------------------------------------------
 
 /*	nRESET	*/
-#if   defined(MCU_IS_STM32F1XX)  // STM's STM32F1XX, using *GPIOB12* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE)
-#define  M8266WIFI_nRESET_GPIO					GPIOA//GPIOB
-#define  M8266WIFI_nRESET_PIN					GPIO_Pin_1//GPIO_Pin_12
+#if defined(MCU_IS_STM32F1XX)  // STM's STM32F1XX, using *GPIOB12* as nRESET
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE)
+	#define  M8266WIFI_nRESET_GPIO					GPIOA//GPIOB
+	#define  M8266WIFI_nRESET_PIN					GPIO_Pin_1//GPIO_Pin_12
 
 #elif defined(MCU_IS_STM32F2XX)  // STM's STM32F2XX, //using *GPIOD0* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
-#define  M8266WIFI_nRESET_GPIO					GPIOD
-#define  M8266WIFI_nRESET_PIN					GPIO_Pin_0
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
+	#define  M8266WIFI_nRESET_GPIO					GPIOD
+	#define  M8266WIFI_nRESET_PIN					GPIO_Pin_0
 
 #elif defined(MCU_IS_STM32F3XX)  // STM's STM32F3XX, //using *GPIOC9* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE)
-#define  M8266WIFI_nRESET_GPIO					GPIOC
-#define  M8266WIFI_nRESET_PIN					GPIO_Pin_9
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE)
+	#define  M8266WIFI_nRESET_GPIO					GPIOC
+	#define  M8266WIFI_nRESET_PIN					GPIO_Pin_9
 
 #elif defined(MCU_IS_STM32F4XX)  // STM's STM32F4XX, 
 //using *GPIOD13* as nRESET
@@ -105,80 +104,80 @@
 #define  M8266WIFI_nRESET_PIN				GPIO_PIN_2
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 /*	nCS		*/ 
-#if   defined(MCU_IS_STM32F1XX)  // STM's STM32F1XX, using *GPIOA4* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOA
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_4
+#if defined(MCU_IS_STM32F1XX)  // STM's STM32F1XX, using *GPIOA4* as nCS
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)
+	#define  M8266WIFI_SPI_nCS_GPIO								GPIOA
+	#define  M8266WIFI_SPI_nCS_PIN								GPIO_Pin_4
 
 #elif defined(MCU_IS_STM32F2XX)  // STM's STM32F2XX, // using *GPIOA15* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOA
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_15
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOA
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_15
 
 #elif defined(MCU_IS_STM32F3XX)  // STM's STM32F3XX, // using *GPIOC8* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE)
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOC
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_8
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE)
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOC
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_8
 
 #elif defined(MCU_IS_STM32F4XX)  // STM's STM32F4XX
 //using *GPIOA8* as nCS
-//#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
-//#define  M8266WIFI_SPI_nCS_GPIO											GPIOA
-//#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_8
+	//#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
+	//#define  M8266WIFI_SPI_nCS_GPIO											GPIOA
+	//#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_8
 //using *GPIOD3* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOD
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_3
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOD
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_Pin_3
 //using *GPIOA4* as nCS
-//#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN		  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
-//#define  M8266WIFI_SPI_nCS_GPIO										GPIOA
-//#define  M8266WIFI_SPI_nCS_PIN										GPIO_Pin_4
+	//#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN		  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
+	//#define  M8266WIFI_SPI_nCS_GPIO										GPIOA
+	//#define  M8266WIFI_SPI_nCS_PIN										GPIO_Pin_4
 //using *GPIOE6* as nCS
-//#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE)
-//#define  M8266WIFI_SPI_nCS_GPIO										GPIOE
-//#define  M8266WIFI_SPI_nCS_PIN										GPIO_Pin_6
+	//#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE)
+	//#define  M8266WIFI_SPI_nCS_GPIO										GPIOE
+	//#define  M8266WIFI_SPI_nCS_PIN										GPIO_Pin_6
 
 #elif defined(MCU_IS_STM32F7XX)  // STM's STM32F7XX, using *GPIOE4* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOE_CLK_ENABLE()
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOE
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_4
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOE_CLK_ENABLE()
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOE
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_4
 
 #elif defined(MCU_IS_STM32L1XX)  // STM's STM32L1XX, using *GPIOC2* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOC_CLK_ENABLE()
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOC
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_2 
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOC_CLK_ENABLE()
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOC
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_2 
 
 #elif defined(MCU_IS_STM32L4XX)  // STM's STM32L4XX, using *GPIOC2* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOC_CLK_ENABLE()
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOC
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_2 
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOC_CLK_ENABLE()
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOC
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_2 
 
 #elif defined(MCU_IS_STM32H7XX)  // STM's STM32H7XX, using *GPIOE4* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOE_CLK_ENABLE()
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOE
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_4 
+	#define  M8266WIFI_SPI_nCS_GPIO_RCC_CLOCK_EN				__HAL_RCC_GPIOE_CLK_ENABLE()
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOE
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_4 
 
 #elif defined(MCU_IS_NXP_LPC17XX) // NXP's LPC17XX, using *GPIO[0,16]* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO											LPC_GPIO0
-#define  M8266WIFI_SPI_nCS_PIN											16
+	#define  M8266WIFI_SPI_nCS_GPIO											LPC_GPIO0
+	#define  M8266WIFI_SPI_nCS_PIN											16
 
 #elif defined(MCU_IS_NXP_MK27_28)   	// NXP's MK27/MK28, using *PTD15* as nCS
-#define  M8266WIFI_SPI_nCS_PORT											PORTD
-#define  M8266WIFI_SPI_nCS_PORT_CLOCK								kCLOCK_PortD
-#define  M8266WIFI_SPI_nCS_GPIO											GPIOD
-#define  M8266WIFI_SPI_nCS_PIN											15
+	#define  M8266WIFI_SPI_nCS_PORT											PORTD
+	#define  M8266WIFI_SPI_nCS_PORT_CLOCK								kCLOCK_PortD
+	#define  M8266WIFI_SPI_nCS_GPIO											GPIOD
+	#define  M8266WIFI_SPI_nCS_PIN											15
 
 #elif defined(MCU_IS_HT32F16XX)   // Holtek's HT32F16XX, using *GPIOA3* as nCS
-#define  M8266WIFI_SPI_nCS_GPIO_CLK_BIT							CKCUClock.Bit.PA
-#define  M8266WIFI_SPI_nCS_GPIO											HT_GPIOA
-#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_3
+	#define  M8266WIFI_SPI_nCS_GPIO_CLK_BIT							CKCUClock.Bit.PA
+	#define  M8266WIFI_SPI_nCS_GPIO											HT_GPIOA
+	#define  M8266WIFI_SPI_nCS_PIN											GPIO_PIN_3
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 
@@ -280,8 +279,8 @@
 
 //----------------------------------------------------------------------------------
 #if  defined(MCU_IS_STM32F1XX)  // STM's STM32F1XX, 
-#define GPIO_OUTPUT_HIGH(gpio,pin)	(gpio)->BSRR=pin
-#define GPIO_OUTPUT_LOW(gpio,pin)		(gpio)->BRR=pin
+#define GPIO_OUTPUT_HIGH(gpio, pin)		(gpio)->BSRR=pin
+#define GPIO_OUTPUT_LOW(gpio, pin)		(gpio)->BRR=pin
 
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32H7XX) 	// STM's STM32F2XX, STM's STM32F4XX, STM's STM32H7XX 
 #define GPIO_OUTPUT_HIGH(gpio,pin)	(gpio)->BSRRL=pin
@@ -296,7 +295,7 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 //----------------------------------------------------------------------------------
@@ -308,12 +307,12 @@
 	GPIO_Init(gpio, &GPIO_InitStructure)	
 
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F4XX)  	// STM's STM32F2XX, STM32F3XX, STM's STM32F4XX 
-#define GPIO_InitStructure_AS_AF(gpio,pins)										\
-	GPIO_InitStructure.GPIO_Pin 	= pins;												\
-	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_AF;								\
+#define GPIO_InitStructure_AS_AF(gpio,pins)									\
+	GPIO_InitStructure.GPIO_Pin 	= pins;									\
+	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_AF;							\
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;							\
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;					\
-	GPIO_InitStructure.GPIO_PuPd 	= GPIO_PuPd_UP;								\
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;						\
+	GPIO_InitStructure.GPIO_PuPd 	= GPIO_PuPd_UP;							\
 	GPIO_Init(gpio, &GPIO_InitStructure)	
 
 #elif defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)  	// STM's STM32F7XX, STM32L1XX, STM32L4XX, STM32F7XX, using HAL 
@@ -330,7 +329,7 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 //----------------------------------------------------------------------------------
@@ -345,9 +344,9 @@
 #elif defined(MCU_IS_STM32H7XX)
 #elif defined(MCU_IS_NXP_LPC17XX)
 #define GPIO_PinRemapSPI0																																										\
-						LPC_PINCON->PINSEL0 &= ~(0x03UL << 30); LPC_PINCON->PINSEL0 |=  (0x02UL << 30);									\
-						LPC_PINCON->PINSEL1 &= ~(0x03UL <<  2); LPC_PINCON->PINSEL1 |=  (0x02UL <<  2);									\
-						LPC_PINCON->PINSEL1 &= ~(0x03UL <<  4); LPC_PINCON->PINSEL1 |=  (0x02UL <<  4);									\
+						LPC_PINCON->PINSEL0 &= ~(0x03UL << 30); LPC_PINCON->PINSEL0 |=  (0x02UL << 30);		\
+						LPC_PINCON->PINSEL1 &= ~(0x03UL <<  2); LPC_PINCON->PINSEL1 |=  (0x02UL <<  2);		\
+						LPC_PINCON->PINSEL1 &= ~(0x03UL <<  4); LPC_PINCON->PINSEL1 |=  (0x02UL <<  4);		\
 						LPC_PINCON->PINSEL1 &= ~(0x03UL << 0);	
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
@@ -378,7 +377,7 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 //-------SPI2---------------------------------------------------------------------------
@@ -543,100 +542,96 @@
 //---STM32F2XX-------------------------------------------------------------------------------
 #if defined(MCU_IS_STM32F2XX)
 
-#if 1 // for a customer2's Board  ( LED[1-4] - R[49-52] - VCC )  || PF6-LED1-R49-VCC, PB12-LED2-R50-VCC, PE0-LED3-R51-VCC, PB8-LED4-R52-VCC,
-#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOB
-#define LED_GPIOS															  GPIOB
-#define LED0_GPIO_PIN													  GPIO_Pin_8
-#define LED1_GPIO_PIN													  GPIO_Pin_12
-//#define LED2_GPIO_PIN													  GPIO_Pin_2
-//#define LED3_GPIO_PIN													  GPIO_Pin_3
-#endif
+	#if 1 // for a customer2's Board  ( LED[1-4] - R[49-52] - VCC )  || PF6-LED1-R49-VCC, PB12-LED2-R50-VCC, PE0-LED3-R51-VCC, PB8-LED4-R52-VCC,
+	#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOB
+	#define LED_GPIOS															  GPIOB
+	#define LED0_GPIO_PIN													  GPIO_Pin_8
+	#define LED1_GPIO_PIN													  GPIO_Pin_12
+	//#define LED2_GPIO_PIN													  GPIO_Pin_2
+	//#define LED3_GPIO_PIN													  GPIO_Pin_3
+	#endif
 
-#if 1 // for a customer2's Board
-#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOB
-#define KEY_GPIOS																GPIOB
-#define KEY0_GPIO_PIN														GPIO_Pin_10
-#define KEY1_GPIO_PIN														GPIO_Pin_10
-#define KEY2_GPIO_PIN														GPIO_Pin_10
-#define KEY3_GPIO_PIN														GPIO_Pin_10
-#endif
+	#if 1 // for a customer2's Board
+	#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOB
+	#define KEY_GPIOS																GPIOB
+	#define KEY0_GPIO_PIN														GPIO_Pin_10
+	#define KEY1_GPIO_PIN														GPIO_Pin_10
+	#define KEY2_GPIO_PIN														GPIO_Pin_10
+	#define KEY3_GPIO_PIN														GPIO_Pin_10
+	#endif
 
 #endif  // end of #if defined(MCU_IS_STM32F2XX)
 
 //---STM32F3XX-------------------------------------------------------------------------------
 #if defined(MCU_IS_STM32F3XX) 
+	#if 1 // for STM32F303RE Nucleo Board, LED0/LED2->LD2->PA5
+	#define RCC_AHBPeriph_GPIO_LEDS									RCC_AHBPeriph_GPIOA
+	#define LED_GPIOS															  GPIOA
+	#define LED0_GPIO_PIN													  GPIO_Pin_5
+	#define LED1_GPIO_PIN													  GPIO_Pin_5
 
-#if 1 // for STM32F303RE Nucleo Board, LED0/LED2->LD2->PA5
-#define RCC_AHBPeriph_GPIO_LEDS									RCC_AHBPeriph_GPIOA
-#define LED_GPIOS															  GPIOA
-#define LED0_GPIO_PIN													  GPIO_Pin_5
-#define LED1_GPIO_PIN													  GPIO_Pin_5
+	#define RCC_AHBPeriph_GPIO_KEYS									RCC_AHBPeriph_GPIOB
+	#define KEY_GPIOS																GPIOB
+	#define KEY0_GPIO_PIN														GPIO_Pin_10
+	#define KEY1_GPIO_PIN														GPIO_Pin_10
+	#define KEY2_GPIO_PIN														GPIO_Pin_10
+	#define KEY3_GPIO_PIN														GPIO_Pin_10
 
-#define RCC_AHBPeriph_GPIO_KEYS									RCC_AHBPeriph_GPIOB
-#define KEY_GPIOS																GPIOB
-#define KEY0_GPIO_PIN														GPIO_Pin_10
-#define KEY1_GPIO_PIN														GPIO_Pin_10
-#define KEY2_GPIO_PIN														GPIO_Pin_10
-#define KEY3_GPIO_PIN														GPIO_Pin_10
-
-#endif
-
+	#endif
 #endif  // end of #if defined(MCU_IS_STM32F3XX)
 
 //---STM32F4XX-------------------------------------------------------------------------------
 #if defined(MCU_IS_STM32F4XX)
+	#if 0  // for DISCOVERY STM32F4 Board
+	#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOF
+	#define LED_GPIOS															  GPIOF
+	#define LED0_GPIO_PIN													  GPIO_Pin_9
+	#define LED1_GPIO_PIN													  GPIO_Pin_10
+	#elif 0 // for a customer1's Board
+	#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOC
+	#define LED_GPIOS															  GPIOC
+	#define LED0_GPIO_PIN													  GPIO_Pin_0
+	#define LED1_GPIO_PIN													  GPIO_Pin_1
+	//#define LED2_GPIO_PIN													  GPIO_Pin_2
+	//#define LED3_GPIO_PIN													  GPIO_Pin_3
+	#elif 0 // for a customer2's Board  ( LED[1-4] - R[49-52] - VCC )  || PF6-LED1-R49-VCC, PB12-LED2-R50-VCC, PE0-LED3-R51-VCC, PB8-LED4-R52-VCC,
+	#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOB
+	#define LED_GPIOS															  GPIOB
+	#define LED0_GPIO_PIN													  GPIO_Pin_8
+	#define LED1_GPIO_PIN													  GPIO_Pin_12
+	//#define LED2_GPIO_PIN													  GPIO_Pin_2
+	//#define LED3_GPIO_PIN													  GPIO_Pin_3
+	#elif 1 // for a customer3's Board
+	#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOA
+	#define LED_GPIOS															  GPIOA
+	#define LED0_GPIO_PIN													  GPIO_Pin_11
+	#define LED1_GPIO_PIN													  GPIO_Pin_12
+	#endif
 
-#if 0  // for DISCOVERY STM32F4 Board
-#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOF
-#define LED_GPIOS															  GPIOF
-#define LED0_GPIO_PIN													  GPIO_Pin_9
-#define LED1_GPIO_PIN													  GPIO_Pin_10
-#elif 0 // for a customer1's Board
-#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOC
-#define LED_GPIOS															  GPIOC
-#define LED0_GPIO_PIN													  GPIO_Pin_0
-#define LED1_GPIO_PIN													  GPIO_Pin_1
-//#define LED2_GPIO_PIN													  GPIO_Pin_2
-//#define LED3_GPIO_PIN													  GPIO_Pin_3
-#elif 0 // for a customer2's Board  ( LED[1-4] - R[49-52] - VCC )  || PF6-LED1-R49-VCC, PB12-LED2-R50-VCC, PE0-LED3-R51-VCC, PB8-LED4-R52-VCC,
-#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOB
-#define LED_GPIOS															  GPIOB
-#define LED0_GPIO_PIN													  GPIO_Pin_8
-#define LED1_GPIO_PIN													  GPIO_Pin_12
-//#define LED2_GPIO_PIN													  GPIO_Pin_2
-//#define LED3_GPIO_PIN													  GPIO_Pin_3
-#elif 1 // for a customer3's Board
-#define RCC_AHB1Periph_GPIO_LEDS								RCC_AHB1Periph_GPIOA
-#define LED_GPIOS															  GPIOA
-#define LED0_GPIO_PIN													  GPIO_Pin_11
-#define LED1_GPIO_PIN													  GPIO_Pin_12
-#endif
-
-
-#if 0 // for DISCOVERY STM32F4 Board
-#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOE
-#define KEY_GPIOS															GPIOE
-#define KEY0_GPIO_PIN														GPIO_Pin_4
-#define KEY1_GPIO_PIN 														GPIO_Pin_3
-#define KEY2_GPIO_PIN														GPIO_Pin_2
-#elif 0 // for a customer1's Board
-#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOB
-#define KEY_GPIOS															GPIOB
-#define KEY0_GPIO_PIN														GPIO_Pin_9
-#define KEY1_GPIO_PIN														GPIO_Pin_9
-#define KEY2_GPIO_PIN														GPIO_Pin_9
-#elif 1 // for a customer2's Board
-#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOB
-#define KEY_GPIOS															GPIOB
-#define KEY0_GPIO_PIN														GPIO_Pin_10
-#define KEY1_GPIO_PIN														GPIO_Pin_10
-#define KEY2_GPIO_PIN														GPIO_Pin_10
-#define KEY3_GPIO_PIN														GPIO_Pin_10
-#else
-#endif
+	#if 0 // for DISCOVERY STM32F4 Board
+	#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOE
+	#define KEY_GPIOS															GPIOE
+	#define KEY0_GPIO_PIN														GPIO_Pin_4
+	#define KEY1_GPIO_PIN 														GPIO_Pin_3
+	#define KEY2_GPIO_PIN														GPIO_Pin_2
+	#elif 0 // for a customer1's Board
+	#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOB
+	#define KEY_GPIOS															GPIOB
+	#define KEY0_GPIO_PIN														GPIO_Pin_9
+	#define KEY1_GPIO_PIN														GPIO_Pin_9
+	#define KEY2_GPIO_PIN														GPIO_Pin_9
+	#elif 1 // for a customer2's Board
+	#define RCC_AHB1Periph_GPIO_KEYS								RCC_AHB1Periph_GPIOB
+	#define KEY_GPIOS															GPIOB
+	#define KEY0_GPIO_PIN														GPIO_Pin_10
+	#define KEY1_GPIO_PIN														GPIO_Pin_10
+	#define KEY2_GPIO_PIN														GPIO_Pin_10
+	#define KEY3_GPIO_PIN														GPIO_Pin_10
+	#else
+	#endif
 
 #endif
 
 
 
-#endif
+#endif	//_BRG_CFG_H_

@@ -1271,8 +1271,7 @@ u8 M8266WIFI_SPI_StartWpsConfig(u8 en, u16* status);
  *                  PLEASE DO NOT CALL IT EACH TIME OF BOOTUP WITH SAVED != 0      *
  *                  OR, THE FLASH ON MODULE MIGHT GO TO FAILURE DUE TO LIFT CYCLE  *
  *                  OF WRITE                                                       *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
 u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, u16* status);
@@ -1289,8 +1288,7 @@ u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, 
  *        use NULL if you don't expect it                                          *
  * @param current_running : pointer to whether dns is now running                  *
  *        use NULL if you don't expect it                                          *
- * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。   *
- *                  如果不需要返回状态码，可以使用 NULL。                       *
+ * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return u8 (1=success, 0=has errors)
  ***********************************************************************************/
 u8 M8266WIFI_SPI_QueryDns(u8* start_on_bootup, u8* current_running, u16* status);

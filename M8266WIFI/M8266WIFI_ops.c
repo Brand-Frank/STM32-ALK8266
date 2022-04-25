@@ -110,22 +110,16 @@ u8 M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip(char* sta_ip, u8 max_wait_
 
 //
 /***********************************************************************************
- * M8266WIFI_Module_Init_Via_SPI(void)                                             *
- * @brief                                                                     *
+ * M8266WIFI_Module_Init_Via_SPI(void)
+ * @brief 通过SPI初始化M8266WIFI模块
  *    To perform a Initialization sequency to M8266WIFI module via SPI I/F         *
  *    (1) Reboot the M8266WIFI module via nRESET pin                               *
  *    (2) Wait and Check if the M8266WIFI module gets an valid IP address          *
  *        if the module in STA or STA+AP mode                                      *
  *    Call this function after Host SPI Interface Initialised                      *
  *    if use SPI interface to config module                                        *
-
- *    none                                                                         *
- * @return                                                                         *
- * @return                                                                         *
- *       0 = failed                                                                *
- *       1 = success                                                               * 
+ * @return  0 = failed  1 = success 
  ***********************************************************************************/
-// 通过SPI初始化M8266WIFI模块
 u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 {
 	u32  	spi_clk = 40000000;
