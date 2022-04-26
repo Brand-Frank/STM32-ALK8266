@@ -94,16 +94,16 @@ u8 M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip(char* sta_ip, u8 max_wait_
 	u16  i;
 	u16  status=0;
 	 
-	for(i=0; i<1*max_wait_time_in_s; i++)  // max wait
+	for(i=0; i < 1 * max_wait_time_in_s; i++)  // max wait
 	{
 		if( (M8266WIFI_SPI_Get_STA_IP_Addr(sta_ip , &status) ==1) && (strcmp(sta_ip, "0.0.0.0")!=0) )
-			 break;
+			break;
 		M8266WIFI_Module_delay_ms(1000);
 		continue;
 	}
 	if(i>=1*max_wait_time_in_s)
 		return 0; // false
-	 
+
 	return 1;  // true
 }
 //
@@ -184,52 +184,52 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 
 	#if defined(MCU_IS_STM32) && !defined(MCU_IS_STM32H7XX)
 		#ifndef SPI_BaudRatePrescaler_2
-		#define SPI_BaudRatePrescaler_2			((uint32_t)0x00000000U)
-		#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000008U)
-		#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000010U)
-		#define SPI_BaudRatePrescaler_16        ((uint32_t)0x00000018U)
-		#define SPI_BaudRatePrescaler_32        ((uint32_t)0x00000020U)
-		#define SPI_BaudRatePrescaler_64        ((uint32_t)0x00000028U)
-		#define SPI_BaudRatePrescaler_128       ((uint32_t)0x00000030U)
-		#define SPI_BaudRatePrescaler_256       ((uint32_t)0x00000038U)
-	#endif
+			#define SPI_BaudRatePrescaler_2			((uint32_t)0x00000000U)
+			#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000008U)
+			#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000010U)
+			#define SPI_BaudRatePrescaler_16        ((uint32_t)0x00000018U)
+			#define SPI_BaudRatePrescaler_32        ((uint32_t)0x00000020U)
+			#define SPI_BaudRatePrescaler_64        ((uint32_t)0x00000028U)
+			#define SPI_BaudRatePrescaler_128       ((uint32_t)0x00000030U)
+			#define SPI_BaudRatePrescaler_256       ((uint32_t)0x00000038U)
+		#endif
 
 	#elif defined(MCU_IS_STM32H7XX)
 		#ifndef SPI_BAUDRATEPRESCALER_2
-		#define SPI_BAUDRATEPRESCALER_2         (0x00000000U)
-		#define SPI_BAUDRATEPRESCALER_4         (0x10000000U)
-		#define SPI_BAUDRATEPRESCALER_8         (0x20000000U)
-		#define SPI_BAUDRATEPRESCALER_16        (0x30000000U)
-		#define SPI_BAUDRATEPRESCALER_32        (0x40000000U)
-		#define SPI_BAUDRATEPRESCALER_64        (0x50000000U)
-		#define SPI_BAUDRATEPRESCALER_128       (0x60000000U)
-		#define SPI_BAUDRATEPRESCALER_256       (0x70000000U)
+			#define SPI_BAUDRATEPRESCALER_2         (0x00000000U)
+			#define SPI_BAUDRATEPRESCALER_4         (0x10000000U)
+			#define SPI_BAUDRATEPRESCALER_8         (0x20000000U)
+			#define SPI_BAUDRATEPRESCALER_16        (0x30000000U)
+			#define SPI_BAUDRATEPRESCALER_32        (0x40000000U)
+			#define SPI_BAUDRATEPRESCALER_64        (0x50000000U)
+			#define SPI_BAUDRATEPRESCALER_128       (0x60000000U)
+			#define SPI_BAUDRATEPRESCALER_256       (0x70000000U)
 		#endif
 
 	#elif defined(MCU_IS_NXP_LPC11XX) || defined(MCU_IS_NXP_LPC17XX)
 		#ifndef SPI_BaudRatePrescaler_2
-		#define SPI_BaudRatePrescaler_2         ((uint32_t)0x00000002U)
-		#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000004U)
-		#define SPI_BaudRatePrescaler_6         ((uint32_t)0x00000006U)
-		#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000008U)
-		#define SPI_BaudRatePrescaler_16        ((uint32_t)0x00000010U)
-		#define SPI_BaudRatePrescaler_32        ((uint32_t)0x00000020U)
-		#define SPI_BaudRatePrescaler_64        ((uint32_t)0x00000040U)
-		#define SPI_BaudRatePrescaler_128       ((uint32_t)0x00000080U)
-		#define SPI_BaudRatePrescaler_256       ((uint32_t)0x00000100U)
+			#define SPI_BaudRatePrescaler_2         ((uint32_t)0x00000002U)
+			#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000004U)
+			#define SPI_BaudRatePrescaler_6         ((uint32_t)0x00000006U)
+			#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000008U)
+			#define SPI_BaudRatePrescaler_16        ((uint32_t)0x00000010U)
+			#define SPI_BaudRatePrescaler_32        ((uint32_t)0x00000020U)
+			#define SPI_BaudRatePrescaler_64        ((uint32_t)0x00000040U)
+			#define SPI_BaudRatePrescaler_128       ((uint32_t)0x00000080U)
+			#define SPI_BaudRatePrescaler_256       ((uint32_t)0x00000100U)
 		#endif
 
 	#elif defined (MCU_IS_NXP_MK27_28) || defined (MCU_IS_NXP_MKV58)
 		#ifndef SPI_BaudRatePrescaler_2
-		#define SPI_BaudRatePrescaler_2         ((uint32_t)0x00000000U)
-		#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000001U)
-		#define SPI_BaudRatePrescaler_6         ((uint32_t)0x00000002U)
-		#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000003U)
-		#define SPI_BaudRatePrescaler_16        ((uint32_t)0x00000004U)
-		#define SPI_BaudRatePrescaler_32        ((uint32_t)0x00000005U)
-		#define SPI_BaudRatePrescaler_64        ((uint32_t)0x00000006U)
-		#define SPI_BaudRatePrescaler_128       ((uint32_t)0x00000007U)
-		#define SPI_BaudRatePrescaler_256       ((uint32_t)0x00000008U)
+			#define SPI_BaudRatePrescaler_2         ((uint32_t)0x00000000U)
+			#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000001U)
+			#define SPI_BaudRatePrescaler_6         ((uint32_t)0x00000002U)
+			#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000003U)
+			#define SPI_BaudRatePrescaler_16        ((uint32_t)0x00000004U)
+			#define SPI_BaudRatePrescaler_32        ((uint32_t)0x00000005U)
+			#define SPI_BaudRatePrescaler_64        ((uint32_t)0x00000006U)
+			#define SPI_BaudRatePrescaler_128       ((uint32_t)0x00000007U)
+			#define SPI_BaudRatePrescaler_256       ((uint32_t)0x00000008U)
 		#endif
 
 	#elif defined(MCU_IS_TI_TMS320F283XX)
@@ -270,16 +270,16 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 
 	#elif defined (MCU_IS_NXP_iMXRT10xx)
 		#ifndef SPI_BaudRatePrescaler_2
-		#define SPI_BaudRatePrescaler_2         ((uint32_t)0x00000000U)
-		#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000002U)
-		#define SPI_BaudRatePrescaler_6         ((uint32_t)0x00000004U)
-		#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000006U)
-		#define SPI_BaudRatePrescaler_12        ((uint32_t)0x0000000AU)
-		#define SPI_BaudRatePrescaler_16        ((uint32_t)0x0000000EU)
-		#define SPI_BaudRatePrescaler_32        ((uint32_t)0x0000001EU)
-		#define SPI_BaudRatePrescaler_64        ((uint32_t)0x0000003EU)
-		#define SPI_BaudRatePrescaler_128       ((uint32_t)0x0000007EU)
-		#define SPI_BaudRatePrescaler_256       ((uint32_t)0x000000FEU)
+			#define SPI_BaudRatePrescaler_2         ((uint32_t)0x00000000U)
+			#define SPI_BaudRatePrescaler_4         ((uint32_t)0x00000002U)
+			#define SPI_BaudRatePrescaler_6         ((uint32_t)0x00000004U)
+			#define SPI_BaudRatePrescaler_8         ((uint32_t)0x00000006U)
+			#define SPI_BaudRatePrescaler_12        ((uint32_t)0x0000000AU)
+			#define SPI_BaudRatePrescaler_16        ((uint32_t)0x0000000EU)
+			#define SPI_BaudRatePrescaler_32        ((uint32_t)0x0000001EU)
+			#define SPI_BaudRatePrescaler_64        ((uint32_t)0x0000003EU)
+			#define SPI_BaudRatePrescaler_128       ((uint32_t)0x0000007EU)
+			#define SPI_BaudRatePrescaler_256       ((uint32_t)0x000000FEU)
 		#endif
 
 	#else
@@ -441,7 +441,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	// 第四步：开发阶段和测试阶段，用于测试评估主机板在当前频率下进行高速SPI读写访问时的可靠性。
 	//       如果足够可靠，则可以适当提高SPI频率；如果不可靠，则可能需要检查主机板连线或者降低SPI频率。
 	//		 (Note:产品研发完毕进入正式产品化发布阶段后，因为在研发阶段已经确立了最佳稳定频率，建议这里改成 #if 0，不必再测试)
-	#if 0  //前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
+	#if 1  //前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
 	{   
 		volatile u32  i, j;
 		u8   byte;
@@ -516,8 +516,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	#if 1	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的将会被执行
 	{
 		//u8 M8266WIFI_SPI_Set_Opmode(u8 op_mode, u8 saved, u16* status);
-		//设置为AP Only模式。1=STA Only, 2=AP Only, 3=STA+AP
-		if(M8266WIFI_SPI_Set_Opmode(1, 0, &status)==0)
+		if( M8266WIFI_SPI_Set_Opmode(2, 0, &status) == 0 )	// 设置为AP Only模式。1=STA Only, 2=AP Only, 3=STA+AP
 			return 0;
 	}
 	#endif
@@ -541,7 +540,6 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	if(M8266WIFI_SPI_Get_Opmode(&sta_ap_mode, &status)==0)
     	return 0;
 
-
 	if( (sta_ap_mode == 1) ||(sta_ap_mode == 3) )  // 1==STA模式	3==STA+AP模式
 	{
 		// If you expect to use smartconfig to config the module, enable here by "#if 1" and prepare to send ssid using your smart devices such as smartphone
@@ -561,9 +559,10 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		// If you expect to use the SSID and password here overriding the default loaded from on-module SPI flash, enable it by "#if 1", and update the ssid and password with those of your routers connected to.
 		// 如果模组上保存有之前连接过的热点/路由器的SSID和密码（称为缺省SSID和密码），而模组启动后的模组包含STA，那么模组会自动加载这个缺省的SSID和密码自动去连接路由器和热点。
 		// 但是如果你不希望使用这个缺省的SSID和密码来连接路由器/热点，你可以这里改成 #if 1，并将其中的SSID和密码改成你所期望连接的热点/路由器的
-		#if 1      	
+		#if 1  //Note:不同的WiFi热点需要根据模式修改    	
 			//u8 M8266WIFI_SPI_STA_Connect_Ap(u8 ssid[32], u8 password[64], u8 saved, u8 timeout_in_s, u16* status);
-			if(M8266WIFI_SPI_STA_Connect_Ap("TP-LINK_A641", "d42612345678", 0, 20, &status) == 0) // not saved, timeout=20s
+			//if(M8266WIFI_SPI_STA_Connect_Ap("TP-LINK_A641", "d42612345678", 0, 20, &status) == 0) // not saved, timeout=20s
+			if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 0, 20, &status) == 0)
 				return 0;
 		#endif
 
@@ -582,8 +581,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		#if 1	
 		else //前方if()
 		{
-			// connection_status will give the status of last connecting
-			// connection_status将返回上次连接热点/路由器的结果状态，协助诊断
+			// connection_status将返回上次连接热点/路由器的结果状态，协助诊断(connection_status will give the status of last connecting)
 			if(M8266WIFI_SPI_Get_STA_Connection_Status(&connection_status, &status)==0)  
 				return 0;
 		}
@@ -592,7 +590,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		// these below function is just an example on how to use them. You may or may not use them during module initialisation
 		// 下面这个函数只是一个例子，来演示如何获取模组连接热点/路由器时的信号强度，你可以在这里使用 #if 1来使用它，也可以使用#if 0来不适用它)
 		#if 1
-			//u8 M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI(char* ssid, u8* rssi, u16* status)
+			// u8 M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI(char* ssid, u8* rssi, u16* status)
 			if(M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI(ssid, &rssi, &status)==0)
 				return 0;
 		#endif

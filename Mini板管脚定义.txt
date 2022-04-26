@@ -1,0 +1,24 @@
+M8266WIFI_SPI_INTERFACE_NO = 1	<--->	SPI1
+nRESET		<--->	PA1
+SPI_nCS		<--->	PA4
+SPI1_SCK	<--->	PA5
+SPI1_MISO	<--->	PA6
+SPI1_MOSI	<--->	PA7
+GND
+3v3
+
+
+
+
+
+
+	/*	SPI参数设置	*/
+	SPI_InitStructure.SPI_Direction 			= SPI_Direction_2Lines_FullDuplex;    
+	SPI_InitStructure.SPI_Mode 					= SPI_Mode_Master;									  
+	SPI_InitStructure.SPI_DataSize 				= SPI_DataSize_8b;									 
+	SPI_InitStructure.SPI_CPOL 					= SPI_CPOL_Low;		//Note:M8266WIFI SPI Works at CPOL=LOW, CPHA=1Edge
+	SPI_InitStructure.SPI_CPHA 					= SPI_CPHA_1Edge;	
+	SPI_InitStructure.SPI_NSS 					= SPI_NSS_Soft;									
+	SPI_InitStructure.SPI_BaudRatePrescaler 	= SPI_BaudRatePrescaler_16;
+	SPI_InitStructure.SPI_FirstBit 				= SPI_FirstBit_MSB;	//Note:M8266WIFI SPI Works with MSB First							
+	SPI_InitStructure.SPI_CRCPolynomial 		= 7;

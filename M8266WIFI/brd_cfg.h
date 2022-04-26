@@ -21,7 +21,7 @@
 //#define MCU_IS_HT32F16XX
 
 #if defined(MCU_IS_HT32F16XX)
-#include "ht32f1655_56.h"
+	#include "ht32f1655_56.h"
 #endif
 
 //#define USE_LED_AND_KEY_FOR_TEST
@@ -34,8 +34,8 @@
 /*	nRESET	*/
 #if defined(MCU_IS_STM32F1XX)  // STM's STM32F1XX, using *GPIOB12* as nRESET
 	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE)//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE)
-	#define  M8266WIFI_nRESET_GPIO					GPIOA//GPIOB
-	#define  M8266WIFI_nRESET_PIN					GPIO_Pin_1//GPIO_Pin_12
+	#define  M8266WIFI_nRESET_GPIO					GPIOA		//GPIOB
+	#define  M8266WIFI_nRESET_PIN					GPIO_Pin_1	//GPIO_Pin_12
 
 #elif defined(MCU_IS_STM32F2XX)  // STM's STM32F2XX, //using *GPIOD0* as nRESET
 	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
@@ -49,59 +49,59 @@
 
 #elif defined(MCU_IS_STM32F4XX)  // STM's STM32F4XX, 
 //using *GPIOD13* as nRESET
-//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
-//#define  M8266WIFI_nRESET_GPIO											GPIOD
-//#define  M8266WIFI_nRESET_PIN												GPIO_Pin_13
+	//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE)
+	//#define  M8266WIFI_nRESET_GPIO											GPIOD
+	//#define  M8266WIFI_nRESET_PIN												GPIO_Pin_13
 //using *GPIOB9* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE)
-#define  M8266WIFI_nRESET_GPIO											GPIOB
-#define  M8266WIFI_nRESET_PIN												GPIO_Pin_9
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE)
+	#define  M8266WIFI_nRESET_GPIO											GPIOB
+	#define  M8266WIFI_nRESET_PIN												GPIO_Pin_9
 //using *GPIOA0* as nRESET
-//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
-//#define  M8266WIFI_nRESET_GPIO											GPIOA
-//#define  M8266WIFI_nRESET_PIN												GPIO_Pin_0
+	//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE)
+	//#define  M8266WIFI_nRESET_GPIO											GPIOA
+	//#define  M8266WIFI_nRESET_PIN												GPIO_Pin_0
 //using *GPIOE4* as nRESET
-//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE)
-//#define  M8266WIFI_nRESET_GPIO											GPIOE
-//#define  M8266WIFI_nRESET_PIN												GPIO_Pin_4
+	//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE)
+	//#define  M8266WIFI_nRESET_GPIO											GPIOE
+	//#define  M8266WIFI_nRESET_PIN												GPIO_Pin_4
 
 #elif defined(MCU_IS_STM32F7XX)  // STM's STM32F7XX, using *GPIOB2* as nRESET  // avoid to use PE3, boards like Apollo have problems in output high simutenous to nearby PIO e.g. PE3&PE4
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOE_CLK_ENABLE()
-#define  M8266WIFI_nRESET_GPIO											GPIOE
-#define  M8266WIFI_nRESET_PIN												GPIO_PIN_3
-//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOB_CLK_ENABLE()
-//#define  M8266WIFI_nRESET_GPIO											GPIOB
-//#define  M8266WIFI_nRESET_PIN												GPIO_PIN_2
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOE_CLK_ENABLE()
+	#define  M8266WIFI_nRESET_GPIO											GPIOE
+	#define  M8266WIFI_nRESET_PIN											GPIO_PIN_3
+	//#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOB_CLK_ENABLE()
+	//#define  M8266WIFI_nRESET_GPIO											GPIOB
+	//#define  M8266WIFI_nRESET_PIN												GPIO_PIN_2
 
 #elif defined(MCU_IS_STM32L1XX)  // STM's STM32L1XX, using *GPIOC3* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOC_CLK_ENABLE()
-#define  M8266WIFI_nRESET_GPIO											GPIOC
-#define  M8266WIFI_nRESET_PIN												GPIO_PIN_3
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOC_CLK_ENABLE()
+	#define  M8266WIFI_nRESET_GPIO											GPIOC
+	#define  M8266WIFI_nRESET_PIN											GPIO_PIN_3
 
 #elif defined(MCU_IS_STM32L4XX)  // STM's STM32L4XX, using *GPIOC3* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOC_CLK_ENABLE()
-#define  M8266WIFI_nRESET_GPIO											GPIOC
-#define  M8266WIFI_nRESET_PIN												GPIO_PIN_3
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOC_CLK_ENABLE()
+	#define  M8266WIFI_nRESET_GPIO											GPIOC
+	#define  M8266WIFI_nRESET_PIN											GPIO_PIN_3
 
 #elif defined(MCU_IS_STM32H7XX)  // STM's STM32H7XX, using *GPIOE3* as nRESET
-#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOE_CLK_ENABLE()
-#define  M8266WIFI_nRESET_GPIO											GPIOE
-#define  M8266WIFI_nRESET_PIN												GPIO_PIN_3
+	#define  M8266WIFI_nRESET_GPIO_RCC_CLOCK_EN				  __HAL_RCC_GPIOE_CLK_ENABLE()
+	#define  M8266WIFI_nRESET_GPIO											GPIOE
+	#define  M8266WIFI_nRESET_PIN											GPIO_PIN_3
 
 #elif defined(MCU_IS_NXP_LPC17XX) // NXP's LPC17XX,  using *GPIO[2,7]* as nRESET
-#define  M8266WIFI_nRESET_GPIO											LPC_GPIO2
-#define  M8266WIFI_nRESET_PIN												7
+	#define  M8266WIFI_nRESET_GPIO											LPC_GPIO2
+	#define  M8266WIFI_nRESET_PIN												7
 
 #elif defined(MCU_IS_NXP_MK27_28)   	// NXP's MK27/MK28, using *PTE4* as nRESET
-#define  M8266WIFI_nRESET_PORT											PORTE
-#define  M8266WIFI_nRESET_PORT_CLOCK								kCLOCK_PortE
-#define  M8266WIFI_nRESET_GPIO											GPIOE
-#define  M8266WIFI_nRESET_PIN												4
+	#define  M8266WIFI_nRESET_PORT											PORTE
+	#define  M8266WIFI_nRESET_PORT_CLOCK								kCLOCK_PortE
+	#define  M8266WIFI_nRESET_GPIO											GPIOE
+	#define  M8266WIFI_nRESET_PIN												4
 
 #elif defined(MCU_IS_HT32F16XX)   // Holtek's HT32F16XX, using *GPIOA2* as nRESET
-#define  M8266WIFI_nRESET_GPIO_CLK_BIT		CKCUClock.Bit.PA
-#define  M8266WIFI_nRESET_GPIO				HT_GPIOA
-#define  M8266WIFI_nRESET_PIN				GPIO_PIN_2
+	#define  M8266WIFI_nRESET_GPIO_CLK_BIT		CKCUClock.Bit.PA
+	#define  M8266WIFI_nRESET_GPIO				HT_GPIOA
+	#define  M8266WIFI_nRESET_PIN				GPIO_PIN_2
 
 #else
 	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
@@ -187,23 +187,25 @@
 //----------------------------------------------------------------------------------
 
 //      PIN   GND - nRST - nCS - MOSI - MISO - CLK   
-////For STM32, see M8266HostIf_STM32xx.c
-//- If uses SPI1, SPI1_MOSI=GPIOA7,  SPI1_MISO=GPIOA6,  SPI1_SCK=GPIOA5   -- this default
-//            or  SPI1_MOSI=GPIOB5,  SPI1_MISO=GPIOB4,  SPI1_SCK=GPIOB3                 
-//- If uses SPI2, SPI2_MOSI=GPIOB15, SPI3_MISO=GPIOB14, SPI3_SCK=GPIOB13  -- this default
-//            or  SPI2_MOSI=GPIOC3,  SPI1_MISO=GPIOC2,  SPI1_SCK=GPIOB10,                  
-//- If uses SPI3, SPI3_MOSI=GPIOB5,  SPI3_MISO=GPIOB4,  SPI3_SCK=GPIOB3,  -- this default
-//            or  SPI3_MOSI=GPIOC12, SPI3_MISO=GPIOC11, SPI3_SCK=GPIOC10                  
-//- If uses SPI4, SPI3_MOSI=GPIOE2,  SPI3_MISO=GPIOE5,  SPI3_SCK=GPIOE6,  -- this default
-//            or  SPI3_MOSI=GPIOC12, SPI3_MISO=GPIOC11, SPI3_SCK=GPIOC10                  
+/*	For STM32, see M8266HostIf_STM32xx.c
+	- If uses SPI1, SPI1_MOSI=GPIOA7,  SPI1_MISO=GPIOA6,  SPI1_SCK=GPIOA5   -- this default
+	            or  SPI1_MOSI=GPIOB5,  SPI1_MISO=GPIOB4,  SPI1_SCK=GPIOB3                 
+	- If uses SPI2, SPI2_MOSI=GPIOB15, SPI3_MISO=GPIOB14, SPI3_SCK=GPIOB13  -- this default
+	            or  SPI2_MOSI=GPIOC3,  SPI1_MISO=GPIOC2,  SPI1_SCK=GPIOB10,                  
+	- If uses SPI3, SPI3_MOSI=GPIOB5,  SPI3_MISO=GPIOB4,  SPI3_SCK=GPIOB3,  -- this default
+	            or  SPI3_MOSI=GPIOC12, SPI3_MISO=GPIOC11, SPI3_SCK=GPIOC10                  
+	- If uses SPI4, SPI3_MOSI=GPIOE2,  SPI3_MISO=GPIOE5,  SPI3_SCK=GPIOE6,  -- this default
+	            or  SPI3_MOSI=GPIOC12, SPI3_MISO=GPIOC11, SPI3_SCK=GPIOC10                  
+*/
 
-////For LPX17xx
-//- If uses SPI0, SPI0_MOSI=P0.18,  SPI0_MISO=P0.17,  SPI0_SCK=P0.15      -- use this currently
-//For HT32F16xx
-//- If uses SPI0, SPI0_MOSI=PA5,  SPI0_MISO=PA6,  SPI0_SCK=PA4            -- use this currently
-//            or  SPI0_MOSI=PD11, SPI0_MISO=PD12, SPI0_SCK=PD10
-//- If uses SPI1, SPI1_MOSI=PE10, SPI1_MISO=PE11, SPI1_SCK=PE9
-//            or  SPI1_MOSI=PC11, SPI1_MISO=PC12, SPI1_SCK=PC10
+/*	For LPX17xx
+	- If uses SPI0, SPI0_MOSI=P0.18,  SPI0_MISO=P0.17,  SPI0_SCK=P0.15      -- use this currently
+	For HT32F16xx
+	- If uses SPI0, SPI0_MOSI=PA5,  SPI0_MISO=PA6,  SPI0_SCK=PA4            -- use this currently
+	            or  SPI0_MOSI=PD11, SPI0_MISO=PD12, SPI0_SCK=PD10
+	- If uses SPI1, SPI1_MOSI=PE10, SPI1_MISO=PE11, SPI1_SCK=PE9
+	            or  SPI1_MOSI=PC11, SPI1_MISO=PC12, SPI1_SCK=PC10
+*/
 #define  M8266WIFI_SPI_INTERFACE_NO	 1  // STM32: 1~. for STM32F4xx, try to use SPI1 other than SPI2 and SPI3, since according to datasheet, SPI1 has a better performance than SPI2 and SPI3
 										// NXP:   0~ 
 //- If uses USART1, USART1_TXD=PA9, USART1_RXD=PA10
@@ -211,7 +213,7 @@
 #define  M8266WIFI_USART_INTERFACE_NO	1 // 1 for USART1, 2 for USART2
 #define  M8266WIFI_USART_RX_BUF_SIZE	512
 
-#define  USART_FOR_PRINTF												USART1
+#define  USART_FOR_PRINTF				USART1
 
 
 
@@ -230,7 +232,7 @@
 //----------------------------------------------------------------------------------
 #if   defined(MCU_IS_STM32F1XX)  		// STM's STM32F1XX, 
 #define GPIO_InitStructure_AS_GPIO_OUTPUT(gpio,pin)						\
-	GPIO_InitStructure.GPIO_Pin 	= pin;												\
+	GPIO_InitStructure.GPIO_Pin 	= pin;									\
 	GPIO_InitStructure.GPIO_Mode 	= GPIO_Mode_Out_PP;						\
 	GPIO_InitStructure.GPIO_Speed 	= GPIO_Speed_50MHz;						\
 	GPIO_Init(gpio, &GPIO_InitStructure)
@@ -274,7 +276,7 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 //----------------------------------------------------------------------------------
@@ -343,35 +345,36 @@
 #elif defined(MCU_IS_STM32L4XX)
 #elif defined(MCU_IS_STM32H7XX)
 #elif defined(MCU_IS_NXP_LPC17XX)
-#define GPIO_PinRemapSPI0																																										\
-						LPC_PINCON->PINSEL0 &= ~(0x03UL << 30); LPC_PINCON->PINSEL0 |=  (0x02UL << 30);		\
-						LPC_PINCON->PINSEL1 &= ~(0x03UL <<  2); LPC_PINCON->PINSEL1 |=  (0x02UL <<  2);		\
-						LPC_PINCON->PINSEL1 &= ~(0x03UL <<  4); LPC_PINCON->PINSEL1 |=  (0x02UL <<  4);		\
-						LPC_PINCON->PINSEL1 &= ~(0x03UL << 0);	
+	#define GPIO_PinRemapSPI0																																										\
+				LPC_PINCON->PINSEL0 &= ~(0x03UL << 30); LPC_PINCON->PINSEL0 |=  (0x02UL << 30);		\
+				LPC_PINCON->PINSEL1 &= ~(0x03UL <<  2); LPC_PINCON->PINSEL1 |=  (0x02UL <<  2);		\
+				LPC_PINCON->PINSEL1 &= ~(0x03UL <<  4); LPC_PINCON->PINSEL1 |=  (0x02UL <<  4);		\
+				LPC_PINCON->PINSEL1 &= ~(0x03UL << 0);
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
+//----------------------------------------------------------------------------------
 //--------SPI1--------------------------------------------------------------------------
 /*	To define GPIO_PinRemapSPI1	*/
 #if   defined(MCU_IS_STM32F1XX)
-#define GPIO_PinRemapSPI1		\
-	GPIO_PinRemapConfig(GPIO_Remap_SPI1, ENABLE);
+	#define GPIO_PinRemapSPI1		\
+		GPIO_PinRemapConfig(GPIO_Remap_SPI1, ENABLE);
 
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
-#define GPIO_PinRemapSPI1		\
-	GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MOSI_GPIO_PinSource,GPIO_AF_SPI1);		\
-	GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MISO_GPIO_PinSource,GPIO_AF_SPI1); 		\
-	GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_CLK_GPIO_PinSource,GPIO_AF_SPI1); 
+	#define GPIO_PinRemapSPI1		\
+		GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MOSI_GPIO_PinSource,GPIO_AF_SPI1);		\
+		GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MISO_GPIO_PinSource,GPIO_AF_SPI1); 		\
+		GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_CLK_GPIO_PinSource,GPIO_AF_SPI1); 
 
 #elif defined(MCU_IS_NXP_LPC17XX)//NXP LPC17XX
-#define GPIO_PinRemapSPI1		\
-						LPC_PINCON->PINSEL0 &= ~(0x03UL << 14); LPC_PINCON->PINSEL0 |=  (0x02UL << 14);	\
-						LPC_PINCON->PINSEL0 &= ~(0x03UL << 16); LPC_PINCON->PINSEL0 |=  (0x02UL << 16);	\
-						LPC_PINCON->PINSEL0 &= ~(0x03UL << 18); LPC_PINCON->PINSEL0 |=  (0x02UL << 18);	\
-						LPC_PINCON->PINSEL0 &= ~(0x03UL << 12);	
+	#define GPIO_PinRemapSPI1		\
+				LPC_PINCON->PINSEL0 &= ~(0x03UL << 14); LPC_PINCON->PINSEL0 |=  (0x02UL << 14);	\
+				LPC_PINCON->PINSEL0 &= ~(0x03UL << 16); LPC_PINCON->PINSEL0 |=  (0x02UL << 16);	\
+				LPC_PINCON->PINSEL0 &= ~(0x03UL << 18); LPC_PINCON->PINSEL0 |=  (0x02UL << 18);	\
+				LPC_PINCON->PINSEL0 &= ~(0x03UL << 12);	
 
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
@@ -380,29 +383,32 @@
 	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
-//-------SPI2---------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//-------SPI2-----------------------------------------------------------------------
 /*	To define GPIO_PinRemapSPI2	*/
 #if   defined(MCU_IS_STM32F1XX)
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
-#define GPIO_PinRemapSPI2			\
-  	GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MOSI_GPIO_PinSource,GPIO_AF_SPI2);		\
-	GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MISO_GPIO_PinSource,GPIO_AF_SPI2); 		\
-	GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_CLK_GPIO_PinSource,GPIO_AF_SPI2); 
+	#define GPIO_PinRemapSPI2			\
+		GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MOSI_GPIO_PinSource,GPIO_AF_SPI2);		\
+		GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_MISO_GPIO_PinSource,GPIO_AF_SPI2); 		\
+		GPIO_PinAFConfig(M8266WIFI_SPI_GPIO,M8266WIFI_SPI_CLK_GPIO_PinSource,GPIO_AF_SPI2); 
 #elif defined(MCU_IS_NXP_LPC17XX)//NXP LPC17XX
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
+
+//----------------------------------------------------------------------------------
 //-------SPI3---------------------------------------------------------------------------
 /*	To define GPIO_PinRemapSPI3	*/
 #if   defined(MCU_IS_STM32F1XX)
-#define GPIO_PinRemapSPI3	\
+	#define GPIO_PinRemapSPI3	\
 	GPIO_PinRemapConfig(GPIO_Remap_SPI3, ENABLE);
 
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
-#define GPIO_PinRemapSPI3				\
+	#define GPIO_PinRemapSPI3				\
 	GPIO_PinAFConfig(GPIOB,GPIO_PinSource3,GPIO_AF_SPI3);		\
 	GPIO_PinAFConfig(GPIOB,GPIO_PinSource4,GPIO_AF_SPI3); 		\
 	GPIO_PinAFConfig(GPIOB,GPIO_PinSource5,GPIO_AF_SPI3);
@@ -412,16 +418,17 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 //----------------------------------------------------------------------------------
-#if   defined(MCU_IS_STM32F1XX)
-#define GPIO_PinRemapUSART1									\
+//----- USART1 ---------------------------------------------------------------------
+#if defined(MCU_IS_STM32F1XX)
+	#define GPIO_PinRemapUSART1							\
 	GPIO_PinRemapConfig(GPIO_Remap_USART1, ENABLE);
 
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
-#define GPIO_PinRemapUSART1													\
+	#define GPIO_PinRemapUSART1												\
 		GPIO_PinAFConfig(GPIOA, GPIO_PinSource9,  GPIO_AF_USART1); 			\
 		GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1);
 
@@ -430,100 +437,100 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 //----------------------------------------------------------------------------------
-#if   defined(MCU_IS_STM32F1XX)
-#define GPIO_PinRemapUSART2							\
+//--------USART2--------------------------------------------------------------------
+#if defined(MCU_IS_STM32F1XX)
+	#define GPIO_PinRemapUSART2							\
 	GPIO_PinRemapConfig(GPIO_Remap_USART2, ENABLE);
 
 #elif defined(MCU_IS_STM32F2XX) || defined(MCU_IS_STM32F3XX) || defined(MCU_IS_STM32F4XX) || defined(MCU_IS_STM32F7XX) || defined(MCU_IS_STM32L1XX) || defined(MCU_IS_STM32L4XX) || defined(MCU_IS_STM32H7XX)
-#define GPIO_PinRemapUSART2																				\
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2,  GPIO_AF_USART2); 			\
+	#define GPIO_PinRemapUSART2																				\
+	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2,  GPIO_AF_USART2); 		\
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3,  GPIO_AF_USART2);
-
 #elif defined(MCU_IS_NXP_LPC17XX)//NXP's LPC17XX
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
-
 #else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
+//----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 #if   defined(MCU_IS_STM32)  // for STM32	缺省值：保持这些宏定义和实际主板的接线一致
-#if   (M8266WIFI_SPI_INTERFACE_NO == 1)
-  #define  M8266WIFI_INTERFACE_SPI								SPI1
-#elif (M8266WIFI_SPI_INTERFACE_NO == 2)
-  #define  M8266WIFI_INTERFACE_SPI								SPI2
-#elif (M8266WIFI_SPI_INTERFACE_NO == 3)
-  #define  M8266WIFI_INTERFACE_SPI								SPI3
-#elif (M8266WIFI_SPI_INTERFACE_NO == 4)
-  #define  M8266WIFI_INTERFACE_SPI								SPI4
-#else
-#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for STM32 in brd_cfg.h
-#endif
+	#if   (M8266WIFI_SPI_INTERFACE_NO == 1)
+		#define  M8266WIFI_INTERFACE_SPI								SPI1
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 2)
+		#define  M8266WIFI_INTERFACE_SPI								SPI2
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 3)
+		#define  M8266WIFI_INTERFACE_SPI								SPI3
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 4)
+		#define  M8266WIFI_INTERFACE_SPI								SPI4
+	#else
+		#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for STM32 in brd_cfg.h
+	#endif
 
 #elif defined(MCU_IS_NXP_LPC17XX) // for LPC17XX
-#if   (M8266WIFI_SPI_INTERFACE_NO == 0)
-  #define  M8266WIFI_INTERFACE_SPI								LPC_SSP0
-	#define  LPC_SC_PCON_SSP_BIT										21				// Power Enable bit of SSP0
-	#define  LPC_SC_PCLKSELx_FOR_SSP								PCLKSEL1	// PCLK Selection for SSP0
-	#define  LPC_SC_PCLKSELx_FOR_SSP_MASK_BIT				10
-#elif (M8266WIFI_SPI_INTERFACE_NO == 1)
-  #define  M8266WIFI_INTERFACE_SPI								LPC_SSP1
-	#define  LPC_SC_PCON_SSP_BIT										10				// Power Enable bit of SSP1
-	#define  LPC_SC_PCLKSELx_FOR_SSP								PCLKSEL0	// PCLK Selection for SSP1
-	#define  LPC_SC_PCLKSELx_FOR_SSP_MASK_BIT				20
-#else
-#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for NXP_LPC17XX in brd_cfg.h
-#endif
+	#if   (M8266WIFI_SPI_INTERFACE_NO == 0)
+		#define  M8266WIFI_INTERFACE_SPI						LPC_SSP0
+		#define  LPC_SC_PCON_SSP_BIT							21				// Power Enable bit of SSP0
+		#define  LPC_SC_PCLKSELx_FOR_SSP						PCLKSEL1	// PCLK Selection for SSP0
+		#define  LPC_SC_PCLKSELx_FOR_SSP_MASK_BIT				10
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 1)
+		#define  M8266WIFI_INTERFACE_SPI						LPC_SSP1
+		#define  LPC_SC_PCON_SSP_BIT							10				// Power Enable bit of SSP1
+		#define  LPC_SC_PCLKSELx_FOR_SSP						PCLKSEL0	// PCLK Selection for SSP1
+		#define  LPC_SC_PCLKSELx_FOR_SSP_MASK_BIT				20
+	#else
+		#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for NXP_LPC17XX in brd_cfg.h
+	#endif
 
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
-#if   (M8266WIFI_SPI_INTERFACE_NO == 0)
-  #define  M8266WIFI_INTERFACE_SPI								SPI0
-	#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi0
-#elif (M8266WIFI_SPI_INTERFACE_NO == 1)
-  #define  M8266WIFI_INTERFACE_SPI								SPI1
-	#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi1
-#elif (M8266WIFI_SPI_INTERFACE_NO == 2)
-  #define  M8266WIFI_INTERFACE_SPI								SPI2
-	#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi2
-#elif (M8266WIFI_SPI_INTERFACE_NO == 3)
-  #define  M8266WIFI_INTERFACE_SPI								SPI3
-	#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi3
-#else
-#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for NXP_MK27_28 in brd_cfg.h
-#endif
+	#if   (M8266WIFI_SPI_INTERFACE_NO == 0)
+		#define  M8266WIFI_INTERFACE_SPI						SPI0
+		#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi0
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 1)
+		#define  M8266WIFI_INTERFACE_SPI						SPI1
+		#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi1
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 2)
+		#define  M8266WIFI_INTERFACE_SPI						SPI2
+		#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi2
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 3)
+		#define  M8266WIFI_INTERFACE_SPI						SPI3
+		#define  M8266WIFI_INTERFACE_SPI_CLOCK					kCLOCK_Spi3
+	#else
+		#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for NXP_MK27_28 in brd_cfg.h
+	#endif
 
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
-#if   (M8266WIFI_SPI_INTERFACE_NO == 0)
-  #define  M8266WIFI_INTERFACE_SPI								HT_SPI0
-#elif (M8266WIFI_SPI_INTERFACE_NO == 1)
-  #define  M8266WIFI_INTERFACE_SPI								HT_SPI1
+	#if   (M8266WIFI_SPI_INTERFACE_NO == 0)
+	#define  M8266WIFI_INTERFACE_SPI								HT_SPI0
+	#elif (M8266WIFI_SPI_INTERFACE_NO == 1)
+	#define  M8266WIFI_INTERFACE_SPI								HT_SPI1
+	#else
+	#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for Holtek's HT32F16XX in brd_cfg.h
+	#endif
 #else
-#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 137 for Holtek's HT32F16XX in brd_cfg.h
-#endif
-
-#else
-#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
+	#error YOU SHOULD DEFINED MCU_IS_XXX near line 17 in brd_cfg.h
 #endif
 
 
 //----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 #if   defined(MCU_IS_STM32)  // for STM32		缺省值：保持这些宏定义和实际主板的接线一致
-#if   (M8266WIFI_USART_INTERFACE_NO == 1)
-#define  M8266WIFI_INTERFACE_USART							USART1
-#define  M8266WIFI_INTERFACE_USART_IRQn					USART1_IRQn
+	#if   (M8266WIFI_USART_INTERFACE_NO == 1)
+	#define  M8266WIFI_INTERFACE_USART							USART1
+	#define  M8266WIFI_INTERFACE_USART_IRQn					USART1_IRQn
 
-#elif (M8266WIFI_USART_INTERFACE_NO == 2)
-#define  M8266WIFI_INTERFACE_USART							USART2
-#define  M8266WIFI_INTERFACE_USART_IRQn					USART2_IRQn
+	#elif (M8266WIFI_USART_INTERFACE_NO == 2)
+	#define  M8266WIFI_INTERFACE_USART							USART2
+	#define  M8266WIFI_INTERFACE_USART_IRQn					USART2_IRQn
 
-#else
-#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 90 for STM32 in brd_cfg.h
-#endif
+	#else
+	#error Wrong M8266WIFI_SPI_INTERFACE_NO defined near line 90 for STM32 in brd_cfg.h
+	#endif
 
 #elif defined(MCU_IS_NXP_LPC17XX) // for LPC17XX
 #elif defined(MCU_IS_NXP_MK27_28)// NXP's MK27/MK28
@@ -531,11 +538,12 @@
 #elif defined(MCU_IS_HT32F16XX)  //Holtek's HT32F16XX
 
 #else
-#error UNSUPPORTED USARTx defined in brd_cfg.h
+	#error UNSUPPORTED USARTx defined in brd_cfg.h
 #endif
 
 
 
+//----------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------
 //Other board related Macros
 
