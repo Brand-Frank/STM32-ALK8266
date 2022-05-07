@@ -477,7 +477,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	// 5.1 If you hope to reduce the Max Tx power, you could enable it by change to "#if 1" 
 	// 5.1 如果你希望减小模组的最大发射功率，可以将这里改成 #if 1，并调整下面的 tx_max_power参数的值
- 	#if 0	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
+ 	#if 0
 		//u8 M8266WIFI_SPI_Set_Tx_Max_Power(u8 tx_max_power, u16 *status)
 		//tx_max_power=68 to set the max tx power of around half of manufacture default, i.e. 50mW or 17dBm. Refer to the API specification for more info
 		//下方:tx_max_power=68表示将发射最大功率设置为出厂缺省数值的一般，即50mW或者17dBm。具体数值含义可以查看这个API函数的头文件声明里的注释
@@ -486,10 +486,9 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	#endif
 
 	//-------------------------------------------------------------------------------------
-	// Web服务器
 	// 5.2 If you expect to config or stop the on-module web server, you could enable it by change to "#if 1" and adjust as required
 	// 5.2 如果你希望配置或关闭模组上自带的WEB服务器，你可以将这里改成 #if 1，并调整下面的API函数里的相关参数值
-	#if 0	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
+	#if 0	// Web服务器
 	{
 		//u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, u16* status)
 		if(M8266WIFI_SPI_Set_WebServer(0, 3128, 0, &status)==0)  // 第一个参数0表示关闭WEB服务器)
@@ -512,7 +511,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	#if 1	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的将会被执行
 	{
 		//u8 M8266WIFI_SPI_Set_Opmode(u8 op_mode, u8 saved, u16* status);
-		if( M8266WIFI_SPI_Set_Opmode(2, 0, &status) == 0 )	// 设置为AP Only模式。1=STA Only, 2=AP Only, 3=STA+AP
+		if( M8266WIFI_SPI_Set_Opmode(1, 0, &status) == 0 )	// 设置为AP Only模式。1=STA Only, 2=AP Only, 3=STA+AP
 			return 0;
 	}
 	#endif
@@ -522,7 +521,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	// 5.4 如果你希望改变模组作为AP热点时的AP热点名称和密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
 	#if 0
 	{
-		//TODO:修改WiFi模块AP模式下的WiFi名和WiFi密码
+		//TODO:修改WiFi模块 AP 模式下的WiFi名和WiFi密码
 		//u8 M8266WIFI_SPI_Config_AP(u8 ssid[13+1], u8 password[13+1], u8 enc, u8 channel, u8 saved, u16* status);
 		if(M8266WIFI_SPI_Config_AP("Anylinkin", "1234567890", 4, 1, 0, &status)==0)  // set to 4=WPA_WPA2_PSK, not saved // 0=OPEN, 1=WEP, 2=WPA_PSK, 3=WPA2_PSK, 4=WPA_WPA2_PSK
 		return 0;
