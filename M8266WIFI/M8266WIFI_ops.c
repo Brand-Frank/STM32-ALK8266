@@ -508,18 +508,18 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	// 5.3 If you expect to change the op_mode overriding the default loaded from flash on bootup, enable it by "#if 1"
 	// 5.3 如果你希望改变模组的op_mode，不使用模组启动时缺省op_mode，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值
-	#if 1	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的将会被执行
+	#if 1
 	{
 		//u8 M8266WIFI_SPI_Set_Opmode(u8 op_mode, u8 saved, u16* status);
-		if( M8266WIFI_SPI_Set_Opmode(1, 0, &status) == 0 )	// 设置为AP Only模式。1=STA Only, 2=AP Only, 3=STA+AP
+		if( M8266WIFI_SPI_Set_Opmode(3, 0, &status) == 0 )	// 1=STA Only, 2=AP Only, 3=STA+AP
 			return 0;
 	}
 	#endif
 
 	//-------------------------------------------------------------------------------------
 	// 5.4 If you expect to change the ap info overriding the default loaded from flash on bootup, enable it by "#if 1". Meanwhile, according to Protocols, the length of password should not be smaller than 8 Bytes per WAP or WAP2
-	// 5.4 如果你希望改变模组作为AP热点时的AP热点名称和密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
-	#if 0
+	// 5.4 如果你希望改变模组作为 AP热点 时的 AP热点名称 和 密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
+	#if 1
 	{
 		//TODO:修改WiFi模块 AP 模式下的WiFi名和WiFi密码
 		//u8 M8266WIFI_SPI_Config_AP(u8 ssid[13+1], u8 password[13+1], u8 enc, u8 channel, u8 saved, u16* status);
@@ -558,7 +558,8 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 			//u8 M8266WIFI_SPI_STA_Connect_Ap(u8 ssid[32], u8 password[64], u8 saved, u8 timeout_in_s, u16* status);
 			//if(M8266WIFI_SPI_STA_Connect_Ap("TP-LINK_A641", "d42612345678", 0, 20, &status) == 0) //not saved,timeout=20s
 			//if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 0, 20, &status) == 0)
-			if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 1, 20, &status) == 0)
+			// if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin", "1234567890", 1, 20, &status) == 0)
+			if(M8266WIFI_SPI_STA_Connect_Ap("test", "zxcvbnm1", 1, 20, &status) == 0)
 				return 0;
 		#endif
 

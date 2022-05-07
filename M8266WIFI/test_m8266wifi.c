@@ -50,10 +50,10 @@ void M8266WIFI_Test(void)
 		└─5.5.WiFi模块双向通讯（WiFi模块AP模式）//OK
 	*/
 	// 测试时WiFi模块的工作方式
-	#define TEST_M8266WIFI_TYPE 3 //1=向外不停地发送数据 | 2=不停地接收数据 | 3=将接收到的数据发送给发送方 | 4=多客户端测试
+	#define TEST_M8266WIFI_TYPE 1 //1=向外不停地发送数据 | 2=不停地接收数据 | 3=将接收到的数据发送给发送方 | 4=多客户端测试
 
 	// 测试时WiFi模块的角色(TCD/UDP-Server/Client)
-	#define TEST_CONNECTION_TYPE 2	// 0 = WIFI模组做UDP | 1 = WIFI模组做TCP客户端 | 2 = WIFI模组做TCP服务器
+	#define TEST_CONNECTION_TYPE 1	// 0 = WIFI模组做UDP | 1 = WIFI模组做TCP客户端 | 2 = WIFI模组做TCP服务器
 
 	/*	local port (套接字的本地端口)	*/
 	#if (TEST_CONNECTION_TYPE == 1)	//模组作为TCP客户端
@@ -71,8 +71,8 @@ void M8266WIFI_Test(void)
 		#define TEST_REMOTE_ADDR	"192.168.4.2"
 		#define TEST_REMOTE_PORT 	1234
 	#elif (TEST_CONNECTION_TYPE == 1)	//模组作为TCP客户端，则必须指定目标ip和port，即模组所要去连接的TCP服务器的ip和port
-		#define TEST_REMOTE_ADDR	"192.168.43.233"	//192.168.43.18
-		#define TEST_REMOTE_PORT	1234	// 80	
+		#define TEST_REMOTE_ADDR	"192.168.43.18"	//192.168.43.18
+		#define TEST_REMOTE_PORT	1230	// 80	
 	#elif (TEST_CONNECTION_TYPE == 2)	//模组作为TCP服务器,不需要指定目标地址和端口，这里的数据只是一个格式填充，随便填写。
 		#define TEST_REMOTE_ADDR	"1.1.1.1"	//远程IP192.168.4.1（端口4321）
 		#define TEST_REMOTE_PORT	1234

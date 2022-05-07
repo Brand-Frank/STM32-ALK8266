@@ -395,7 +395,7 @@ I (..\M8266WIFI\brd_cfg.h)(0x6267B8C3)
 I (..\M8266WIFI\M8266WIFIDrv.h)(0x6267EB4A)
 I (..\M8266WIFI\M8266HostIf.h)(0x624C92FE)
 F (..\M8266WIFI\M8266WIFIDrv_STM32F1xx.a)(0x60B904CF)()
-F (..\M8266WIFI\M8266WIFI_Ops.c)(0x6275FF08)(-c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ..\CORE -I ..\FWLIB\inc -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HARDWARE\KEY -I ..\HARDWARE\LED -I ..\HARDWARE\LCD -I ..\HARDWARE\SPI -I ..\HARDWARE\TIMER -I ..\USER -I .. -I ..\M8266WIFI-I.\RTE\_STM32F1_M8266WIFI-IF:\MCU\keil5\C51\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-IF:\MCU\keil5\C51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM3 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o ..\output\obj\m8266wifi_ops.o --omf_browse ..\output\obj\m8266wifi_ops.crf --depend ..\output\obj\m8266wifi_ops.d)
+F (..\M8266WIFI\M8266WIFI_Ops.c)(0x627607EF)(-c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ..\CORE -I ..\FWLIB\inc -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HARDWARE\KEY -I ..\HARDWARE\LED -I ..\HARDWARE\LCD -I ..\HARDWARE\SPI -I ..\HARDWARE\TIMER -I ..\USER -I .. -I ..\M8266WIFI-I.\RTE\_STM32F1_M8266WIFI-IF:\MCU\keil5\C51\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-IF:\MCU\keil5\C51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM3 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o ..\output\obj\m8266wifi_ops.o --omf_browse ..\output\obj\m8266wifi_ops.crf --depend ..\output\obj\m8266wifi_ops.d)
 I (F:\MCU\keil5\C51\ARM\ARMCC\include\stdio.h)(0x569DEA3A)
 I (F:\MCU\keil5\C51\ARM\ARMCC\include\string.h)(0x569DEA3A)
 I (..\M8266WIFI\brd_cfg.h)(0x6267B8C3)
@@ -432,7 +432,7 @@ I (..\FWLIB\inc\misc.h)(0x4D783BB4)
 I (..\M8266WIFI\M8266WIFIDrv.h)(0x6267EB4A)
 I (..\M8266WIFI\M8266HostIf.h)(0x624C92FE)
 I (..\M8266WIFI\M8266WIFI_ops.h)(0x624C9D98)
-F (..\M8266WIFI\test_m8266wifi.c)(0x6275FE7E)(-c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ..\CORE -I ..\FWLIB\inc -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HARDWARE\KEY -I ..\HARDWARE\LED -I ..\HARDWARE\LCD -I ..\HARDWARE\SPI -I ..\HARDWARE\TIMER -I ..\USER -I .. -I ..\M8266WIFI-I.\RTE\_STM32F1_M8266WIFI-IF:\MCU\keil5\C51\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-IF:\MCU\keil5\C51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM3 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o ..\output\obj\test_m8266wifi.o --omf_browse ..\output\obj\test_m8266wifi.crf --depend ..\output\obj\test_m8266wifi.d)
+F (..\M8266WIFI\test_m8266wifi.c)(0x6276060B)(-c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ..\CORE -I ..\FWLIB\inc -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HARDWARE\KEY -I ..\HARDWARE\LED -I ..\HARDWARE\LCD -I ..\HARDWARE\SPI -I ..\HARDWARE\TIMER -I ..\USER -I .. -I ..\M8266WIFI-I.\RTE\_STM32F1_M8266WIFI-IF:\MCU\keil5\C51\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-IF:\MCU\keil5\C51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM3 -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o ..\output\obj\test_m8266wifi.o --omf_browse ..\output\obj\test_m8266wifi.crf --depend ..\output\obj\test_m8266wifi.d)
 I (F:\MCU\keil5\C51\ARM\ARMCC\include\stdio.h)(0x569DEA3A)
 I (..\M8266WIFI\brd_cfg.h)(0x6267B8C3)
 I (..\M8266WIFI\M8266WIFIDrv.h)(0x6267EB4A)

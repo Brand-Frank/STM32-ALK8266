@@ -1,11 +1,2 @@
-*** Using Compiler 'V5.06 update 1 (build 61)', folder: 'F:\MCU\keil5\C51\ARM\ARMCC\Bin'
-Build target 'STM32F1_M8266WIFI'
-compiling test_m8266wifi.c...
-..\M8266WIFI\test_m8266wifi.c(21): warning:  #177-D: variable "link_no1" was declared but never referenced
-  	u8	link_no1 = 1;	//Á´Â·1
-..\M8266WIFI\test_m8266wifi.c: 1 warning, 0 errors
-linking...
-Program Size: Code=10428 RO-data=480 RW-data=48 ZI-data=8808  
-FromELF: creating hex file...
-"..\Output\obj\STM32F1-M8266WIFI.axf" - 0 Error(s), 1 Warning(s).
-Build Time Elapsed:  00:00:02
+Load "..\\Output\\obj\\STM32F1-M8266WIFI.axf" 
+Erase Done.Programming Done.Verify OK.Flash Load finished at 13:47:59
