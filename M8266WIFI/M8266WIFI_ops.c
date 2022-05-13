@@ -420,7 +420,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	{
      	// If M8266HostIf_SPI_Select() fails here, then check your host interface wiring and initialization
      	// 如果你在执行时 M8266HostIf_SPI_Select()失败而进入了这里，请仔细检查主机接口的接线是否正确和可靠，SPI主机接口初始化是否正确。
-	   	//可参考《主机集成说明》之章节“底层调试技巧--主机接口的硬件接线、初始化和匹配以及验证技巧（选阅）” 进行快速梳理和定位。
+	   	// 可参考《主机集成说明》之章节“底层调试技巧--主机接口的硬件接线、初始化和匹配以及验证技巧（选阅）” 进行快速梳理和定位。
 		while(1)
 		{
 			#ifdef USE_LED_AND_KEY_FOR_TEST	 // MB LEDs flash in 2Hz upon errors
@@ -437,7 +437,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	// 第四步：开发阶段和测试阶段，用于测试评估主机板在当前频率下进行高速SPI读写访问时的可靠性。
 	//       如果足够可靠，则可以适当提高SPI频率；如果不可靠，则可能需要检查主机板连线或者降低SPI频率。
 	//		 (Note:产品研发完毕进入正式产品化发布阶段后，因为在研发阶段已经确立了最佳稳定频率，建议这里改成 #if 0，不必再测试)
-	#if 1  //前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
+	#if 1  // 测试
 	{   
 		volatile u32  i, j;
 		u8   byte;
@@ -477,7 +477,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	// 5.1 If you hope to reduce the Max Tx power, you could enable it by change to "#if 1" 
 	// 5.1 如果你希望减小模组的最大发射功率，可以将这里改成 #if 1，并调整下面的 tx_max_power参数的值
- 	#if 0
+ 	#if 0	// 功率
 		//u8 M8266WIFI_SPI_Set_Tx_Max_Power(u8 tx_max_power, u16 *status)
 		//tx_max_power=68 to set the max tx power of around half of manufacture default, i.e. 50mW or 17dBm. Refer to the API specification for more info
 		//下方:tx_max_power=68表示将发射最大功率设置为出厂缺省数值的一般，即50mW或者17dBm。具体数值含义可以查看这个API函数的头文件声明里的注释
@@ -508,22 +508,20 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	// 5.3 If you expect to change the op_mode overriding the default loaded from flash on bootup, enable it by "#if 1"
 	// 5.3 如果你希望改变模组的op_mode，不使用模组启动时缺省op_mode，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值
-	#if 1	//Note:前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的将会被执行
+	#if 1
 	{
 		//u8 M8266WIFI_SPI_Set_Opmode(u8 op_mode, u8 saved, u16* status);
-		if( M8266WIFI_SPI_Set_Opmode(1, 0, &status) == 0 )	// 设置为AP Only模式。1=STA Only, 2=AP Only, 3=STA+AP
+		if( M8266WIFI_SPI_Set_Opmode(1, 0, &status) == 0 )	// 1=STA Only, 2=AP Only, 3=STA+AP
 			return 0;
 	}
 	#endif
 
 	//-------------------------------------------------------------------------------------
 	// 5.4 If you expect to change the ap info overriding the default loaded from flash on bootup, enable it by "#if 1". Meanwhile, according to Protocols, the length of password should not be smaller than 8 Bytes per WAP or WAP2
-	// 5.4 如果你希望改变模组作为AP热点时的AP热点名称和密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
-	#if 0
+	// 5.4 如果你希望改变模组作为 AP热点 时的 AP热点名称 和 密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
+	#if 0	//TODO:修改WiFi模块 AP 模式下的WiFi名和WiFi密码
 	{
-		//TODO:修改WiFi模块 AP 模式下的WiFi名和WiFi密码
-		//u8 M8266WIFI_SPI_Config_AP(u8 ssid[13+1], u8 password[13+1], u8 enc, u8 channel, u8 saved, u16* status);
-		if(M8266WIFI_SPI_Config_AP("Anylinkin", "1234567890", 4, 1, 0, &status)==0)  // set to 4=WPA_WPA2_PSK, not saved // 0=OPEN, 1=WEP, 2=WPA_PSK, 3=WPA2_PSK, 4=WPA_WPA2_PSK
+		if(M8266WIFI_SPI_Config_AP("Anylinkin", "1234567890", 4, 1, 0, &status)==0) // 0=OPEN, 1=WEP, 2=WPA_PSK, 3=WPA2_PSK, 4=WPA_WPA2_PSK
 		return 0;
 	}
 	#endif
@@ -539,7 +537,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	{
 		// If you expect to use smartconfig to config the module, enable here by "#if 1" and prepare to send ssid using your smart devices such as smartphone
 		// 如果你希望使用智能配网来进行配网，你可以这里改成 #if 1
-		#if 0 
+		#if 0 //智能配网
 			u8 smartconfig_type;
 			char smartconfig_phone_ip[15+1]={0};
 			// u8 M8266WIFI_SPI_DoModuleSmartConfig(u8 timeout_in_s, u8 saved, u8* smartconfig_type, char smartconfig_phone_ip[15+1], u16* status);
@@ -558,7 +556,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 			//u8 M8266WIFI_SPI_STA_Connect_Ap(u8 ssid[32], u8 password[64], u8 saved, u8 timeout_in_s, u16* status);
 			//if(M8266WIFI_SPI_STA_Connect_Ap("TP-LINK_A641", "d42612345678", 0, 20, &status) == 0) //not saved,timeout=20s
 			//if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 0, 20, &status) == 0)
-			if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 1, 20, &status) == 0)
+			if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin", "1234567890", 1, 20, &status) == 0)
 				return 0;
 		#endif
 
@@ -592,7 +590,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		#endif
 
 	} // end to if((sta_ap_mode == 1 || ==3)
-  	return 1;	
+  	return 1;
 } //end of M8266WIFI_Module_Init_Via_SPI()
 
 
