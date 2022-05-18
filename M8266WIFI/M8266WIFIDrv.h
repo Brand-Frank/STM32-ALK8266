@@ -409,17 +409,17 @@ u8 M8266WIFI_SPI_STA_ScanSignalsBySsid(char target_ssid[27+1], u8 channel, s8* r
 u8 M8266WIFI_SPI_STA_ScanSignalsByBssid(char target_bssid[17+1], u8 channel, s8* rssi, u16* status);
 
 /**********************************************************************************
- * M8266WIFI_SPI_Get_STA_Hostname								                                  *
+ * M8266WIFI_SPI_Get_STA_Hostname
  * @brief <4.2.15> - 获取 STA 的主机名，如果模块处于 AP-Only 模式，将返回失败
- *     To get the hostname of the STA via SPI                                     *
- *     Note: Will return failure if module in AP-Only Mode                        *
- * @param																																	*
- * @param hostname 		: the hostame to get  		       														*
- * @param status  		: pointer to the status upon failure												*
- *                      如果不需要返回状态码，可以使用 NULL。                  * 
- * @return value:																																	*
- *     =1, success																																*
- *     =0, has error(s)																														*
+ *     To get the hostname of the STA via SPI
+ *     Note: Will return failure if module in AP-Only Mode
+ * @param
+ * @param hostname 		: the hostame to get
+ * @param status  		: pointer to the status upon failure
+ *                      如果不需要返回状态码，可以使用 NULL。
+ * @return value:
+ *     =1, success
+ *     =0, has error(s)
  **********************************************************************************/
 u8 M8266WIFI_SPI_Get_STA_Hostname(char hostname[28+1], u16* status);
 

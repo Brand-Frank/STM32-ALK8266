@@ -131,7 +131,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	//Step 1: To hardware reset the module (with nCS=0 during reset) and wait up the module bootup
 	//步骤1：对模组执行硬复位时序,在片选nCS拉低的时候对nRESET管脚输出低高电平)，并等待模组复位启动完毕
-	M8266WIFI_Module_Hardware_Reset();	//前方定义
+	M8266WIFI_Module_Hardware_Reset();
 
 
 
