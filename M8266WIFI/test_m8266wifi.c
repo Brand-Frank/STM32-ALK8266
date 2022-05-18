@@ -17,8 +17,8 @@ void M8266WIFI_Test(void)
 {
 	u16 i;	//在开启led显示的for()闪烁时的索引值
 	u16 status = 0;		//链接到配置的数量
-	u8  link_no = 0;	//链路号
-	//u8	link_no1 = 1;	//链路1
+	u8  link_no = 0;	//链路0
+	u8	link_no1 = 1;	//链路1
 
 	// 单片机主板上的两颗LED灯闪烁4次，用于提示代码执行到这里的方便调试。和模组通信无关，非必须，可略。
 	// 若没有定义宏USE_LED_AND_KEY_FOR_TEST，此处不会被编译进来。

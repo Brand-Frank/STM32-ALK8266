@@ -38,6 +38,7 @@
         "Rxdata",
         "RXNE",
         "ssid",
+        "SYSCLK",
         "tcnt",
         "tnow",
         "Trasmission",
