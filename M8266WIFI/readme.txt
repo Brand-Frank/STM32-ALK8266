@@ -1,4 +1,4 @@
-¡¾Files decriptions¡¿
+Â¡Â¾Files decriptionsÂ¡Â¿
 
 ----------------------------HARDWARE INTERFACE------------------------------------------
 - M8266WIFIHostIf.c -- example source of MCU inteface to M8266WIFI Module              -
@@ -35,7 +35,7 @@ Notes:                                                                          
   2. You may please modify or reference it for your own application
 ----------------------------------------------------------------------------------------
  
-¡¾Architecture¡¿
+Â¡Â¾ArchitectureÂ¡Â¿
 
   ------------
  |APPLICATIONS|
@@ -59,7 +59,7 @@ Notes:                                                                          
            | HARDWARE INTERFACE |
             --------------------
 
-¡¾Usage¡¿
+Â¡Â¾UsageÂ¡Â¿
        
  1. Implement the sources of hardware interface according to your hardware design
 
@@ -84,7 +84,7 @@ Notes:                                                                          
 
 AnyLinkin!
 Link anytime, anywhere, and anyhow!
-IoT@anylinkin.com
+Email: IoT@anylinkin.com
 http://www.anylinkin.com
-htpp://anylinkin.taobao.com
+http://anylinkin.taobao.com
               
