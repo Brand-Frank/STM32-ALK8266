@@ -5,7 +5,7 @@
   * @version V3.5.0
   * @date    11-March-2011
   * @brief   This file provides all the miscellaneous firmware functions (add-on
-  *          to CMSIS functions).
+  *          to CMSIS functions).该文件提供了所有附加到 CMSIS 功能的杂项固件功能
   ******************************************************************************
   * @attention
   *

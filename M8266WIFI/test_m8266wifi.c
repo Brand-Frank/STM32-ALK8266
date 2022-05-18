@@ -69,7 +69,7 @@ void M8266WIFI_Test(void)
 		#define TEST_REMOTE_PORT	1211
 		// #define TEST_REMOTE_ADDR1	"192.168.4.1"	//【链路1】模块2(TCP服务器)的IP地址与端口
 		// #define TEST_REMOTE_PORT1	4321
-		#define TEST_REMOTE_ADDR1	"192.168.43.18"	//【链路0】
+		#define TEST_REMOTE_ADDR1	"192.168.43.18"	//【链路1】
 		#define TEST_REMOTE_PORT1	1222
 	#elif (TEST_CONNECTION_TYPE == 2)	//模组作为TCP服务器,不需要指定目标地址和端口，这里的数据只是一个格式填充，随便填写。
 		#define TEST_REMOTE_ADDR	"1.1.1.1"	//远程IP192.168.4.1（端口4321）
@@ -261,13 +261,16 @@ void M8266WIFI_Test(void)
 			else{ }
 
 			// 调用M8266WIFI_SPI_Send_BlockData()来发送大块数据 
-			#if 1  //(#1)
+			#if 1  //(#1 M8266WIFI_SPI_Send_BlockData)
 			{
 				// u32 M8266WIFI_SPI_Send_BlockData(u8 Data[], u32 Data_len, u16 max_loops, u8 link_no, char* remote_ip, u16 remote_port, u16* status);
 				// 对于那些TI/IAP提供的平台编译器，例如MSP430, K60，TMS28335,等等，注意这里的Data_len参数是32位的，所以，请注意，传递一个不超过2^16的常值的长度参数时，一定要标注其位u32，比如(u32)TEST_SEND_DATA_SIZE，或者 2048UL 否则，可能会出现参数传递错位的情形。这个问题可能只存在于TI或IAR的某些编译器环境下。
 				// PLEASE add (u32) to mandatorily convert a const to u32, or, the parameter transmission will be 16-bit and bring about function calling failure
-				sent = M8266WIFI_SPI_Send_BlockData(snd_data, (u32)TEST_SEND_DATA_SIZE, 5000, link_no, NULL, 0, &status);
 				sent1 = M8266WIFI_SPI_Send_BlockData(snd_data, (u32)TEST_SEND_DATA_SIZE, 5000, link_no1, NULL, 0, &status);
+				sent = M8266WIFI_SPI_Send_BlockData(snd_data, (u32)TEST_SEND_DATA_SIZE, 5000, link_no, NULL, 0, &status);
+				//sent1 = M8266WIFI_SPI_Send_BlockData(snd_data, (u32)TEST_SEND_DATA_SIZE, 5000, link_no1, NULL, 0, &status);
+				//sent = M8266WIFI_SPI_Send_BlockData(snd_data, (u32)TEST_SEND_DATA_SIZE, 5000, link_no, "192.168.43.18", 1211, &status);
+				//sent1 = M8266WIFI_SPI_Send_BlockData(snd_data, (u32)TEST_SEND_DATA_SIZE, 5000, link_no1, "192.168.43.18", 1222, &status);
 				total_sent += sent;
 				total_sent1 += sent1;
 
@@ -293,9 +296,9 @@ void M8266WIFI_Test(void)
 					M8266HostIf_delay_us(101);
 				}
 			}//end of #if 1
-		
-			// 调用 M8266WIFI_SPI_Send_Data() 来一个一个包的发送数据，实际几乎就是M8266WIFI_SPI_Send_BlockData()函数的二次封装，但是效率和灵活性不够
-			#else	//(#2)
+	
+			// 调用 M8266WIFI_SPI_Send_Data() 来一个一个包的发送数据，M8266WIFI_SPI_Send_BlockData()是对本函数的二次封装，但是效率和灵活性不如本函数
+			#else	//(#2 M8266WIFI_SPI_Send_Data)
 			{
 				u16 tcp_packet_size = 1024;
 				u16 loops     = 0;
@@ -324,6 +327,7 @@ void M8266WIFI_Test(void)
 				} // end of for(...		
 				total_sent += sent;		total_sent1 += sent1;
 			}//end of #else
+
 			#endif	//(#3)
 		} //end of for()
 

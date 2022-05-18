@@ -10,6 +10,7 @@
 #include "M8266HostIf.h"
 
 void M8266WIFI_Test(void);
+//#define USE_LED_AND_KEY_FOR_TEST
 
 int main(void)
 { 
@@ -46,8 +47,9 @@ int main(void)
 	
 	if(success)	// 主板上两个LED交替闪烁3次表示M8266WIFI初始化成功
 	{
-		#ifdef USE_LED_AND_KEY_FOR_TEST			
+		#ifdef USE_LED_AND_KEY_FOR_TEST
 		{
+			u8 i;
 			for(i=0; i<3; i++)
 			{
 				LED_set(0, 1); LED_set(1, 0);  M8266WIFI_Module_delay_ms(100);
