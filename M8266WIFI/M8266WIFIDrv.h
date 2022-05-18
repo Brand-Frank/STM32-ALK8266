@@ -647,10 +647,17 @@ u8 M8266WIFI_SPI_AP_Query_PermitBlock_List(AP_MAC_LIST_PERIMIT_BLOCK_TYPE *block
 //
 //----------------------------------------------------------------------------------
 
-/***********************************************************************************
- * M8266WIFI_SPI_Setup_Connection                                                  *
- * @brief   建立一个TCP客户端连接/UDP连接
 
+#define SOCKET_TYPE_UDP 									0
+#define SOCKET_TYPE_TCP_CLIENT 								1
+#define SOCKET_TYPE_TCP_SERVER 								2
+#define SOCKET_TCP_CLIENT_BITMAP_SSL 						0x40
+#define SOCKET_TCP_CLIENT_BITMAP_CLIENT_CERT_REQUEST_EN 	0x20 
+#define SOCKET_TCP_CLIENT_BITMAP_CA_CERT_EN 				0x10
+
+/***********************************************************************************
+ * M8266WIFI_SPI_Setup_Connection
+ * @brief   <4.3.1> - 通过 SPI 设置 UDP 连接或 TCP 客户端连接
  * @param tcp_udp      : 建立 tcp 或 udp 服务链接的类型(=0, udp；=1, tcp client；=2, tcp server)
  * @param local_port   : 本地端口。如果设定为 0，则由模组会产生一个随机的本地端口。如果!=0，则设定为指定的本地端口。
  * @param remote_addr  : 远端（目标）地址，可以是 IP 形式，也可以是域名形式。
@@ -660,13 +667,6 @@ u8 M8266WIFI_SPI_AP_Query_PermitBlock_List(AP_MAC_LIST_PERIMIT_BLOCK_TYPE *block
  * @param status  : 失败时返回错误码（LSB）和状态（MSB）的指针。如果不需要返回状态码，可以使用 NULL。
  * @return =1，执行成功；=0，出错了
  ***********************************************************************************/
-#define SOCKET_TYPE_UDP 									0
-#define SOCKET_TYPE_TCP_CLIENT 								1
-#define SOCKET_TYPE_TCP_SERVER 								2
-#define SOCKET_TCP_CLIENT_BITMAP_SSL 						0x40
-#define SOCKET_TCP_CLIENT_BITMAP_CLIENT_CERT_REQUEST_EN 	0x20 
-#define SOCKET_TCP_CLIENT_BITMAP_CA_CERT_EN 				0x10
-// <4.3.1> - 通过 SPI 设置 UDP 连接或 TCP 客户端连接
 u8 M8266WIFI_SPI_Setup_Connection(u8 tcp_udp, u16 local_port, char* remote_addr, u16 remote_port, u8 link_no, u8 timeout_in_s, u16* status);
 																	
 /***********************************************************************************

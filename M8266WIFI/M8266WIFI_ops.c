@@ -555,8 +555,8 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		#if 1  //Note:不同的WiFi热点需要根据模式修改    	
 			//u8 M8266WIFI_SPI_STA_Connect_Ap(u8 ssid[32], u8 password[64], u8 saved, u8 timeout_in_s, u16* status);
 			//if(M8266WIFI_SPI_STA_Connect_Ap("TP-LINK_A641", "d42612345678", 0, 20, &status) == 0) //not saved,timeout=20s
-			//if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 0, 20, &status) == 0)
-			if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin", "1234567890", 1, 20, &status) == 0)
+			if(M8266WIFI_SPI_STA_Connect_Ap("test", "zxcvbnm1", 0, 20, &status) == 0)
+			//if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin", "1234567890", 1, 20, &status) == 0)
 				return 0;
 		#endif
 
