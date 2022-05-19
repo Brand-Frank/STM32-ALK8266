@@ -437,7 +437,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	// 第四步：开发阶段和测试阶段，用于测试评估主机板在当前频率下进行高速SPI读写访问时的可靠性。
 	//       如果足够可靠，则可以适当提高SPI频率；如果不可靠，则可能需要检查主机板连线或者降低SPI频率。
 	//		 (Note:产品研发完毕进入正式产品化发布阶段后，因为在研发阶段已经确立了最佳稳定频率，建议这里改成 #if 0，不必再测试)
-	#if 1  //前面所有的#if defined(单片机)，判断结果都是 1，所以这里写0表明后面的不会被执行
+	#if 1  // 开发阶段和测试阶段
 	{   
 		volatile u32  i, j;
 		u8   byte;
@@ -477,7 +477,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	// 5.1 If you hope to reduce the Max Tx power, you could enable it by change to "#if 1" 
 	// 5.1 如果你希望减小模组的最大发射功率，可以将这里改成 #if 1，并调整下面的 tx_max_power参数的值
- 	#if 0
+ 	#if 0 //更改功率
 		//u8 M8266WIFI_SPI_Set_Tx_Max_Power(u8 tx_max_power, u16 *status)
 		//tx_max_power=68 to set the max tx power of around half of manufacture default, i.e. 50mW or 17dBm. Refer to the API specification for more info
 		//下方:tx_max_power=68表示将发射最大功率设置为出厂缺省数值的一般，即50mW或者17dBm。具体数值含义可以查看这个API函数的头文件声明里的注释
@@ -491,11 +491,10 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	#if 0	// Web服务器
 	{
 		//u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, u16* status)
-		if(M8266WIFI_SPI_Set_WebServer(0, 3128, 0, &status)==0)  // 第一个参数0表示关闭WEB服务器)
-		{
-			return 0;
-		}
-		//u8 M8266WIFI_SPI_Set_WebServer(u8 open_not_shutdown, u16 server_port, u8 saved, u16* status)
+		// if(M8266WIFI_SPI_Set_WebServer(0, 3128, 0, &status)==0)  // 第一个参数0表示关闭WEB服务器)
+		// {
+		// 	return 0;
+		// }
 		// 1-> to (re-)start the web_server with port = 3128, not saved, invalid after reboot
 		// 第一个参数1表示开启WEB服务器，第二个参数3128表示将WEB服务器的端口改成3128，第三个参数0表示不保存，只是当前设置有效，模组复位后失效
 		if(M8266WIFI_SPI_Set_WebServer(1, 3128, 0, &status)==0)
@@ -519,9 +518,8 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	//-------------------------------------------------------------------------------------
 	// 5.4 If you expect to change the ap info overriding the default loaded from flash on bootup, enable it by "#if 1". Meanwhile, according to Protocols, the length of password should not be smaller than 8 Bytes per WAP or WAP2
 	// 5.4 如果你希望改变模组作为 AP热点 时的 AP热点名称 和 密码，不使用模组启动时缺省参数，你可以这里改成 #if 1，并调整下面的API函数里的相关参数值. 同时根据相关协议约定，WAP和WAP2的密码长度不能少于8个字节
-	#if 1
+	#if 1	//TODO:设置模块在 AP 模式下的WiFi名和WiFi密码
 	{
-		//TODO:修改WiFi模块 AP 模式下的WiFi名和WiFi密码
 		//u8 M8266WIFI_SPI_Config_AP(u8 ssid[13+1], u8 password[13+1], u8 enc, u8 channel, u8 saved, u16* status);
 		if(M8266WIFI_SPI_Config_AP("Anylinkin", "1234567890", 4, 1, 0, &status)==0)  // set to 4=WPA_WPA2_PSK, not saved // 0=OPEN, 1=WEP, 2=WPA_PSK, 3=WPA2_PSK, 4=WPA_WPA2_PSK
 		return 0;
@@ -539,7 +537,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 	{
 		// If you expect to use smartconfig to config the module, enable here by "#if 1" and prepare to send ssid using your smart devices such as smartphone
 		// 如果你希望使用智能配网来进行配网，你可以这里改成 #if 1
-		#if 0 
+		#if 0 // 智能配网
 			u8 smartconfig_type;
 			char smartconfig_phone_ip[15+1]={0};
 			// u8 M8266WIFI_SPI_DoModuleSmartConfig(u8 timeout_in_s, u8 saved, u8* smartconfig_type, char smartconfig_phone_ip[15+1], u16* status);
@@ -554,8 +552,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		// If you expect to use the SSID and password here overriding the default loaded from on-module SPI flash, enable it by "#if 1", and update the ssid and password with those of your routers connected to.
 		// 如果模组上保存有之前连接过的热点/路由器的SSID和密码（称为缺省SSID和密码），而模组启动后的模组包含STA，那么模组会自动加载这个缺省的SSID和密码自动去连接路由器和热点。
 		// 但是如果你不希望使用这个缺省的SSID和密码来连接路由器/热点，你可以这里改成 #if 1，并将其中的SSID和密码改成你所期望连接的热点/路由器的
-		#if 1  //Note:不同的WiFi热点需要根据模式修改    	
-			//u8 M8266WIFI_SPI_STA_Connect_Ap(u8 ssid[32], u8 password[64], u8 saved, u8 timeout_in_s, u16* status);
+		#if 1  //Note:配置连接的WiFi名和密码
 			//if(M8266WIFI_SPI_STA_Connect_Ap("TP-LINK_A641", "d42612345678", 0, 20, &status) == 0) //not saved,timeout=20s
 			//if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin!", "1234567890", 0, 20, &status) == 0)
 			// if(M8266WIFI_SPI_STA_Connect_Ap("Anylinkin", "1234567890", 1, 20, &status) == 0)
@@ -568,7 +565,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		// 最多等待10秒。max_wait_time_in_s可以根据实际情形调整。但这个时间不是实际等待的时间，
 		// 而是最大等待时间超时上限。这个函数会在获取到ip地址或等待时间到达这里的超时上限时返回 
 		*/
-		if(M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip(sta_ip, 10)==0) //下方还有一个else 
+		if(M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip(sta_ip, 10)==0) 
 		{
 			return 0;
 		}
@@ -576,7 +573,7 @@ u8 M8266WIFI_Module_Init_Via_SPI(void)	//TODO:配置相关模式等
 		// If you expect to to know the reason of failure by above M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip(), enable below
 		//如果你希望查看联网失败后的原因，你可以在这里使用 #if 1
 		#if 1	
-		else //前方if()
+		else
 		{
 			// connection_status将返回上次连接热点/路由器的结果状态，协助诊断(connection_status will give the status of last connecting)
 			if(M8266WIFI_SPI_Get_STA_Connection_Status(&connection_status, &status)==0)  

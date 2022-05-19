@@ -1262,101 +1262,101 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000130   Data   RO           19    RESET               startup_stm32f10x_hd.o
-    0x08000130   0x08000130   0x00000008   Code   RO         2142  * !!!main             c_w.l(__main.o)
-    0x08000138   0x08000138   0x00000034   Code   RO         2304    !!!scatter          c_w.l(__scatter.o)
-    0x0800016c   0x0800016c   0x0000001a   Code   RO         2306    !!handler_copy      c_w.l(__scatter_copy.o)
+    0x08000130   0x08000130   0x00000008   Code   RO         2184  * !!!main             c_w.l(__main.o)
+    0x08000138   0x08000138   0x00000034   Code   RO         2346    !!!scatter          c_w.l(__scatter.o)
+    0x0800016c   0x0800016c   0x0000001a   Code   RO         2348    !!handler_copy      c_w.l(__scatter_copy.o)
     0x08000186   0x08000186   0x00000002   PAD
-    0x08000188   0x08000188   0x0000001c   Code   RO         2308    !!handler_zi        c_w.l(__scatter_zi.o)
-    0x080001a4   0x080001a4   0x00000002   Code   RO         2169    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
-    0x080001a6   0x080001a6   0x00000004   Code   RO         2175    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2178    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2181    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2183    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2185    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2188    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2190    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2192    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2194    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2196    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2198    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2200    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2202    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2204    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2206    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2208    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2212    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2214    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2216    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000000   Code   RO         2218    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
-    0x080001aa   0x080001aa   0x00000002   Code   RO         2219    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
-    0x080001ac   0x080001ac   0x00000002   Code   RO         2244    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO         2257    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO         2259    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO         2262    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO         2265    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO         2267    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
-    0x080001ae   0x080001ae   0x00000000   Code   RO         2270    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
-    0x080001ae   0x080001ae   0x00000002   Code   RO         2271    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
-    0x080001b0   0x080001b0   0x00000000   Code   RO         2144    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
-    0x080001b0   0x080001b0   0x00000000   Code   RO         2146    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
-    0x080001b0   0x080001b0   0x00000006   Code   RO         2158    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
-    0x080001b6   0x080001b6   0x00000000   Code   RO         2148    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
-    0x080001b6   0x080001b6   0x00000004   Code   RO         2149    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
-    0x080001ba   0x080001ba   0x00000000   Code   RO         2151    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
-    0x080001ba   0x080001ba   0x00000008   Code   RO         2152    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
-    0x080001c2   0x080001c2   0x00000002   Code   RO         2173    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
-    0x080001c4   0x080001c4   0x00000000   Code   RO         2221    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
-    0x080001c4   0x080001c4   0x00000004   Code   RO         2222    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
-    0x080001c8   0x080001c8   0x00000006   Code   RO         2223    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
+    0x08000188   0x08000188   0x0000001c   Code   RO         2350    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x080001a4   0x080001a4   0x00000002   Code   RO         2211    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x080001a6   0x080001a6   0x00000004   Code   RO         2217    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2220    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2223    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2225    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2227    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2230    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2232    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2234    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2236    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2238    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2240    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2242    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2244    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2246    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2248    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2250    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2254    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2256    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2258    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000000   Code   RO         2260    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x080001aa   0x080001aa   0x00000002   Code   RO         2261    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
+    0x080001ac   0x080001ac   0x00000002   Code   RO         2286    .ARM.Collect$$libshutdown$$00000000  c_w.l(libshutdown.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO         2299    .ARM.Collect$$libshutdown$$00000002  c_w.l(libshutdown2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO         2301    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO         2304    .ARM.Collect$$libshutdown$$00000007  c_w.l(libshutdown2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO         2307    .ARM.Collect$$libshutdown$$0000000A  c_w.l(libshutdown2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO         2309    .ARM.Collect$$libshutdown$$0000000C  c_w.l(libshutdown2.o)
+    0x080001ae   0x080001ae   0x00000000   Code   RO         2312    .ARM.Collect$$libshutdown$$0000000F  c_w.l(libshutdown2.o)
+    0x080001ae   0x080001ae   0x00000002   Code   RO         2313    .ARM.Collect$$libshutdown$$00000010  c_w.l(libshutdown2.o)
+    0x080001b0   0x080001b0   0x00000000   Code   RO         2186    .ARM.Collect$$rtentry$$00000000  c_w.l(__rtentry.o)
+    0x080001b0   0x080001b0   0x00000000   Code   RO         2188    .ARM.Collect$$rtentry$$00000002  c_w.l(__rtentry2.o)
+    0x080001b0   0x080001b0   0x00000006   Code   RO         2200    .ARM.Collect$$rtentry$$00000004  c_w.l(__rtentry4.o)
+    0x080001b6   0x080001b6   0x00000000   Code   RO         2190    .ARM.Collect$$rtentry$$00000009  c_w.l(__rtentry2.o)
+    0x080001b6   0x080001b6   0x00000004   Code   RO         2191    .ARM.Collect$$rtentry$$0000000A  c_w.l(__rtentry2.o)
+    0x080001ba   0x080001ba   0x00000000   Code   RO         2193    .ARM.Collect$$rtentry$$0000000C  c_w.l(__rtentry2.o)
+    0x080001ba   0x080001ba   0x00000008   Code   RO         2194    .ARM.Collect$$rtentry$$0000000D  c_w.l(__rtentry2.o)
+    0x080001c2   0x080001c2   0x00000002   Code   RO         2215    .ARM.Collect$$rtexit$$00000000  c_w.l(rtexit.o)
+    0x080001c4   0x080001c4   0x00000000   Code   RO         2263    .ARM.Collect$$rtexit$$00000002  c_w.l(rtexit2.o)
+    0x080001c4   0x080001c4   0x00000004   Code   RO         2264    .ARM.Collect$$rtexit$$00000003  c_w.l(rtexit2.o)
+    0x080001c8   0x080001c8   0x00000006   Code   RO         2265    .ARM.Collect$$rtexit$$00000004  c_w.l(rtexit2.o)
     0x080001ce   0x080001ce   0x00000002   PAD
     0x080001d0   0x080001d0   0x00000040   Code   RO           20    .text               startup_stm32f10x_hd.o
-    0x08000210   0x08000210   0x00000780   Code   RO         2023    .text               M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08000990   0x08000990   0x0000004e   Code   RO         2136    .text               c_w.l(rt_memclr_w.o)
+    0x08000210   0x08000210   0x00000780   Code   RO         2065    .text               M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08000990   0x08000990   0x0000004e   Code   RO         2178    .text               c_w.l(rt_memclr_w.o)
     0x080009de   0x080009de   0x00000002   PAD
-    0x080009e0   0x080009e0   0x00000080   Code   RO         2138    .text               c_w.l(strcmpv7m.o)
-    0x08000a60   0x08000a60   0x00000006   Code   RO         2140    .text               c_w.l(heapauxi.o)
-    0x08000a66   0x08000a66   0x0000004a   Code   RO         2160    .text               c_w.l(sys_stackheap_outer.o)
-    0x08000ab0   0x08000ab0   0x00000012   Code   RO         2162    .text               c_w.l(exit.o)
+    0x080009e0   0x080009e0   0x00000080   Code   RO         2180    .text               c_w.l(strcmpv7m.o)
+    0x08000a60   0x08000a60   0x00000006   Code   RO         2182    .text               c_w.l(heapauxi.o)
+    0x08000a66   0x08000a66   0x0000004a   Code   RO         2202    .text               c_w.l(sys_stackheap_outer.o)
+    0x08000ab0   0x08000ab0   0x00000012   Code   RO         2204    .text               c_w.l(exit.o)
     0x08000ac2   0x08000ac2   0x00000002   PAD
-    0x08000ac4   0x08000ac4   0x00000008   Code   RO         2170    .text               c_w.l(libspace.o)
-    0x08000acc   0x08000acc   0x0000000c   Code   RO         2231    .text               c_w.l(sys_exit.o)
-    0x08000ad8   0x08000ad8   0x00000008   Code   RO         2236    .text               c_w.l(rt_fp_status_addr_intlibspace.o)
-    0x08000ae0   0x08000ae0   0x00000002   Code   RO         2247    .text               c_w.l(use_no_semi.o)
-    0x08000ae2   0x08000ae2   0x00000000   Code   RO         2249    .text               c_w.l(indicate_semi.o)
+    0x08000ac4   0x08000ac4   0x00000008   Code   RO         2212    .text               c_w.l(libspace.o)
+    0x08000acc   0x08000acc   0x0000000c   Code   RO         2273    .text               c_w.l(sys_exit.o)
+    0x08000ad8   0x08000ad8   0x00000008   Code   RO         2278    .text               c_w.l(rt_fp_status_addr_intlibspace.o)
+    0x08000ae0   0x08000ae0   0x00000002   Code   RO         2289    .text               c_w.l(use_no_semi.o)
+    0x08000ae2   0x08000ae2   0x00000000   Code   RO         2291    .text               c_w.l(indicate_semi.o)
     0x08000ae2   0x08000ae2   0x00000002   PAD
-    0x08000ae4   0x08000ae4   0x000002fc   Code   RO         2067    .text.1             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08000de0   0x08000de0   0x00000110   Code   RO         2027    .text.12            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08000ef0   0x08000ef0   0x0000016a   Code   RO         2071    .text.13            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08000ae4   0x08000ae4   0x000002fc   Code   RO         2109    .text.1             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08000de0   0x08000de0   0x00000110   Code   RO         2069    .text.12            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08000ef0   0x08000ef0   0x0000016a   Code   RO         2113    .text.13            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
     0x0800105a   0x0800105a   0x00000002   PAD
-    0x0800105c   0x0800105c   0x00000100   Code   RO         2032    .text.14            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x0800115c   0x0800115c   0x000000d0   Code   RO         2031    .text.15            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x0800122c   0x0800122c   0x000000f4   Code   RO         2028    .text.5             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001320   0x08001320   0x000000fa   Code   RO         2026    .text.9             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x0800105c   0x0800105c   0x00000100   Code   RO         2074    .text.14            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x0800115c   0x0800115c   0x000000d0   Code   RO         2073    .text.15            M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x0800122c   0x0800122c   0x000000f4   Code   RO         2070    .text.5             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001320   0x08001320   0x000000fa   Code   RO         2068    .text.9             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
     0x0800141a   0x0800141a   0x00000002   PAD
-    0x0800141c   0x0800141c   0x000000d0   Code   RO         2130    .text.M8266HostIf_SPI_Select  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080014ec   0x080014ec   0x00000194   Code   RO         2057    .text.M8266WIFI_SPI_Config_AP  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001680   0x08001680   0x00000018   Code   RO         2049    .text.M8266WIFI_SPI_Config_STA_Param  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001698   0x08001698   0x00000018   Code   RO         2088    .text.M8266WIFI_SPI_Config_Tcp_Window_num  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080016b0   0x080016b0   0x00000016   Code   RO         2072    .text.M8266WIFI_SPI_Delete_Connection  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080016c6   0x080016c6   0x0000009c   Code   RO         2129    .text.M8266WIFI_SPI_Get_Module_Info  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001762   0x08001762   0x0000004e   Code   RO         2041    .text.M8266WIFI_SPI_Get_Opmode  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080017b0   0x080017b0   0x0000004e   Code   RO         2043    .text.M8266WIFI_SPI_Get_STA_Connection_Status  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080017fe   0x080017fe   0x0000006a   Code   RO         2064    .text.M8266WIFI_SPI_Get_STA_IP_Addr  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001868   0x08001868   0x00000044   Code   RO         2036    .text.M8266WIFI_SPI_Interface_Communication_OK  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080018ac   0x080018ac   0x000000d0   Code   RO         2070    .text.M8266WIFI_SPI_Query_Connection  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x0800197c   0x0800197c   0x0000007a   Code   RO         2085    .text.M8266WIFI_SPI_Query_Tcp_Mss  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080019f6   0x080019f6   0x0000001a   Code   RO         2086    .text.M8266WIFI_SPI_Query_Tcp_Window_num  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001a10   0x08001a10   0x00000344   Code   RO         2053    .text.M8266WIFI_SPI_STA_Connect_Ap  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001d54   0x08001d54   0x00000074   Code   RO         2052    .text.M8266WIFI_SPI_STA_DisConnect_Ap  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08001dc8   0x08001dc8   0x0000029c   Code   RO         2066    .text.M8266WIFI_SPI_STA_Get_HostIP_by_HostName  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08002064   0x08002064   0x00000084   Code   RO         2065    .text.M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080020e8   0x080020e8   0x00000130   Code   RO         2087    .text.M8266WIFI_SPI_Send_BlockData  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08002218   0x08002218   0x0000007c   Code   RO         2042    .text.M8266WIFI_SPI_Set_Opmode  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08002294   0x08002294   0x00000224   Code   RO         2075    .text.M8266WIFI_SPI_Setup_Connection  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x080024b8   0x080024b8   0x00000002   Code   RO         1956    i.BusFault_Handler  stm32f10x_it.o
-    0x080024ba   0x080024ba   0x00000002   Code   RO         1957    i.DebugMon_Handler  stm32f10x_it.o
+    0x0800141c   0x0800141c   0x000000d0   Code   RO         2172    .text.M8266HostIf_SPI_Select  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080014ec   0x080014ec   0x00000194   Code   RO         2099    .text.M8266WIFI_SPI_Config_AP  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001680   0x08001680   0x00000018   Code   RO         2091    .text.M8266WIFI_SPI_Config_STA_Param  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001698   0x08001698   0x00000018   Code   RO         2130    .text.M8266WIFI_SPI_Config_Tcp_Window_num  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080016b0   0x080016b0   0x00000016   Code   RO         2114    .text.M8266WIFI_SPI_Delete_Connection  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080016c6   0x080016c6   0x0000009c   Code   RO         2171    .text.M8266WIFI_SPI_Get_Module_Info  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001762   0x08001762   0x0000004e   Code   RO         2083    .text.M8266WIFI_SPI_Get_Opmode  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080017b0   0x080017b0   0x0000004e   Code   RO         2085    .text.M8266WIFI_SPI_Get_STA_Connection_Status  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080017fe   0x080017fe   0x0000006a   Code   RO         2106    .text.M8266WIFI_SPI_Get_STA_IP_Addr  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001868   0x08001868   0x00000044   Code   RO         2078    .text.M8266WIFI_SPI_Interface_Communication_OK  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080018ac   0x080018ac   0x000000d0   Code   RO         2112    .text.M8266WIFI_SPI_Query_Connection  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x0800197c   0x0800197c   0x0000007a   Code   RO         2127    .text.M8266WIFI_SPI_Query_Tcp_Mss  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080019f6   0x080019f6   0x0000001a   Code   RO         2128    .text.M8266WIFI_SPI_Query_Tcp_Window_num  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001a10   0x08001a10   0x00000344   Code   RO         2095    .text.M8266WIFI_SPI_STA_Connect_Ap  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001d54   0x08001d54   0x00000074   Code   RO         2094    .text.M8266WIFI_SPI_STA_DisConnect_Ap  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08001dc8   0x08001dc8   0x0000029c   Code   RO         2108    .text.M8266WIFI_SPI_STA_Get_HostIP_by_HostName  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08002064   0x08002064   0x00000084   Code   RO         2107    .text.M8266WIFI_SPI_STA_Query_Current_SSID_And_RSSI  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080020e8   0x080020e8   0x00000130   Code   RO         2129    .text.M8266WIFI_SPI_Send_BlockData  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08002218   0x08002218   0x0000007c   Code   RO         2084    .text.M8266WIFI_SPI_Set_Opmode  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08002294   0x08002294   0x00000224   Code   RO         2117    .text.M8266WIFI_SPI_Setup_Connection  M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x080024b8   0x080024b8   0x00000002   Code   RO         1998    i.BusFault_Handler  stm32f10x_it.o
+    0x080024ba   0x080024ba   0x00000002   Code   RO         1999    i.DebugMon_Handler  stm32f10x_it.o
     0x080024bc   0x080024bc   0x000000a2   Code   RO          167    i.GPIO_Init         stm32f10x_gpio.o
-    0x0800255e   0x0800255e   0x00000002   Code   RO         1958    i.HardFault_Handler  stm32f10x_it.o
+    0x0800255e   0x0800255e   0x00000002   Code   RO         2000    i.HardFault_Handler  stm32f10x_it.o
     0x08002560   0x08002560   0x00000050   Code   RO         1591    i.M8266HostIf_GPIO_CS_RESET_Init  m8266hostif_stm32xx.o
     0x080025b0   0x080025b0   0x0000000e   Code   RO         1592    i.M8266HostIf_Init  m8266hostif_stm32xx.o
     0x080025be   0x080025be   0x00000002   PAD
@@ -1372,31 +1372,31 @@ Memory Map of the image
     0x08002806   0x08002806   0x00000002   PAD
     0x08002808   0x08002808   0x0000004c   Code   RO         1665    i.M8266WIFI_SPI_wait_sta_connecting_to_ap_and_get_ip  m8266wifi_ops.o
     0x08002854   0x08002854   0x000001a4   Code   RO         1816    i.M8266WIFI_Test    test_m8266wifi.o
-    0x080029f8   0x080029f8   0x00000002   Code   RO         1959    i.MemManage_Handler  stm32f10x_it.o
-    0x080029fa   0x080029fa   0x00000002   Code   RO         1960    i.NMI_Handler       stm32f10x_it.o
+    0x080029f8   0x080029f8   0x00000002   Code   RO         2001    i.MemManage_Handler  stm32f10x_it.o
+    0x080029fa   0x080029fa   0x00000002   Code   RO         2002    i.NMI_Handler       stm32f10x_it.o
     0x080029fc   0x080029fc   0x00000014   Code   RO         1453    i.NVIC_PriorityGroupConfig  misc.o
-    0x08002a10   0x08002a10   0x00000002   Code   RO         1961    i.PendSV_Handler    stm32f10x_it.o
+    0x08002a10   0x08002a10   0x00000002   Code   RO         2003    i.PendSV_Handler    stm32f10x_it.o
     0x08002a12   0x08002a12   0x00000002   PAD
     0x08002a14   0x08002a14   0x00000018   Code   RO          543    i.RCC_APB2PeriphClockCmd  stm32f10x_rcc.o
     0x08002a2c   0x08002a2c   0x00000018   Code   RO          544    i.RCC_APB2PeriphResetCmd  stm32f10x_rcc.o
     0x08002a44   0x08002a44   0x00000014   Code   RO          280    i.SPI_Cmd           stm32f10x_spi.o
     0x08002a58   0x08002a58   0x00000038   Code   RO          293    i.SPI_Init          stm32f10x_spi.o
-    0x08002a90   0x08002a90   0x00000002   Code   RO         1962    i.SVC_Handler       stm32f10x_it.o
+    0x08002a90   0x08002a90   0x00000002   Code   RO         2004    i.SVC_Handler       stm32f10x_it.o
     0x08002a92   0x08002a92   0x00000002   PAD
-    0x08002a94   0x08002a94   0x000000a8   Code   RO         1905    i.SetSysClockTo72   system_stm32f10x.o
+    0x08002a94   0x08002a94   0x000000a8   Code   RO         1947    i.SetSysClockTo72   system_stm32f10x.o
     0x08002b3c   0x08002b3c   0x00000018   Code   RO         1456    i.SysTick_CLKSourceConfig  misc.o
-    0x08002b54   0x08002b54   0x00000002   Code   RO         1963    i.SysTick_Handler   stm32f10x_it.o
+    0x08002b54   0x08002b54   0x00000002   Code   RO         2005    i.SysTick_Handler   stm32f10x_it.o
     0x08002b56   0x08002b56   0x00000002   PAD
-    0x08002b58   0x08002b58   0x00000050   Code   RO         1907    i.SystemInit        system_stm32f10x.o
-    0x08002ba8   0x08002ba8   0x00000002   Code   RO         1964    i.UsageFault_Handler  stm32f10x_it.o
+    0x08002b58   0x08002b58   0x00000050   Code   RO         1949    i.SystemInit        system_stm32f10x.o
+    0x08002ba8   0x08002ba8   0x00000002   Code   RO         2006    i.UsageFault_Handler  stm32f10x_it.o
     0x08002baa   0x08002baa   0x00000002   PAD
     0x08002bac   0x08002bac   0x0000003c   Code   RO         1488    i.delay_init        delay.o
     0x08002be8   0x08002be8   0x00000034   Code   RO         1490    i.delay_us          delay.o
-    0x08002c1c   0x08002c1c   0x0000001e   Code   RO         1893    i.main              main.o
-    0x08002c3a   0x08002c3a   0x0000000e   Code   RO         2229    x$fpl$fpinit        g_ws.l(fpinit.o)
-    0x08002c48   0x08002c48   0x00000020   Data   RO         2132    .rodata             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08002c68   0x08002c68   0x00000068   Data   RO         2133    .rodata.str1.1      M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x08002cd0   0x08002cd0   0x00000020   Data   RO         2302    Region$$Table       anon$$obj.o
+    0x08002c1c   0x08002c1c   0x0000001e   Code   RO         1932    i.main              main.o
+    0x08002c3a   0x08002c3a   0x0000000e   Code   RO         2271    x$fpl$fpinit        g_ws.l(fpinit.o)
+    0x08002c48   0x08002c48   0x00000020   Data   RO         2174    .rodata             M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08002c68   0x08002c68   0x00000068   Data   RO         2175    .rodata.str1.1      M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x08002cd0   0x08002cd0   0x00000020   Data   RO         2344    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08002cf0, Size: 0x00002298, Max: 0x00005000, ABSOLUTE)
@@ -1404,11 +1404,11 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x08002cf0   0x00000004   Data   RW         1491    .data               delay.o
-    0x20000004   0x08002cf4   0x00000014   Data   RW         1908    .data               system_stm32f10x.o
-    0x20000018   0x08002d08   0x00000016   Data   RW         2024    .data               M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x20000004   0x08002cf4   0x00000014   Data   RW         1950    .data               system_stm32f10x.o
+    0x20000018   0x08002d08   0x00000016   Data   RW         2066    .data               M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
     0x2000002e   0x08002d1e   0x00000002   PAD
-    0x20000030        -       0x00000008   Zero   RW         2025    .bss                M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
-    0x20000038        -       0x00000060   Zero   RW         2171    .bss                c_w.l(libspace.o)
+    0x20000030        -       0x00000008   Zero   RW         2067    .bss                M8266WIFIDrv_STM32F1xx.a(M8266WIFIDrv_STM32F1xx.o)
+    0x20000038        -       0x00000060   Zero   RW         2213    .bss                c_w.l(libspace.o)
     0x20000098        -       0x00000200   Zero   RW           18    HEAP                startup_stm32f10x_hd.o
     0x20000298        -       0x00002000   Zero   RW           17    STACK               startup_stm32f10x_hd.o
 
@@ -1423,7 +1423,7 @@ Image component sizes
          0          0          0          0          0       4544   core_cm3.o
        112         20          0          4          0       1188   delay.o
        306         24          0          0          0       3848   m8266hostif_stm32xx.o
-       444         64          0          0          0     205107   m8266wifi_ops.o
+       444         64          0          0          0     205235   m8266wifi_ops.o
         30          0          0          0          0        443   main.o
         44         10          0          0          0       1009   misc.o
         64         26        304          0       8704        796   startup_stm32f10x_hd.o
@@ -1433,10 +1433,10 @@ Image component sizes
         48         12          0          0          0       1122   stm32f10x_rcc.o
         76          0          0          0          0       2065   stm32f10x_spi.o
        248         24          0         20          0       1713   system_stm32f10x.o
-       420         16          0          0          0       5841   test_m8266wifi.o
+       420         16          0          0          0       5933   test_m8266wifi.o
 
     ----------------------------------------------------------------------
-      1986        196        336         24       8704     450066   Object Totals
+      1986        196        336         24       8704     450286   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         14          0          0          0          0          0   (incl. Padding)
 
@@ -1492,8 +1492,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     11032        376        472         48       8808     449066   Grand Totals
-     11032        376        472         48       8808     449066   ELF Image Totals
+     11032        376        472         48       8808     449286   Grand Totals
+     11032        376        472         48       8808     449286   ELF Image Totals
      11032        376        472         48          0          0   ROM Totals
 
 ==============================================================================
